@@ -1,0 +1,661 @@
+﻿@model CR_Details.Models.CRDetails
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CR Tracker | Admin Dashboard</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/cr-tracker-dashboard.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/font-awsome.js"></script>
+    <script src="~/Scripts/adminlte.min.js"></script>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/buttons.bootstrap4.min.js"></script>
+    <script src="~/Scripts/jszip.min.js"></script>
+    <script src="~/Scripts/pdfmake.min.js"></script>
+    <script src="~/Scripts/vfs_fonts.js"></script>
+    <script src="~/Scripts/buttons.html5.min.js"></script>
+
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/dataviz.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">CR Tracker Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Admin Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tasks"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">All CR Module</span>
+                        <span class="info-box-number"> 10 </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon elevation-1" style="background-color:#eacb00"><i class="fas fa-chart-line"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">New</span>
+                        <span class="info-box-number">1,410</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon elevation-1" style="background-color:#a6c2ee"><i class="fas fa-check-circle"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Completed</span>
+                        <span class="info-box-number">4,500</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon elevation-1" style="background-color:#848482"><i class="fas fa-cloud-upload-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">UAT</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header" style="background: gainsboro;">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie" style="color: #4c5d6d;"></i> Status for CR Chart <label style="margin: 0 20px 0 20px;">|</label> <i class="fas fa-chart-bar" style="color: #4c5d6d;"></i> CR Progress Chart
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="form-group col-md-6" style="background-color:#ffffff;margin-left:-20px;margin-right:20px;margin-bottom:20px">
+                                <div id="pieChartdiv"></div>
+                                @*@Html.Partial("_PieChart");*@
+                            </div>
+                            @*<div class="col-md-6">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 339px;" width="339" height="250" class="chartjs-render-monitor"></canvas>
+                                </div>*@
+                            @*<div class="col-md-6">
+                                    <div class="chart">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 339px;" width="339" height="250" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>*@
+                            <div class="form-group col-md-6" style="background-color:#ffffff;margin-left:-20px;margin-right:20px;margin-bottom:20px">
+                                @*   <h6 align="center">CR Progress Chart</h6>*@
+                                @*@Html.Partial("_StackGraph");*@
+                                <div id="stockedChartdiv"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="card">
+                    <div class="card-header border-transparent" style="background: gainsboro;">
+                        <h3 class="card-title"><i class="fas fa-database" style="color: #4c5d6d;"></i> CR Tracker Details</h3>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-sm btn-info float-left">Raise New CR</a>
+                            <a href="#" class="btn btn-sm btn-success float-left" style="margin: 0 10px 0 15px;">Refresh</a>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><svg class="svg-inline--fa fa-minus fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="minus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg><!-- <i class="fas fa-minus"></i> --></button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="table-responsive" style="padding-top: 18px;padding-bottom: 6px;">
+                            <table class="table m-0 table-bordered table-hover" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th>CR Tracker ID</th>
+                                        <th>CR Description</th>
+                                        <th>Category / System Name</th>
+                                        <th title="On schedule-From requirements upto go-live, basis project plan and timelines submitted (YES / NO)">Project Completed</th>
+                                        <th title="Input Yes for projects/CRs which can be termed as Importan projects/Milestones (YES / NO)">Key Projects</th>
+                                        <th title="Final/Confirned CR received date (DD-MMM-YY)">Final Project / CR Received Date</th>
+                                        <th title="Post signoff of original CR / or during UAT Count of CRs received  during WIP, post requirement signoff, or during UAT, post uat signoff">No. of CRs received</th>
+                                        <th>First Committed Live Dat</th>
+                                        <th>Manager</th>
+                                        <th>Edit</th>
+                                        <th>Download</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR9842">CR9842</a></td>
+                                        <td>Malicious file can be uploaded on the server</td>
+                                        <td>CIMA</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>12-Mar-19</td>
+                                        <td>-</td>
+                                        <td>04-Mar-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a data-toggle="modal" data-book-id="123" href="#cr_details">Edit</a></td>
+                                        <td><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-success">UAT Done</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR1848">CR1848</a></td>
+                                        <td>Application is vulnerable to Improper Session Management</td>
+                                        <td>CIMA</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>12-Mar-19</td>
+                                        <td>-</td>
+                                        <td>04-Mar-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td title="Jan_2020.pdf, Feb_2020.pdf"><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR7429">CR7429</a></td>
+                                        <td>Claim form integration Orion</td>
+                                        <td>Orion</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>25-Mar-19</td>
+                                        <td>-</td>
+                                        <td>15-Apr-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-danger">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR7429">CR7429</a></td>
+                                        <td>Analysis - Cancellation SMS @@ IVR</td>
+                                        <td>Orion</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>02-Apr-19</td>
+                                        <td>-</td>
+                                        <td>16-Apr-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-info">Testing</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR9772">CR9772</a></td>
+                                        <td>CRm Excel can be uploaded on the server</td>
+                                        <td>CIMA</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>12-Mar-19</td>
+                                        <td>-</td>
+                                        <td>04-Mar-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td title="payment_01_2020.pdf,payment_05_2020.pdf,payment_051_2020.pdf"><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-success">UAT Done</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR7429">CR7429</a></td>
+                                        <td>Login for customer issue</td>
+                                        <td>CIMA</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>12-Mar-19</td>
+                                        <td>-</td>
+                                        <td>04-Mar-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-danger">Testing</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="cr-tracker-id" resource="CR7429">CR7429</a></td>
+                                        <td>Remove Testing Table From Database</td>
+                                        <td>CIMA</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>12-Mar-19</td>
+                                        <td>-</td>
+                                        <td>04-Mar-19</td>
+                                        <td>Sagar Dasgupta</td>
+                                        <td><a href="#">Edit</a></td>
+                                        <td title="Claim_Jan2020.xls,Claim_Dec_2019.xls"><a href="#">Download</a></td>
+                                        <td style="text-align:center;"><span class="badge badge-danger">Completed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix" style="display: block;">
+                    </div>
+                    <!-- /.card-footer -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cr_status_details">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">CR Tracker Follow-Up | Status | Remark</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- The time line -->
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                <div class="time-label">
+                                    <span class="bg-red">10-Mar-2020</span>
+                                </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-envelope" style=" background #ffffff;border-radius 50%;font-size 15px;height 30px;left 18px;line-height 30px;position absolute;text-align center;width 30px;color blueviolet;"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                        <h3 class="timeline-header"><a href="#">Admin Team</a> sent UAT email</h3>
+
+                                        <div class="timeline-body">
+                                            New page added for multiple file upload to CRM.
+                                            New Link shared on mail kindly refer for process your pending work.
+                                            This CR get auto closed.
+                                            Regards Admin Team.
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-comments" style=" background #ffffff;border-radius 50%;font-size 15px;height 30px;left 18px;line-height 30px;position absolute;text-align center;width 30px;color coral;"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> Multiple file upload on "Insurance Report" page done.</h3>
+                                    </div>
+                                </div>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-comments" style=" background #ffffff;border-radius 50%;font-size 15px;height 30px;left 18px;line-height 30px;position absolute;text-align center;width 30px;color coral;"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+                                        <h3 class="timeline-header"><a href="#">Jay White</a> CR Details Assigned to Ajay.Bind@hdfcergo.com</h3>
+                                        <div class="timeline-body">
+                                            This CR Assigned to AjayBind.hdfcergo.com on 08-Apr-2020.
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END timeline item -->
+                                <!-- timeline time label -->
+                                <div class="time-label">
+                                    <span class="bg-green">03-Jan-2020</span>
+                                </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-comments" style=" background #ffffff;border-radius 50%;font-size 15px;height 30px;left 18px;line-height 30px;position absolute;text-align center;width 30px;color coral;"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
+                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                                        <div class="timeline-body">
+                                            New CR Raised by User kindly assign to admin team.
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <!-- END timeline item -->
+                                <div>
+                                    <i class="fas fa-clock" style=" background:#ffffff;border-radius:50%;font-size:15px;height:30px;left:18px;line-height:30px;position absolute;text-align center;width 30px;margin-top -10px;color dimgrey;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @*Deepak giri modal*@
+    <div class="modal fade" id="cr_details">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#cccccc">
+                    <h4 class="modal-title" style="color:white">CR Details Form</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="bookId" id="bookId" value="" />
+                    <form role="form" method="POST" action="/CR_Tracker/CRDetails">
+                        <table class="col-md-12">
+                            <tbody class="table">
+                                <tr class="no-border">
+                                    <td class="no-border" id="lblTitle">
+                                        @Html.LabelFor(model => model.CrTitle, "CR Title")
+                                    </td>
+                                    <td id="txtTitle">
+                                        @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-10" } })
+                                        @Html.ValidationMessageFor(model => model.CrTitle, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                    <td id="lblDescription">
+                                        @Html.LabelFor(model => model.CrDescription, "CR description ")
+                                    </td>
+                                    <td id="txtDescription">
+                                        @Html.TextAreaFor(model => model.CrDescription, htmlAttributes: new
+                                                          {
+                                                              @class = "form-control col-md-10"
+                                                          })
+                                        @Html.ValidationMessageFor(model => model.CrDescription, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblComplexity">
+                                        @Html.LabelFor(model => model.ComplexityList, "Complexity (Including CRs)")
+                                    </td>
+                                    <td id="txtComplexity">
+                                        @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
+                                        htmlAttributes: new
+                                         {
+                                          @class = "form-control col-md-10"
+                                         })
+                                        @Html.ValidationMessageFor(model => model.ComplexityList, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                    <td id="lblDepartment">
+                                        @Html.LabelFor(model => model.DepartmentList, "Department")
+                                    </td>
+                                    <td id="txtDepartment">
+                                        @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                                           htmlAttributes: new
+                                           {
+                                              @class = "form-control col-md-10"
+                                           })
+                                        @Html.ValidationMessageFor(model => model.DepartmentList, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblCategoryList">
+                                        @Html.LabelFor(model => model.CategoryList, "System Name")
+                                    </td>
+                                    <td id="txtCategoryList">
+                                        @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                                         htmlAttributes: new
+                                         {
+                                           @class = "form-control col-md-10"
+                                         })
+                                        @Html.ValidationMessageFor(model => model.CategoryList, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                    <td id="lblKeyProjects">
+                                        @Html.LabelFor(model => model.KeyProjects, "Key Projects")
+                                    </td>
+                                    <td id="txtKeyProjects">
+                                        @Html.RadioButtonFor(model => model.KeyProjects, true, new { @checked = true })Yes
+                                        @Html.RadioButtonFor(model => model.KeyProjects, false) No
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblProjectCRReceivedDate">
+                                        @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date")
+                                    </td>
+                                    <td id="txtProjectCRReceivedDate">
+                                        @Html.EditorFor(model => model.ProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td id="lblFinalProjectCRReceivedDate">
+                                        @Html.LabelFor(model => model.KeyProjects, "Final Project / CR Received Date")
+                                    </td>
+                                    <td id="txtFinalProjectCRReceivedDate">
+                                        @Html.EditorFor(model => model.FinalProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblUATDeliveryDate">
+                                        @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date")
+                                    </td>
+                                    <td id="txtUATDeliveryDate">
+                                        @Html.EditorFor(model => model.UATDeliveryDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td id="lblUATSignoffDate">
+                                        @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date")
+                                    </td>
+                                    <td id="txtUATSignoffDate">
+                                        @Html.EditorFor(model => model.UATSignoffDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblUATDeliveryDate">
+                                        @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date")
+                                    </td>
+                                    <td id="txtUATDeliveryDate">
+                                        @Html.EditorFor(model => model.ProjectCRLiveDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td id="lblUATSignoffDate">
+                                        @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date")
+                                    </td>
+                                    <td id="txtUATSignoffDate">
+                                        @Html.EditorFor(model => model.FirstCommittedLiveDate, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblUnitLead">
+                                        @Html.LabelFor(model => model.UnitLead, "Unit Lead")
+                                    </td>
+                                    <td id="txtUnitLead">
+                                        @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                                              htmlAttributes: new
+                                                              {
+                                                                @class = "form-control col-sm-10"
+                                                              })
+                                        @Html.ValidationMessageFor(model => model.UnitLead, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                    <td id="lblNoOfCRReceivedDuringUAT">
+                                        @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR")
+                                    </td>
+                                    <td id="txtNoOfCRReceivedDuringUAT">
+                                        @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblTAT">
+                                        @Html.LabelFor(model => model.TAT, "TAT (In Days)")
+                                    </td>
+                                    <td id="txtTAT">
+                                        @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td id="lblNoOfShowstoppersPostGoLive">
+                                        @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live:")
+                                    </td>
+                                    <td id="txtNoOfShowstoppersPostGoLive">
+                                        @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control col-sm-10" } })
+                                        @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblProjectCompletedSchedule">
+                                        @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule")
+                                    </td>
+                                    <td id="txtProjectCompletedSchedule">
+                                        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
+                                        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
+                                    </td>
+                                    <td id="lblManager">
+                                        @Html.LabelFor(model => model.Manager, "Assigned To")
+                                    </td>
+                                    <td id="txtManager">
+                                        @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                                             htmlAttributes: new
+                                                                  {
+                                                               @class = "form-control col-sm-10"
+                                                             })
+                                        @Html.ValidationMessageFor(model => model.Manager, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblReasonRCA">
+                                        @Html.LabelFor(model => model.ReasonRCA, "Reason / RCA")
+                                    </td>
+                                    <td id="txtReasonRCA">
+                                        @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
+                                        {
+                                            @class = "form-control col-sm-10"
+                                        })
+                                        @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
+                                        {
+                                              @class = "text-danger"
+                                        })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="lblupload">
+                                        <label>Upload required Document</label>
+                                    </td>
+                                    <td id="txtReasonRCA">
+                                        <label for="fileInput" class="btn btn-info">Browse</label>
+                                        <input type="file" id="fileInput" name="AttachFile" multiple style="visibility:hidden;" />
+                                    </td>
+                                    <td>
+                                        @* <table class="table" id="FilesList" style="visibility:hidden">*@
+                                        <table class="table" id="FilesList">
+                                            <tr>
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</body>
+</html>
+<script src="~/Scripts/cr-tracker-dashboard.js"></script>

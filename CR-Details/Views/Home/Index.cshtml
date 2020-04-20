@@ -1,0 +1,360 @@
+﻿@model CR_Details.Models.CRDetails
+@{
+    ViewBag.Title = "Home Page";
+}
+<script>
+    $(function () {
+        var me = getUrlVars()["user"];
+        if (me != "admin") {
+            alert("normal");
+            $('#complexity').hide();
+            $('#crRcvDate').hide();
+            $('#finalRcvDate').hide();
+            $('#UATDate').hide();
+            $('#UATSignOffDate').hide();
+            $('#crLiveDate').hide();
+            $('#fstCommDate').hide();
+            $('#lead').hide();
+            $('#noCrRcv').hide();
+            $('#tat').hide();
+            $('#noShowstoppers').hide();
+            $('#projCompSchdl').hide();
+            $('#manager').hide();
+            $('#reason').hide();
+            $('#upload').hide();
+        }
+        else {
+            alert("Admin");
+        }
+        // Read a page's GET URL variables and return them as an associative array.
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+    });
+
+    //upload file code
+    var formdata = new FormData(); //FormData object  
+    $(document).ready(function () {
+
+        $("#fileInput").on("change", function () {
+            var fileInput = document.getElementById('fileInput');
+            //Iterating through each files selected in fileInput  
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdata.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name  
+                $("#FilesList tbody").append(markup);
+
+            }
+            chkatchtbl();
+            $('#fileInput').val('');
+        });
+
+        $("#btnSubmit").click(function () {
+            formdata.append('uploadername', $('#txtuploader').val());
+            $.ajax({
+                url: '/Home/CRDetails',
+                type: "POST",
+                contentType: false, // Not to set any content header  
+                processData: false, // Not to process data  
+                data: formdata,
+                async: false,
+                success: function (result) {
+                    if (result != "") {
+                        alert(result);
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        });
+    });
+    function DeleteFile(Fileid, FileName) {
+        formdata.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl();
+    }
+    function chkatchtbl() {
+        if ($('#FilesList tr').length > 1) {
+            $("#FilesList").css("visibility", "visible");
+        } else {
+            $("#FilesList").css("visibility", "hidden");
+        }
+    } 
+</script>
+<style>
+    .form-group.required .control-label:after {
+        content: "*";
+        color: red;
+    }
+</style>
+@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true, "", new
+{
+    @class = "text-danger"
+})
+    <div class="form-group-sm col-md-12" style="margin-top:10px">
+        <div id="title" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.CrTitle, "CR Title ", htmlAttributes: new
+       {
+           @class = "control-label col-md-5"
+       })
+            @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+            @Html.ValidationMessageFor(model => model.CrTitle, "", new
+            {
+                  @class = "text-danger"
+            })
+        </div>
+        <div id="description" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.CrDescription, "CR description ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.TextAreaFor(model => model.CrDescription, htmlAttributes: new
+               {
+                   @class = "form-control col-md-6"
+               })
+            @Html.ValidationMessageFor(model => model.CrDescription, "", new
+            {
+                  @class = "text-danger"
+            })
+        </div>
+        <div id="complexity" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.ComplexityList, "Complexity (Including CRs)", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
+                                  htmlAttributes: new
+                                       {
+                                    @class = "form-control col-md-6"
+                                  })
+            @Html.ValidationMessageFor(model => model.ComplexityList, "", new
+            {
+                  @class = "text-danger"
+            })
+        </div>
+    </div>  
+    <div class="form-group-sm col-md-12">
+        <div class="form-group required col-md-6">
+            @Html.LabelFor(model => model.DepartmentList, "Department ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+                @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                                    htmlAttributes: new
+                                    {
+                                       @class = "form-control col-md-6"
+                                    })
+                @Html.ValidationMessageFor(model => model.DepartmentList, "", new
+                {
+                      @class = "text-danger"
+                })
+        </div>
+        <div id="systemName" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.CategoryList, "System Name ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+                @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                                      htmlAttributes: new
+                                      {
+                                        @class = "form-control col-md-6"
+                                      })
+                @Html.ValidationMessageFor(model => model.CategoryList, "", new
+                {
+                      @class = "text-danger"
+                })
+        </div>
+
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="keyProject" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.KeyProjects, "Key Projects ", htmlAttributes: new
+            {
+                            @class = "control-label col-md-5"
+            })
+            @Html.RadioButtonFor(model => model.KeyProjects, true, new { @checked = true })Yes
+            @Html.RadioButtonFor(model => model.KeyProjects, false) No
+        </div>
+        <div id="crRcvDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.ProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="finalRcvDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.FinalProjectCRReceivedDate, "Final Project / CR Received Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.FinalProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
+        </div>
+        <div id="UATDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.UATDeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="UATSignOffDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.UATSignoffDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
+        </div>
+        <div id="crLiveDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.ProjectCRLiveDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="fstCommDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.FirstCommittedLiveDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
+        </div>
+        <div id="lead" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.UnitLead, "Unit Lead ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                  htmlAttributes: new
+                                  {
+                                    @class = "form-control col-md-1"
+                                  })
+            @Html.ValidationMessageFor(model => model.UnitLead, "", new
+            {
+                  @class = "text-danger"
+            })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="noCrRcv" class="form-group col-md-6">
+            @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
+        </div>
+        <div id="tat" class="form-group col-md-6">
+            @Html.LabelFor(model => model.TAT, "TAT (In Days) ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="noShowstoppers" class="form-group col-md-6">
+            @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live: ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
+        </div>
+        <div id="projCompSchdl" class="form-group col-md-6">
+            @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
+        <div id="manager" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.Manager, "Assigned To: ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+                @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                     htmlAttributes: new
+                                          {
+                                       @class = "form-control col-md-6"
+                                     })
+                @Html.ValidationMessageFor(model => model.Manager, "", new
+                {
+                      @class = "text-danger"
+                })
+        </div>
+        <div class="form-group required col-md-6">
+            @Html.LabelFor(model => model.ReasonRCA, "	Reason / RCA: ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+               @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
+               {
+                   @class = "form-control col-md-6"
+               })
+                @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
+                {
+                      @class = "text-danger"
+                })
+        </div>
+    </div>
+   
+    <div class="form-group-sm col-md-12">
+        <div id="upload" class="form-group col-md-6">
+            <div class="col-md-5">
+                <label>Upload required Document<span style="content:'*';color:red">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <label for="fileInput" class="btn btn-primary">Browse</label>
+                <input type="file" id="fileInput" name="AttachFile" multiple style="visibility:hidden;" />
+            </div>
+                <table class="table" id="FilesList" style="visibility:hidden">
+                    <tr>
+                        <th>
+                            Attachment(s)
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </table>
+                @* <input type="button" id="btnupload" value="Upload" style="float:right" />*@
+            </div>
+        <div class="form-group col-md-6">
+            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary">Back</button>
+        </div>
+    </div>
+
+  
+}
