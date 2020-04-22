@@ -107,7 +107,44 @@ namespace CR_Details.DAL
                 {
                     //Add more Fields here
                     cRDetail.SrNo = (m_dsCRMst.Tables[0].Rows[0]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SrNo"])) : 0;
+                    cRDetail.CrDescription = (m_dsCRMst.Tables[0].Rows[0]["CrDescription"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CrDescription"])) : string.Empty;
+                    if(m_dsCRMst.Tables[0].Rows[0]["ComplexityList"] != DBNull.Value)
+                    {
+                        var complexType = (Models.Complexity)Enum.Parse(typeof(Models.Complexity), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ComplexityList"]));
+                        cRDetail.ComplexityList = complexType;
+                    }
 
+                    if (m_dsCRMst.Tables[0].Rows[0]["DepartmentList"] != DBNull.Value)
+                    {
+                        var departmentType = (Models.Department)Enum.Parse(typeof(Models.Department), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["DepartmentList"]));
+                        cRDetail.DepartmentList = departmentType;
+                    }
+                    if (m_dsCRMst.Tables[0].Rows[0]["CategoryList"] != DBNull.Value)
+                    {
+                        var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CategoryList"]));
+                        cRDetail.CategoryList = categoryType;
+                    }
+                    cRDetail.ProjectCompletedSchedule = (m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"])) : false;
+                    cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : false;
+                    cRDetail.ProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+                    cRDetail.FinalProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+                    cRDetail.NoOfCRReceivedDuringUAT = (m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"])) : 0;
+                    cRDetail.UATSignoffDate = (m_dsCRMst.Tables[0].Rows[0]["UATSignoffDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["UATSignoffDate"]).Date) : DateTime.MinValue;
+                    cRDetail.ProjectCRLiveDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRLiveDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRLiveDate"]).Date) : DateTime.MinValue;
+                    cRDetail.FirstCommittedLiveDate = (m_dsCRMst.Tables[0].Rows[0]["FirstCommittedLiveDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["FirstCommittedLiveDate"]).Date) : DateTime.MinValue;
+                    cRDetail.TAT = (m_dsCRMst.Tables[0].Rows[0]["TAT"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["TAT"])) : string.Empty;
+                    cRDetail.NoOfShowstoppersPostGoLive = (m_dsCRMst.Tables[0].Rows[0]["NoOfShowstoppersPostGoLive"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["NoOfShowstoppersPostGoLive"])) : 0;
+                    if (m_dsCRMst.Tables[0].Rows[0]["UnitLead"] != DBNull.Value)
+                    {
+                        var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["UnitLead"]));
+                        cRDetail.UnitLead = leadType;
+                    }
+                    if (m_dsCRMst.Tables[0].Rows[0]["Manager"] != DBNull.Value)
+                    {
+                        var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["Manager"]));
+                        cRDetail.Manager = managerType;
+                    }
+                    cRDetail.ReasonRCA = (m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"])) : string.Empty;
                 }
                 else
                 {

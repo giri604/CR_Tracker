@@ -20,30 +20,30 @@ namespace CR_Details.Models
         public bool KeyProjects { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ProjectCRReceivedDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? ProjectCRReceivedDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FinalProjectCRReceivedDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? FinalProjectCRReceivedDate { get; set; }
 
         public int NoOfCRReceivedDuringUAT { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime UATDeliveryDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime UATSignoffDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? UATSignoffDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ProjectCRLiveDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? ProjectCRLiveDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FirstCommittedLiveDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? FirstCommittedLiveDate { get; set; }
         public string TAT { get; set; }
         public int NoOfShowstoppersPostGoLive { get; set; }
         public Lead UnitLead { get; set; }

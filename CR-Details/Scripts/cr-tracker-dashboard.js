@@ -171,34 +171,6 @@ am4core.ready(function () {
 
 }); // end am4core.ready()
 
-//var donutData = {
-//    labels: [
-//      'New',
-//      'UAT',
-//      'Working',
-//      'Pending',
-//      'Completed'
-//    ],
-//    datasets: [{
-//        data: [700, 500, 400, 600, 100],
-//        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#d2d6de'],
-//    }]
-//}
-
-//var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-//var pieData = donutData;
-//var pieOptions = {
-//    maintainAspectRatio: false,
-//    responsive: true,
-//}
-
-//var pieChart = new Chart(pieChartCanvas, {
-//    type: 'pie',
-//    data: pieData,
-//    options: pieOptions
-//})
-
-
 
 
 
@@ -242,27 +214,6 @@ var areaChartData = {
     ]
 }
 
-//var barChartCanvas = $('#barChart').get(0).getContext('2d')
-//var barChartData = jQuery.extend(true, {}, areaChartData)
-//var temp0 = areaChartData.datasets[0]
-//var temp1 = areaChartData.datasets[1]
-//var temp2 = areaChartData.datasets[2]
-//barChartData.datasets[0] = temp1
-//barChartData.datasets[1] = temp0
-//barChartData.datasets[2] = temp2
-
-//var barChartOptions = {
-//    responsive: true,
-//    maintainAspectRatio: false,
-//    datasetFill: false
-//}
-
-//var barChart = new Chart(barChartCanvas, {
-//    type: 'bar',
-//    data: barChartData,
-//    options: barChartOptions
-//})
-
 
 var table = $("#example1").DataTable({
     dom: 'Blfrtip',
@@ -276,11 +227,12 @@ var table = $("#example1").DataTable({
 
 
 $('#example1 tbody').on('click', 'tr', function () {
-    if ($(this).hasClass('selected')) {
-        $(this).removeClass('selected');
+    var $j = jQuery.noConflict();
+    if ($j(this).hasClass('selected')) {
+        $j(this).removeClass('selected');
     } else {
         table.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
+        $j(this).addClass('selected');
     }
 });
 
@@ -322,27 +274,40 @@ function chkatchtbl() {
 } 
 
 
-//$('#cr_details').on('show.bs.modal', function (e) {
-//    alert("Modal loaded");
-//    var myBookId = $(this).data('id');
-//    $(".modal-body #bookId").val(myBookId);
-//    alert(myBookId);
-//    ////get data-id attribute of the clicked element
-//    //var bookId = $(e.relatedTarget).data('book-id');
-
-//    ////populate the textbox
-//    //$(e.currentTarget).find('input[name="bookId"]').val(bookId);
-//});
-
 //triggered when modal is about to be shown
 $('#cr_details').on('show.bs.modal', function (e) {
 
     //get data-id attribute of the clicked element
-    var bookId = $(e.relatedTarget).data('book-id');
+    var $j = jQuery.noConflict();
+    var bookId = $j(e.relatedTarget).data('book-id');
+    alert("a clicked");
     alert(bookId);
-    //populate the textbox
-    $(e.currentTarget).find('input[name="bookId"]').val(bookId);
+    //var bookId = $(e.relatedTarget).data('book-id');
+    $j.ajax({
+        type: "GET",
+        url: TeamDetailPostBackURL,
+        contentType: "application/json; charset=utf-8",
+        data: { "crID": bookId },
+        datatype: "json",
+        success: function (data) {
+            $j('#myModalContent').html(data);
+            $j('#cr_details').modal('show');
+        },
+        error: function () {
+            alert("Error: Dynamic content load failed.");
+        }
+    });
 });
 
 
+//$j("#datepicker").datepicker();
+//$j('.datepicker').datepicker();
+
+
+//$('input[type=datetime]').datepicker({
+//    dateFormat: "dd/MM/yyyy",
+//    changeMonth: true,
+//    changeYear: true,
+//    yearRange: "-60:+0"
+//}); 
 

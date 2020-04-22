@@ -17,14 +17,15 @@ namespace CR_Details.Controllers
         }
 
         [HttpGet]
-        public CRDetails GetCRDetails(int crID)
+        public ActionResult GetCRDetails(int crID)
         {
             Models.CRDetails cRDetail = repository.GetRDetail(crID);
             if (cRDetail == null)
             {
                 return null;
             }
-            return cRDetail;
+            return PartialView(cRDetail);
+            //return cRDetail;
         }
 
         [HttpPost]
