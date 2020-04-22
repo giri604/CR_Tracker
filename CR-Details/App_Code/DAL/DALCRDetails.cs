@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -23,13 +24,16 @@ namespace CR_Details.DAL
         }
 
         #region "ADDCRDetail"
-        public string ADDCRDetail(CR_Details.Models.CRDetails cRDetails, HttpPostedFileBase attachFile)
+        public int ADDCRDetail(CR_Details.Models.CRDetails cRDetails, HttpPostedFileBase attachFile)
         {
+         
+            int CrIDOut = 0;
             try
             {
-                m_strmessage = Convert.ToString(SQL.SQLLayer.ExecuteNonQuery(m_conn,
+                m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn,
                                                                             null,
                                                                             "[dbo].[AddCRDetails]",
+                                                                            cRDetails.CrTitle,
                                                                             cRDetails.CrDescription,
                                                                             cRDetails.ComplexityList,
                                                                             cRDetails.DepartmentList,
@@ -47,20 +51,18 @@ namespace CR_Details.DAL
                                                                             cRDetails.NoOfShowstoppersPostGoLive,
                                                                             cRDetails.UnitLead,
                                                                             cRDetails.Manager,
-                                                                            cRDetails.ReasonRCA
-                                                                            ));
-                m_strmessage = "CR Detail Record Added Succesfully";
+                                                                            cRDetails.ReasonRCA);
+                CrIDOut = (m_dsCRMst.Tables[0].Rows[0]["SRNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SRNo"])) : 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                m_strmessage = "Error in Writing Cr Detail Record";
+                return CrIDOut;
             }
             finally
             {
                 SQL.SQLLayer.CloseConnection(m_conn);
             }
-            return (m_strmessage);
+            return CrIDOut;
         }
         #endregion
 
@@ -75,15 +77,16 @@ namespace CR_Details.DAL
             }
             try
             {
+                var Filename = Path.GetFileName(attachFile.FileName);
                 OutSrno = Convert.ToInt32(SQL.SQLLayer.ExecuteScalar(m_conn,
                                                 null,
                                                 "[dbo].AddCRAttachments",
                                                 SrNo,
-                                                Path.GetFileName(attachFile.FileName),
+                                                Filename,
                                                 attachFile.ContentType,
                                                 bytes));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 OutSrno = 0;

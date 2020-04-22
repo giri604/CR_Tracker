@@ -49,7 +49,7 @@ namespace CR_Details.Models
         public Lead UnitLead { get; set; }
         public Lead Manager { get; set; }
         public string ReasonRCA { get; set; }
-        public int fileID { get; set; }
+        public int AttachFileId { get; set; }
 
     }
 

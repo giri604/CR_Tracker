@@ -12,8 +12,7 @@ create procedure [dbo].[AddCRAttachments]
 @SrNo int,
 @Filename varchar(55),
 @ContentType nvarchar(255),
-@AttachDocument varbinary(max),
-@SrNoOut int Output
+@AttachDocument varbinary(max)
 
 As
 BEGIN
@@ -27,10 +26,9 @@ values
 	@Filename,
 	@ContentType,
 	@AttachDocument)
-end
-set @SrNoOut = @SrNo
 
-return @SrNoOut
+update [dbo].[CRDetails] set AttachFileId = @SrNo where SrNo = @SrNo
+end
 	
 GO
 

@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[CRDetails](
 	[UnitLead] [nvarchar](50) NULL,
 	[Manager] [nvarchar](50) NULL,
 	[ReasonRCA] [nvarchar](50) NULL,
+	[AttachFileId] [int] NULL,
 	[Created] [datetime2](3) NULL,
 	[modified] [datetime2](3) NULL,
  CONSTRAINT [PK_CRDetails] PRIMARY KEY CLUSTERED 

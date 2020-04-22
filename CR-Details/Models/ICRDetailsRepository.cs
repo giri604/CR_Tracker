@@ -9,7 +9,7 @@ namespace CR_Details.Models
 {
     public interface ICRDetailsRepository
     {
-        string SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile);
+        int SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile);
         int SaveCRAttachFiles(int SrNo, HttpPostedFileBase attachFile);
         CRDetails GetRDetail(int crId);
     }

@@ -25,10 +25,10 @@ namespace CR_Details.Models
             return message;
         }
 
-        public string SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile)
+        public int SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile)
         {
             BAL.CRDetails BALCRDetails = new BAL.CRDetails();
-            string message = BAL.CRDetails.AddCRDetail(cRDetails, attachFile);
+            int message = BAL.CRDetails.AddCRDetail(cRDetails, attachFile);
             return message;
         }
     }

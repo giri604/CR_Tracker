@@ -70,7 +70,7 @@
                     @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
                        htmlAttributes: new
                        {
-                          @class = "form-control col-md-10"
+                          @class = "form-control col-md-12"
                        })
                     @Html.ValidationMessageFor(model => model.DepartmentList, "", new
                     {
@@ -86,7 +86,7 @@
                     @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
                      htmlAttributes: new
                      {
-                       @class = "form-control col-md-6"
+                       @class = "form-control col-md-7"
                      })
                     @Html.ValidationMessageFor(model => model.CategoryList, "", new
                     {
@@ -106,14 +106,14 @@
                     @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date")
                 </td>
                 <td id="txtProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "Project CR Received Date"} })
+                    @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-7 date-picker", placeholder = "Project CR Received Date"} })
                     @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblFinalProjectCRReceivedDate">
                     @Html.LabelFor(model => model.KeyProjects, "Final Project / CR Received Date")
                 </td>
                 <td id="txtFinalProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "Final Project CR Received Date" } })
+                    @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "Final Project CR Received Date" } })
                     @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -122,14 +122,14 @@
                     @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date")
                 </td>
                 <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "UAT Delivery Date" } })
+                    @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-7 date-picker", placeholder = "UAT Delivery Date" } })
                     @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblUATSignoffDate">
                     @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date")
                 </td>
                 <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "UAT Signoff Date" } })
+                    @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "UAT Signoff Date" } })
                     @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -138,14 +138,14 @@
                     @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date")
                 </td>
                 <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "Project CR Live Date" } })
+                    @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-7 date-picker", placeholder = "Project CR Live Date" } })
                     @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblUATSignoffDate">
                     @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date")
                 </td>
                 <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-sm-6 date-picker", placeholder = "First Committed Live Date" } })
+                    @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "First Committed Live Date" } })
                     @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -157,7 +157,7 @@
                     @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
                                           htmlAttributes: new
                                           {
-                                            @class = "form-control col-sm-6"
+                                            @class = "form-control col-md-7"
                                           })
                     @Html.ValidationMessageFor(model => model.UnitLead, "", new
                     {
@@ -168,7 +168,7 @@
                     @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR")
                 </td>
                 <td id="txtNoOfCRReceivedDuringUAT">
-                    @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-sm-6" } })
+                    @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-md-12" } })
                     @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -177,14 +177,14 @@
                     @Html.LabelFor(model => model.TAT, "TAT (In Days)")
                 </td>
                 <td id="txtTAT">
-                    @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control col-sm-6" } })
+                    @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control col-md-7" } })
                     @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblNoOfShowstoppersPostGoLive">
                     @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live:")
                 </td>
                 <td id="txtNoOfShowstoppersPostGoLive">
-                    @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control col-sm-6" } })
+                    @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control col-md-12" } })
                     @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -203,7 +203,7 @@
                     @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
                                          htmlAttributes: new
                                               {
-                                           @class = "form-control col-sm-6"
+                                           @class = "form-control col-md-12"
                                          })
                     @Html.ValidationMessageFor(model => model.Manager, "", new
                     {
@@ -218,7 +218,7 @@
                 <td id="txtReasonRCA">
                     @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
                     {
-                        @class = "form-control col-sm-6"
+                        @class = "form-control col-md-7"
                     })
                     @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
                     {

@@ -25,7 +25,6 @@ namespace CR_Details.Controllers
                 return null;
             }
             return PartialView(cRDetail);
-            //return cRDetail;
         }
 
         [HttpPost]
@@ -41,8 +40,8 @@ namespace CR_Details.Controllers
                 fileID = repository.SaveCRAttachFiles(cRDetails.SrNo, file);
 
             }
-            cRDetails.fileID = fileID;
-            string message = repository.SaveCRDetails(cRDetails, null);
+            cRDetails.AttachFileId = fileID;
+            int CrID = repository.SaveCRDetails(cRDetails, null);
             return View();
         }
     }

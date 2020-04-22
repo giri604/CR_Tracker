@@ -21,7 +21,7 @@
             $('#projCompSchdl').hide();
             $('#manager').hide();
             $('#reason').hide();
-            $('#upload').hide();
+            //$('#upload').hide();
         }
         else {
             alert("Admin");
@@ -40,12 +40,17 @@
     });
 
     //upload file code
-    var formdata = new FormData(); //FormData object  
+    var formdata = new FormData(); //FormData object
     $(document).ready(function () {
+        $(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
+        $(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
+        $(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
+        $(".select-lead-placeholder").prepend("<option value='' disabled selected>Select a lead...</option>");
+        $(".select-manager-placeholder").prepend("<option value='' disabled selected>Select a manager...</option>");
 
         $("#fileInput").on("change", function () {
             var fileInput = document.getElementById('fileInput');
-            //Iterating through each files selected in fileInput  
+            //Iterating through each files selected in fileInput
             for (i = 0; i < fileInput.files.length; i++) {
 
                 var sfilename = fileInput.files[i].name;
@@ -54,7 +59,7 @@
                 formdata.append(sfilename, fileInput.files[i]);
 
                 var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
-                    "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name  
+                    "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
                 $("#FilesList tbody").append(markup);
 
             }
@@ -63,12 +68,30 @@
         });
 
         $("#btnSubmit").click(function () {
-            formdata.append('uploadername', $('#txtuploader').val());
+            formdata.append("CrTitle", $("#CrTitle").val());
+            formdata.append("ComplexityList", $("#ComplexityList").val());
+            formdata.append("DepartmentList", $("#DepartmentList").val());
+            formdata.append("CategoryList", $("#CategoryList").val());
+            formdata.append("ProjectCompletedSchedule", $("#ProjectCompletedSchedule").val());
+            formdata.append("KeyProjects", $("#KeyProjects").val());
+            formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
+            formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
+            formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
+            formdata.append("UATDeliveryDate", $("#UATDeliveryDate").val());
+            formdata.append("UATSignoffDate", $("#UATSignoffDate").val());
+            formdata.append("ProjectCRLiveDate", $("#ProjectCRLiveDate").val());
+            formdata.append("FirstCommittedLiveDate", $("#FirstCommittedLiveDate").val());
+            formdata.append("TAT", $("#TAT").val());
+            formdata.append("NoOfShowstoppersPostGoLive", $("#NoOfShowstoppersPostGoLive").val());
+            formdata.append("UnitLead", $("#UnitLead").val());
+            formdata.append("Manager", $("#Manager").val());
+            formdata.append("ReasonRCA", $("#ReasonRCA").val());
+            formdata.append('uploadername', fileInput);
             $.ajax({
                 url: '/Home/CRDetails',
                 type: "POST",
-                contentType: false, // Not to set any content header  
-                processData: false, // Not to process data  
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
                 data: formdata,
                 async: false,
                 success: function (result) {
@@ -93,7 +116,7 @@
         } else {
             $("#FilesList").css("visibility", "hidden");
         }
-    } 
+    }
 </script>
 <style>
     .form-group.required .control-label:after {
@@ -101,12 +124,13 @@
         color: red;
     }
 </style>
-@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+@using (Html.BeginForm())
 {
     @Html.ValidationSummary(true, "", new
-{
-    @class = "text-danger"
-})
+    {
+        @class = "text-danger"
+    })
     <div class="form-group-sm col-md-12" style="margin-top:10px">
         <div id="title" class="form-group required col-md-6">
             @Html.LabelFor(model => model.CrTitle, "CR Title ", htmlAttributes: new
@@ -140,45 +164,45 @@
             })
             @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
                                   htmlAttributes: new
-                                       {
-                                    @class = "form-control col-md-6"
+                                   {
+                                    @class = "form-control col-md-6 select-complexity-placeholder"
                                   })
             @Html.ValidationMessageFor(model => model.ComplexityList, "", new
             {
                   @class = "text-danger"
             })
         </div>
-    </div>  
+    </div>
     <div class="form-group-sm col-md-12">
         <div class="form-group required col-md-6">
             @Html.LabelFor(model => model.DepartmentList, "Department ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
-                @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
-                                    htmlAttributes: new
-                                    {
-                                       @class = "form-control col-md-6"
-                                    })
-                @Html.ValidationMessageFor(model => model.DepartmentList, "", new
-                {
-                      @class = "text-danger"
-                })
+            @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                                htmlAttributes: new
+                                {
+                                    @class = "form-control col-md-6 select-department-placeholder"
+                                })
+            @Html.ValidationMessageFor(model => model.DepartmentList, "", new
+            {
+                  @class = "text-danger"
+            })
         </div>
         <div id="systemName" class="form-group required col-md-6">
             @Html.LabelFor(model => model.CategoryList, "System Name ", htmlAttributes: new
+                           {
+                               @class = "control-label col-md-5"
+                           })
+            @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                                  htmlAttributes: new
+                                  {
+                                    @class = "form-control col-md-6 select-category-placeholder"
+                                  })
+            @Html.ValidationMessageFor(model => model.CategoryList, "", new
             {
-                @class = "control-label col-md-5"
+                  @class = "text-danger"
             })
-                @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
-                                      htmlAttributes: new
-                                      {
-                                        @class = "form-control col-md-6"
-                                      })
-                @Html.ValidationMessageFor(model => model.CategoryList, "", new
-                {
-                      @class = "text-danger"
-                })
         </div>
 
     </div>
@@ -253,7 +277,7 @@
             @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
                                   htmlAttributes: new
                                   {
-                                    @class = "form-control col-md-1"
+                                    @class = "form-control col-md-1 select-lead-placeholder"
                                   })
             @Html.ValidationMessageFor(model => model.UnitLead, "", new
             {
@@ -293,8 +317,8 @@
             {
                 @class = "control-label col-md-5"
             })
-                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
-                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
+            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
+            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
         </div>
     </div>
     <div class="form-group-sm col-md-12">
@@ -303,32 +327,32 @@
             {
                 @class = "control-label col-md-5"
             })
-                @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
-                                     htmlAttributes: new
-                                          {
-                                       @class = "form-control col-md-6"
-                                     })
-                @Html.ValidationMessageFor(model => model.Manager, "", new
-                {
-                      @class = "text-danger"
-                })
+            @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                 htmlAttributes: new
+                                      {
+                                   @class = "form-control col-md-6 select-manager-placeholder"
+                                 })
+            @Html.ValidationMessageFor(model => model.Manager, "", new
+            {
+                  @class = "text-danger"
+            })
         </div>
         <div class="form-group required col-md-6">
             @Html.LabelFor(model => model.ReasonRCA, "	Reason / RCA: ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
-               @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
-               {
-                   @class = "form-control col-md-6"
-               })
-                @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
-                {
-                      @class = "text-danger"
-                })
+            @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
+            {
+                @class = "form-control col-md-6"
+            })
+            @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
+            {
+                  @class = "text-danger"
+            })
         </div>
     </div>
-   
+
     <div class="form-group-sm col-md-12">
         <div id="upload" class="form-group col-md-6">
             <div class="col-md-5">
@@ -338,23 +362,22 @@
                 <label for="fileInput" class="btn btn-primary">Browse</label>
                 <input type="file" id="fileInput" name="AttachFile" multiple style="visibility:hidden;" />
             </div>
-                <table class="table" id="FilesList" style="visibility:hidden">
-                    <tr>
-                        <th>
-                            Attachment(s)
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                    </tr>
-                </table>
-                @* <input type="button" id="btnupload" value="Upload" style="float:right" />*@
-            </div>
-        <div class="form-group col-md-6">
-            <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-primary">Back</button>
+            <table class="table" id="FilesList" style="visibility:hidden">
+                <tr>
+                    <th>
+                        Attachment(s)
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </table>
         </div>
     </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button id="btnSubmit" class="btn btn-success">Save changes</button>
+    </div>
 
-  
+
 }

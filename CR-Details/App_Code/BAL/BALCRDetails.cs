@@ -12,7 +12,7 @@ namespace CR_Details.BAL
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
         }
 
-        public static string AddCRDetail(CR_Details.Models.CRDetails cRDetails, HttpPostedFileBase attachFile)
+        public static int AddCRDetail(CR_Details.Models.CRDetails cRDetails, HttpPostedFileBase attachFile)
         {
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
             return DALCRDetails.ADDCRDetail(cRDetails, attachFile);
