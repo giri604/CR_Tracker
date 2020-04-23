@@ -27,6 +27,11 @@ namespace CR_Details.BAL
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
             return DALCRDetails.GetCRDetail(crId);
         }
-
+        
+        public static List<CR_Details.Models.CRAttachFiles> getCRAttachFiles(int? AttachFileId)
+        {
+            DAL.CRDetails DALCRDetails = new DAL.CRDetails();
+            return DALCRDetails.getCRAttachFiles(AttachFileId);
+        }
     }
 }

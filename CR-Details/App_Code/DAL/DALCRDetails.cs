@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace CR_Details.DAL
@@ -26,7 +27,7 @@ namespace CR_Details.DAL
         #region "ADDCRDetail"
         public int ADDCRDetail(CR_Details.Models.CRDetails cRDetails, HttpPostedFileBase attachFile)
         {
-         
+
             int CrIDOut = 0;
             try
             {
@@ -102,6 +103,7 @@ namespace CR_Details.DAL
         #region "GetCRDetail"
         public CR_Details.Models.CRDetails GetCRDetail(int crId)
         {
+            DateTime validValue;
             CR_Details.Models.CRDetails cRDetail = new Models.CRDetails();
             try
             {
@@ -109,9 +111,10 @@ namespace CR_Details.DAL
                 if (m_dsCRMst.Tables.Count > 0)
                 {
                     //Add more Fields here
+                    cRDetail.CrTitle = (m_dsCRMst.Tables[0].Rows[0]["CrTitle"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CrTitle"])) : string.Empty;
                     cRDetail.SrNo = (m_dsCRMst.Tables[0].Rows[0]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SrNo"])) : 0;
                     cRDetail.CrDescription = (m_dsCRMst.Tables[0].Rows[0]["CrDescription"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CrDescription"])) : string.Empty;
-                    if(m_dsCRMst.Tables[0].Rows[0]["ComplexityList"] != DBNull.Value)
+                    if (m_dsCRMst.Tables[0].Rows[0]["ComplexityList"] != DBNull.Value)
                     {
                         var complexType = (Models.Complexity)Enum.Parse(typeof(Models.Complexity), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ComplexityList"]));
                         cRDetail.ComplexityList = complexType;
@@ -127,14 +130,18 @@ namespace CR_Details.DAL
                         var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CategoryList"]));
                         cRDetail.CategoryList = categoryType;
                     }
-                    cRDetail.ProjectCompletedSchedule = (m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"])) : false;
-                    cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : false;
-                    cRDetail.ProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
-                    cRDetail.FinalProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+                    cRDetail.ProjectCompletedSchedule = (m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["ProjectCompletedSchedule"])) : (Boolean?)null;
+                    //cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : false;
+                    cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : (Boolean?)null;
+
+                    //cRDetail.ProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+                    cRDetail.ProjectCRReceivedDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
+                    cRDetail.FinalProjectCRReceivedDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
                     cRDetail.NoOfCRReceivedDuringUAT = (m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"])) : 0;
-                    cRDetail.UATSignoffDate = (m_dsCRMst.Tables[0].Rows[0]["UATSignoffDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["UATSignoffDate"]).Date) : DateTime.MinValue;
-                    cRDetail.ProjectCRLiveDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRLiveDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRLiveDate"]).Date) : DateTime.MinValue;
-                    cRDetail.FirstCommittedLiveDate = (m_dsCRMst.Tables[0].Rows[0]["FirstCommittedLiveDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["FirstCommittedLiveDate"]).Date) : DateTime.MinValue;
+                    cRDetail.UATDeliveryDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["UATDeliveryDate"]), out validValue) ? validValue : (DateTime?)null;
+                    cRDetail.UATSignoffDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["UATSignoffDate"]), out validValue) ? validValue : (DateTime?)null;
+                    cRDetail.ProjectCRLiveDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ProjectCRLiveDate"]), out validValue) ? validValue : (DateTime?)null;
+                    cRDetail.FirstCommittedLiveDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["FirstCommittedLiveDate"]), out validValue) ? validValue : (DateTime?)null;
                     cRDetail.TAT = (m_dsCRMst.Tables[0].Rows[0]["TAT"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["TAT"])) : string.Empty;
                     cRDetail.NoOfShowstoppersPostGoLive = (m_dsCRMst.Tables[0].Rows[0]["NoOfShowstoppersPostGoLive"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["NoOfShowstoppersPostGoLive"])) : 0;
                     if (m_dsCRMst.Tables[0].Rows[0]["UnitLead"] != DBNull.Value)
@@ -148,6 +155,7 @@ namespace CR_Details.DAL
                         cRDetail.Manager = managerType;
                     }
                     cRDetail.ReasonRCA = (m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"])) : string.Empty;
+                    cRDetail.AttachFileId = (m_dsCRMst.Tables[0].Rows[0]["AttachFileId"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["AttachFileId"])) : 0;
                 }
                 else
                 {
@@ -164,6 +172,50 @@ namespace CR_Details.DAL
                 SQL.SQLLayer.CloseConnection(m_conn);
             }
             return cRDetail;
+        }
+        #endregion
+
+        #region "GetCRAttachments"
+        //getCRAttachFiles(AttachFileId)
+        public List<CR_Details.Models.CRAttachFiles> getCRAttachFiles(int? AttachFileId)
+        {
+            List<CR_Details.Models.CRAttachFiles> cRAttachFiles = new List<Models.CRAttachFiles>();
+            CR_Details.Models.CRAttachFiles cRAttach = null;
+            try
+            {
+                m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetCRAttachFiles", AttachFileId);
+                if (m_dsCRMst.Tables.Count > 0)
+                {
+                    for(int i=0; i<= m_dsCRMst.Tables.Count; i++)
+                    {
+                        cRAttach = new Models.CRAttachFiles();
+                        cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[i]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["SrNo"])) : 0;
+                        cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[i]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["FileName"])) : string.Empty;
+                        cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["ContentType"])) : string.Empty;
+                        //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
+                        //cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[i]["ContentType"] : null;
+                        cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(m_dsCRMst.Tables[0].Rows[i]["ContentType"].ToString()) : null;
+
+                        cRAttachFiles.Add(cRAttach);
+                    }
+                
+                }
+                else
+                {
+                    cRAttachFiles = null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return cRAttachFiles;
+            }
+            finally
+            {
+                SQL.SQLLayer.CloseConnection(m_conn);
+            }
+            return cRAttachFiles;
         }
         #endregion
     }

@@ -54,10 +54,11 @@
                 </td>
                 <td id="txtComplexity">
                     @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
+                    "select a Complexity",
                     htmlAttributes: new
-                     {
-                      @class = "form-control col-md-7"
-                     })
+                    {
+                        @class = "form-control col-md-7 select-complexity-placeholder"
+                    })
                     @Html.ValidationMessageFor(model => model.ComplexityList, "", new
                     {
                           @class = "text-danger"
@@ -68,9 +69,10 @@
                 </td>
                 <td id="txtDepartment">
                     @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                       "select a Department",
                        htmlAttributes: new
                        {
-                          @class = "form-control col-md-12"
+                          @class = "form-control col-md-12 select-department-placeholder"
                        })
                     @Html.ValidationMessageFor(model => model.DepartmentList, "", new
                     {
@@ -84,9 +86,10 @@
                 </td>
                 <td id="txtCategoryList">
                     @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                     "select a Category",
                      htmlAttributes: new
                      {
-                       @class = "form-control col-md-7"
+                       @class = "form-control col-md-7 select-category-placeholder"
                      })
                     @Html.ValidationMessageFor(model => model.CategoryList, "", new
                     {
@@ -155,9 +158,10 @@
                 </td>
                 <td id="txtUnitLead">
                     @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                          "select a Lead",
                                           htmlAttributes: new
                                           {
-                                            @class = "form-control col-md-7"
+                                            @class = "form-control col-md-7 select-lead-placeholder"
                                           })
                     @Html.ValidationMessageFor(model => model.UnitLead, "", new
                     {
@@ -193,7 +197,7 @@
                     @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule")
                 </td>
                 <td id="txtProjectCompletedSchedule">
-                    @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
+                    @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true)Yes
                     @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
                 </td>
                 <td id="lblManager">
@@ -201,9 +205,10 @@
                 </td>
                 <td id="txtManager">
                     @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                         "select a Manager",
                                          htmlAttributes: new
                                               {
-                                           @class = "form-control col-md-12"
+                                           @class = "form-control col-md-12 select-manager-placeholder"
                                          })
                     @Html.ValidationMessageFor(model => model.Manager, "", new
                     {
@@ -242,6 +247,17 @@
                             </th>
                             <th>Action</th>
                         </tr>
+                        @if (Model.CRAttachFiles.Count > 0)
+                        {
+                            foreach (var file in Model.CRAttachFiles)
+                            {
+                    <tr>
+                        <td>@file.FileName</td>
+                        <td><label onclick='DeleteFile(@file.FileName)' style='color:Red'><b>X</b></label></td>
+                        @*<td><a href='#' onclick='DeleteFile(@file.FileName)'><span class='glyphicon glyphicon-remove red'></span></a></td>*@
+                    </tr>
+                            }
+                        }
                     </table>
                 </td>
             </tr>

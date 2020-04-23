@@ -50,6 +50,7 @@ namespace CR_Details.Controllers
         [HttpPost]
         public ActionResult CRDetails(FormCollection formCollection)
         {
+            DateTime validValue;
             string uname = Request["uploadername"];
             HttpFileCollectionBase files = Request.Files;
             CR_Details.Models.CRDetails cRDetails = new CRDetails();
@@ -70,16 +71,18 @@ namespace CR_Details.Controllers
                 var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(formCollection["CategoryList"]));
                 cRDetails.CategoryList = categoryType;
             }
-            cRDetails.ProjectCompletedSchedule = Convert.ToBoolean(formCollection["ProjectCompletedSchedule"]);
-            cRDetails.KeyProjects = Convert.ToBoolean(formCollection["KeyProjects"]);
-            cRDetails.ProjectCRReceivedDate = (formCollection["ProjectCRReceivedDate"] != "") ? (Convert.ToDateTime(formCollection["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
-            cRDetails.ProjectCRReceivedDate = (formCollection["ProjectCRReceivedDate"] != "") ? (Convert.ToDateTime(formCollection["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
-            cRDetails.FinalProjectCRReceivedDate = (formCollection["FinalProjectCRReceivedDate"] != "") ? (Convert.ToDateTime(formCollection["FinalProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+            //cRDetails.ProjectCompletedSchedule = Convert.ToBoolean(formCollection["ProjectCompletedSchedule"]);
+            cRDetails.ProjectCompletedSchedule = (formCollection["ProjectCompletedSchedule"] != "null") ? (Convert.ToBoolean(formCollection["ProjectCompletedSchedule"])) : (Boolean?)null;
+
+            cRDetails.KeyProjects = (formCollection["KeyProjects"] != "null") ? (Convert.ToBoolean(formCollection["KeyProjects"])) : (Boolean?)null;
+            //cRDetails.ProjectCRReceivedDate = (formCollection["ProjectCRReceivedDate"] != "") ? (Convert.ToDateTime(formCollection["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+            cRDetails.ProjectCRReceivedDate = DateTime.TryParse((formCollection["ProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.FinalProjectCRReceivedDate = DateTime.TryParse((formCollection["FinalProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.NoOfCRReceivedDuringUAT = (formCollection["NoOfCRReceivedDuringUAT"] != "") ? (Convert.ToInt32(formCollection["NoOfCRReceivedDuringUAT"])) : 0;
-            cRDetails.UATDeliveryDate = (formCollection["UATDeliveryDate"] != "") ? (Convert.ToDateTime(formCollection["UATDeliveryDate"]).Date) : DateTime.MinValue;
-            cRDetails.UATSignoffDate = (formCollection["UATSignoffDate"] != "") ? (Convert.ToDateTime(formCollection["UATSignoffDate"]).Date) : DateTime.MinValue;
-            cRDetails.ProjectCRLiveDate = (formCollection["ProjectCRLiveDate"] != "") ? (Convert.ToDateTime(formCollection["ProjectCRLiveDate"]).Date) : DateTime.MinValue;
-            cRDetails.FirstCommittedLiveDate = (formCollection["FirstCommittedLiveDate"] != "") ? (Convert.ToDateTime(formCollection["FirstCommittedLiveDate"]).Date) : DateTime.MinValue;
+            cRDetails.UATDeliveryDate = DateTime.TryParse((formCollection["UATDeliveryDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.UATSignoffDate = DateTime.TryParse((formCollection["UATSignoffDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.ProjectCRLiveDate = DateTime.TryParse((formCollection["ProjectCRLiveDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.FirstCommittedLiveDate = DateTime.TryParse((formCollection["FirstCommittedLiveDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.TAT = formCollection["TAT"];
             cRDetails.NoOfShowstoppersPostGoLive = (formCollection["NoOfShowstoppersPostGoLive"] != "") ? (Convert.ToInt32(formCollection["NoOfShowstoppersPostGoLive"])) : 0;
             if (formCollection["UnitLead"] != "null")

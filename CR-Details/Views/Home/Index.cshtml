@@ -41,6 +41,30 @@
 
     //upload file code
     var formdata = new FormData(); //FormData object
+    var keyBool = null;
+    var projBool = null;
+    function keyProjectsResult(radio) {
+        var selected = radio.value;
+        if (selected == "Yes")
+            keyBool = true;
+        //formdata.append("KeyProjects", true);
+        //alert($("#InfoButton").val());
+        else if (selected == "No")
+            keyBool = false;
+            //formdata.append("KeyProjects", false);
+        alert(keyBool);
+    }
+
+    function ProjectCompletedScheduleResult(radio) {
+        var selected = radio.value;
+        if (selected == "Yes")
+            projBool = true;
+        //formdata.append("ProjectCompletedSchedule", true);
+        else if (selected == "No")
+            projBool = false;
+            //formdata.append("ProjectCompletedSchedule", false);
+    }
+
     $(document).ready(function () {
         $(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
         $(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
@@ -67,13 +91,17 @@
             $('#fileInput').val('');
         });
 
+
         $("#btnSubmit").click(function () {
             formdata.append("CrTitle", $("#CrTitle").val());
+            formdata.append("CrDescription", $("#CrDescription").val());
             formdata.append("ComplexityList", $("#ComplexityList").val());
             formdata.append("DepartmentList", $("#DepartmentList").val());
-            formdata.append("CategoryList", $("#CategoryList").val());
-            formdata.append("ProjectCompletedSchedule", $("#ProjectCompletedSchedule").val());
-            formdata.append("KeyProjects", $("#KeyProjects").val());
+            formdata.append("CategoryList", $("#CategoryList").val()); 
+            //formdata.append("ProjectCompletedSchedule", $("#ProjectCompletedSchedule").val());
+            //formdata.append("KeyProjects", $("#KeyProjects").val());
+            formdata.append("KeyProjects", keyBool);
+            formdata.append("ProjectCompletedSchedule", projBool);
             formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
             formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
             formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
@@ -208,12 +236,18 @@
     </div>
     <div class="form-group-sm col-md-12">
         <div id="keyProject" class="form-group required col-md-6">
+            @*@Html.LabelFor(model => model.KeyProjects, "Key Projects ", htmlAttributes: new
+        {
+                        @class = "control-label col-md-5"
+        })
+        @Html.RadioButtonFor(model => model.KeyProjects, true)Yes
+        @Html.RadioButtonFor(model => model.KeyProjects, false) No*@
             @Html.LabelFor(model => model.KeyProjects, "Key Projects ", htmlAttributes: new
-            {
-                            @class = "control-label col-md-5"
-            })
-            @Html.RadioButtonFor(model => model.KeyProjects, true, new { @checked = true })Yes
-            @Html.RadioButtonFor(model => model.KeyProjects, false) No
+                            {
+                                            @class = "control-label col-md-5"
+                            })
+            @Html.RadioButton("Radio", "Yes", new { onclick = "keyProjectsResult(this)" })  Yes
+            @Html.RadioButton("Radio", "No", new { onclick = "keyProjectsResult(this)" })  No
         </div>
         <div id="crRcvDate" class="form-group required col-md-6">
             @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date ", htmlAttributes: new
@@ -313,12 +347,18 @@
             @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
         </div>
         <div id="projCompSchdl" class="form-group col-md-6">
+            @*@Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
+        {
+            @class = "control-label col-md-5"
+        })
+        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true)Yes
+        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No*@
             @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
-            {
-                @class = "control-label col-md-5"
-            })
-            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @checked = true })Yes
-            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No
+                          {
+                              @class = "control-label col-md-5"
+                          })
+            @Html.RadioButton("Radio", "Yes", new { onclick = "ProjectCompletedScheduleResult(this)" })  Yes
+            @Html.RadioButton("Radio", "No", new { onclick = "ProjectCompletedScheduleResult(this)" })  No
         </div>
     </div>
     <div class="form-group-sm col-md-12">

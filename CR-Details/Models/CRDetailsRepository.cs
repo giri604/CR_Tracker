@@ -10,6 +10,14 @@ namespace CR_Details.Models
     {
         static DataSet m_dsCrDetail;
 
+        public List<CRAttachFiles> getCRAttachFiles(int? AttachFileId)
+        {
+            List<CRAttachFiles> CRAttachFiles = new List<CRAttachFiles>();
+            BAL.CRDetails BALCRDetails = new BAL.CRDetails();
+            CRAttachFiles = BAL.CRDetails.getCRAttachFiles(AttachFileId);
+            return CRAttachFiles;
+        }
+
         public CRDetails GetRDetail(int crId)
         {
             CRDetails cRDetails = new CRDetails();

@@ -276,9 +276,15 @@ function chkatchtbl() {
 
 //triggered when modal is about to be shown
 $('#cr_details').on('show.bs.modal', function (e) {
+    var $j = jQuery.noConflict();
+    //$j(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
+    //$j(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
+    //$j(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
+    //$j(".select-lead-placeholder").prepend("<option value='' disabled selected>Select a lead...</option>");
+    //$j(".select-manager-placeholder").prepend("<option value='' disabled selected>Select a manager...</option>");
 
     //get data-id attribute of the clicked element
-    var $j = jQuery.noConflict();
+
     var bookId = $j(e.relatedTarget).data('book-id');
     alert("a clicked");
     alert(bookId);
@@ -290,6 +296,7 @@ $('#cr_details').on('show.bs.modal', function (e) {
         data: { "crID": bookId },
         datatype: "json",
         success: function (data) {
+            //alert(JSON.stringify(data));
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
         },
@@ -300,14 +307,8 @@ $('#cr_details').on('show.bs.modal', function (e) {
 });
 
 
+
+
 //$j("#datepicker").datepicker();
 //$j('.datepicker').datepicker();
-
-
-//$('input[type=datetime]').datepicker({
-//    dateFormat: "dd/MM/yyyy",
-//    changeMonth: true,
-//    changeYear: true,
-//    yearRange: "-60:+0"
-//}); 
 

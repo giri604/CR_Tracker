@@ -12,5 +12,6 @@ namespace CR_Details.Models
         int SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile);
         int SaveCRAttachFiles(int SrNo, HttpPostedFileBase attachFile);
         CRDetails GetRDetail(int crId);
+        List<CRAttachFiles> getCRAttachFiles(int? AttachFileId);
     }
 }

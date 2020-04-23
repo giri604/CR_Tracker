@@ -24,6 +24,11 @@ namespace CR_Details.Controllers
             {
                 return null;
             }
+            else
+            {
+                List<CRAttachFiles> files = repository.getCRAttachFiles(cRDetail.AttachFileId);
+                cRDetail.CRAttachFiles = files;
+            }
             return PartialView(cRDetail);
         }
 

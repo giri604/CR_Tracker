@@ -13,11 +13,11 @@ namespace CR_Details.Models
         public string CrTitle { get; set; }
         [Required]
         public string CrDescription { get; set; }
-        public Complexity ComplexityList { get; set; }
-        public Department DepartmentList { get; set; }
-        public Category CategoryList { get; set; }
-        public bool ProjectCompletedSchedule { get; set; }
-        public bool KeyProjects { get; set; }
+        public Complexity? ComplexityList { get; set; } = null;
+        public Department? DepartmentList { get; set; } = null;
+        public Category? CategoryList { get; set; } = null;
+        public bool? ProjectCompletedSchedule { get; set; } = null;
+        public bool? KeyProjects { get; set; } = null;
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -27,11 +27,11 @@ namespace CR_Details.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FinalProjectCRReceivedDate { get; set; }
 
-        public int NoOfCRReceivedDuringUAT { get; set; }
+        public int? NoOfCRReceivedDuringUAT { get; set; } = null;
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime UATDeliveryDate { get; set; }
+        public DateTime? UATDeliveryDate { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -45,11 +45,13 @@ namespace CR_Details.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FirstCommittedLiveDate { get; set; }
         public string TAT { get; set; }
-        public int NoOfShowstoppersPostGoLive { get; set; }
-        public Lead UnitLead { get; set; }
-        public Lead Manager { get; set; }
+        public int? NoOfShowstoppersPostGoLive { get; set; } = null;
+        public Lead? UnitLead { get; set; } = null;
+        public Lead? Manager { get; set; } = null;
         public string ReasonRCA { get; set; }
-        public int AttachFileId { get; set; }
+        public int? AttachFileId { get; set; } = null;
+
+        public List<CRAttachFiles> CRAttachFiles { get; set; }
 
     }
 

@@ -129,6 +129,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRAttachFiles.cs" />
     <Compile Include="Models\CRDetails.cs" />
     <Compile Include="Models\CRDetailsRepository.cs" />
     <Compile Include="Models\ICRDetailsRepository.cs" />
