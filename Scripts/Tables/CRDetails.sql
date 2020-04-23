@@ -6,6 +6,7 @@ GO
 
 CREATE TABLE [dbo].[CRDetails](
 	[SrNo] [int] IDENTITY(1,1) NOT NULL,
+	[CrTitle] [nvarchar](50) NULL,
 	[CrDescription] [nvarchar](max) NULL,
 	[ComplexityList] [nvarchar](50) NULL,
 	[DepartmentList] [nvarchar](50) NULL,
