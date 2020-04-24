@@ -49,5 +49,75 @@ namespace CR_Details.Controllers
             int CrID = repository.SaveCRDetails(cRDetails, null);
             return View();
         }
+
+        [HttpPost]
+        public FileResult DownloadFile(int? fileId)
+        {
+            CRAttachFiles cRAttachFile = repository.getCRAttachFile(fileId);
+            byte[] bytes = null;
+            string fileName = string.Empty;
+            string contentType = string.Empty;
+            if (cRAttachFile != null)
+            {
+                bytes = cRAttachFile.AttachDocument;
+                fileName = cRAttachFile.FileName;
+                contentType = cRAttachFile.ContentType;
+            }
+
+            return File(bytes, contentType, fileName);
+        }
+
+        //UpdateCRDetails
+        [HttpPost]
+        public ActionResult UpdateCRDetails(FormCollection formCollection)
+        {
+            DateTime validValue;
+            int SrNo = 0;
+            CR_Details.Models.CRDetails cRDetails = new CRDetails();
+            SrNo = (formCollection["SrNo"] != "") ? (Convert.ToInt32(formCollection["SrNo"])) : 0;
+            cRDetails.CrTitle = formCollection["CrTitle"];
+            cRDetails.CrDescription = formCollection["CrDescription"];
+            if (formCollection["ComplexityList"] != "null")
+            {
+                var complexType = (Models.Complexity)Enum.Parse(typeof(Models.Complexity), Convert.ToString(formCollection["ComplexityList"]));
+                cRDetails.ComplexityList = complexType;
+            }
+            if (formCollection["DepartmentList"] != "null")
+            {
+                var departmentType = (Models.Department)Enum.Parse(typeof(Models.Department), Convert.ToString(formCollection["DepartmentList"]));
+                cRDetails.DepartmentList = departmentType;
+            }
+            if (formCollection["CategoryList"] != "null")
+            {
+                var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(formCollection["CategoryList"]));
+                cRDetails.CategoryList = categoryType;
+            }
+            cRDetails.ProjectCompletedSchedule = (formCollection["ProjectCompletedSchedule"] != "null") ? (Convert.ToBoolean(formCollection["ProjectCompletedSchedule"])) : (Boolean?)null;
+            cRDetails.KeyProjects = (formCollection["KeyProjects"] != "null") ? (Convert.ToBoolean(formCollection["KeyProjects"])) : (Boolean?)null;
+            cRDetails.ProjectCRReceivedDate = DateTime.TryParse((formCollection["ProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.FinalProjectCRReceivedDate = DateTime.TryParse((formCollection["FinalProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.NoOfCRReceivedDuringUAT = (formCollection["NoOfCRReceivedDuringUAT"] != "") ? (Convert.ToInt32(formCollection["NoOfCRReceivedDuringUAT"])) : 0;
+            cRDetails.UATDeliveryDate = DateTime.TryParse((formCollection["UATDeliveryDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.UATSignoffDate = DateTime.TryParse((formCollection["UATSignoffDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.ProjectCRLiveDate = DateTime.TryParse((formCollection["ProjectCRLiveDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.FirstCommittedLiveDate = DateTime.TryParse((formCollection["FirstCommittedLiveDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.TAT = formCollection["TAT"];
+            cRDetails.NoOfShowstoppersPostGoLive = (formCollection["NoOfShowstoppersPostGoLive"] != "") ? (Convert.ToInt32(formCollection["NoOfShowstoppersPostGoLive"])) : 0;
+            if (formCollection["UnitLead"] != "null")
+            {
+                var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
+                cRDetails.UnitLead = leadType;
+            }
+            if (formCollection["Manager"] != "null")
+            {
+                var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
+                cRDetails.Manager = managerType;
+            }
+            cRDetails.ReasonRCA = formCollection["ReasonRCA"];
+
+            string message = repository.UpdateCRDetails(cRDetails, SrNo);
+            return Content(message);
+
+        }
     }
 }

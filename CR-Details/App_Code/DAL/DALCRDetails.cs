@@ -67,6 +67,49 @@ namespace CR_Details.DAL
         }
         #endregion
 
+        #region "UpdateCRDetails"
+        public string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int SrNo)
+        {
+            try
+            {
+                m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn,
+                                                                          null,
+                                                                          "[dbo].[UpdateCRDetails]",
+                                                                          SrNo,
+                                                                          cRDetails.CrTitle,
+                                                                          cRDetails.CrDescription,
+                                                                          cRDetails.ComplexityList,
+                                                                          cRDetails.DepartmentList,
+                                                                          cRDetails.CategoryList,
+                                                                          cRDetails.ProjectCompletedSchedule,
+                                                                          cRDetails.KeyProjects,
+                                                                          cRDetails.ProjectCRReceivedDate,
+                                                                          cRDetails.FinalProjectCRReceivedDate,
+                                                                          cRDetails.NoOfCRReceivedDuringUAT,
+                                                                          cRDetails.UATDeliveryDate,
+                                                                          cRDetails.UATSignoffDate,
+                                                                          cRDetails.ProjectCRLiveDate,
+                                                                          cRDetails.FirstCommittedLiveDate,
+                                                                          cRDetails.TAT,
+                                                                          cRDetails.NoOfShowstoppersPostGoLive,
+                                                                          cRDetails.UnitLead,
+                                                                          cRDetails.Manager,
+                                                                          cRDetails.ReasonRCA);
+                m_strmessage = "Record updated successfully";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+            finally
+            {
+                SQL.SQLLayer.CloseConnection(m_conn);
+            }
+            return m_strmessage;
+        }
+        #endregion
+
         #region "AddCRAttachFiles"
         public int AddCRAttachFiles(int SrNo, HttpPostedFileBase attachFile)
         {
@@ -186,9 +229,10 @@ namespace CR_Details.DAL
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetCRAttachFiles", AttachFileId);
                 if (m_dsCRMst.Tables.Count > 0)
                 {
-                    for(int i=0; i<= m_dsCRMst.Tables.Count; i++)
+                    for (int i = 0; i <= m_dsCRMst.Tables.Count; i++)
                     {
                         cRAttach = new Models.CRAttachFiles();
+                        cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[i]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["FileID"])) : 0;
                         cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[i]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["SrNo"])) : 0;
                         cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[i]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["FileName"])) : string.Empty;
                         cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["ContentType"])) : string.Empty;
@@ -198,7 +242,7 @@ namespace CR_Details.DAL
 
                         cRAttachFiles.Add(cRAttach);
                     }
-                
+
                 }
                 else
                 {
@@ -216,6 +260,42 @@ namespace CR_Details.DAL
                 SQL.SQLLayer.CloseConnection(m_conn);
             }
             return cRAttachFiles;
+        }
+        #endregion
+
+        #region "getCRAttachFile"
+        public CR_Details.Models.CRAttachFiles getCRAttachFile(int? FileId)
+        {
+            CR_Details.Models.CRAttachFiles cRAttach = null;
+            try
+            {
+                m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetCRAttachFile", FileId);
+                if (m_dsCRMst.Tables.Count > 0)
+                {
+                    cRAttach = new Models.CRAttachFiles();
+                    cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[0]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["FileID"])) : 0;
+                    cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[0]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SrNo"])) : 0;
+                    cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[0]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["FileName"])) : string.Empty;
+                    cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ContentType"])) : string.Empty;
+                    //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
+                    //cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"] : null;
+                    cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(m_dsCRMst.Tables[0].Rows[0]["ContentType"].ToString()) : null;
+                }
+                else
+                {
+                    cRAttach = null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return cRAttach;
+            }
+            finally
+            {
+                SQL.SQLLayer.CloseConnection(m_conn);
+            }
+            return cRAttach;
         }
         #endregion
     }

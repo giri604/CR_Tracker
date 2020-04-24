@@ -1,7 +1,7 @@
 USE [MyDemoDB]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetCRAttachFiles]    Script Date: 23 Apr 2020 7:13:27 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCRAttachFile]    Script Date: 24 Apr 2020 11:19:37 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,8 +12,8 @@ GO
 -- Author:		Deepak Giri
 -- Create date: 23 Apr 2020
 -- =============================================
-CREATE PROCEDURE [dbo].[GetCRAttachFiles]
-@AttachFileId int
+Create PROCEDURE [dbo].[GetCRAttachFile]
+@FileID int
 AS
 BEGIN
   
@@ -24,9 +24,7 @@ SELECT [FileID]
       ,[FileName]
       ,[ContentType]
       ,[AttachDocument]
-      ,[CreatedDate]
-      ,[ModifiedDateTime]
-  FROM [MyDemoDB].[dbo].[CRAttachFiles] where SrNo = @AttachFileId
+  FROM [MyDemoDB].[dbo].[CRAttachFiles] where FileID = @FileID
 
 	
 

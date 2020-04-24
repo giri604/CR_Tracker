@@ -10,6 +10,14 @@ namespace CR_Details.Models
     {
         static DataSet m_dsCrDetail;
 
+        public CRAttachFiles getCRAttachFile(int? FileId)
+        {
+            CRAttachFiles CRAttachFiles = new CRAttachFiles();
+            BAL.CRDetails BALCRDetails = new BAL.CRDetails();
+            CRAttachFiles = BAL.CRDetails.getCRAttachFile(FileId);
+            return CRAttachFiles;
+        }
+
         public List<CRAttachFiles> getCRAttachFiles(int? AttachFileId)
         {
             List<CRAttachFiles> CRAttachFiles = new List<CRAttachFiles>();
@@ -37,6 +45,13 @@ namespace CR_Details.Models
         {
             BAL.CRDetails BALCRDetails = new BAL.CRDetails();
             int message = BAL.CRDetails.AddCRDetail(cRDetails, attachFile);
+            return message;
+        }
+
+        public string UpdateCRDetails(CRDetails cRDetails, int SrNo)
+        {
+            BAL.CRDetails BALCRDetails = new BAL.CRDetails();
+            string message = BAL.CRDetails.UpdateCRDetails(cRDetails, SrNo);
             return message;
         }
     }

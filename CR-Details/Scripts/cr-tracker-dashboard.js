@@ -260,11 +260,22 @@ $("#fileInput").on("change", function () {
     $('#fileInput').val('');
 });
 
-function DeleteFile(Fileid, FileName) {
-    formdata.delete(FileName)
-    $("#" + Fileid).remove();
-    chkatchtbl();
+function DeleteFile(FileName) {
+    alert("delete clicked");
+    //formdata.delete(FileName)
+    //$("#" + Fileid).remove();
+    //chkatchtbl();
 }
+
+function DownloadFile(fileId) {
+    var $j = jQuery.noConflict();
+    alert("download clicked");
+    $j("#hfFileId").val(fileId);
+    $j("#btnDownload")[0].click();
+};
+
+
+
 function chkatchtbl() {
     if ($('#FilesList tr').length > 1) {
         $("#FilesList").css("visibility", "visible");
@@ -277,17 +288,10 @@ function chkatchtbl() {
 //triggered when modal is about to be shown
 $('#cr_details').on('show.bs.modal', function (e) {
     var $j = jQuery.noConflict();
-    //$j(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
-    //$j(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
-    //$j(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
-    //$j(".select-lead-placeholder").prepend("<option value='' disabled selected>Select a lead...</option>");
-    //$j(".select-manager-placeholder").prepend("<option value='' disabled selected>Select a manager...</option>");
 
     //get data-id attribute of the clicked element
 
     var bookId = $j(e.relatedTarget).data('book-id');
-    alert("a clicked");
-    alert(bookId);
     //var bookId = $(e.relatedTarget).data('book-id');
     $j.ajax({
         type: "GET",
@@ -299,6 +303,8 @@ $('#cr_details').on('show.bs.modal', function (e) {
             //alert(JSON.stringify(data));
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
+            $j('#message').hide();
+
         },
         error: function () {
             alert("Error: Dynamic content load failed.");
@@ -307,8 +313,99 @@ $('#cr_details').on('show.bs.modal', function (e) {
 });
 
 
+var keyBool = null;
+var projBool = null;
+var keyFlag = 0;
+var projFlag = 0;
 
 
-//$j("#datepicker").datepicker();
-//$j('.datepicker').datepicker();
+function ToggleKeyProjects(el) {
+    keyFlag = 1;
+    keyBool = el.value;
+}
+
+function ToggleProjectCompletedSchedule(el) {
+    projFlag = 1;
+    projBool = el.value;
+}
+
+$(document).on("click", "#btnSubmit", function (event) {
+    var formdata = new FormData(); //FormData object
+    var $j = jQuery.noConflict();
+    //var bookId = $j(event.relatedTarget).data('book-id');
+    //alert(CRSrNo);
+    formdata.append("SrNo", $j("#SrNo").val());
+    formdata.append("CrTitle", $j("#CrTitle").val());
+    formdata.append("CrDescription", $j("#CrDescription").val());
+    formdata.append("ComplexityList", $j("#ComplexityList").val());
+    formdata.append("DepartmentList", $j("#DepartmentList").val());
+    formdata.append("CategoryList", $j("#CategoryList").val());
+    if (keyFlag == 1) {
+        formdata.append("KeyProjects", keyBool);
+    }
+    else {
+        if ($j("#KeyProjectsYes").is(':checked')) {
+            formdata.append("KeyProjects", true);
+        }
+        else if ($j("#KeyProjectsNo").is(':checked')) {
+            formdata.append("KeyProjects", false);
+        }
+        else {
+            formdata.append("KeyProjects", keyBool);
+        }
+    
+    }
+    if (projFlag == 1) {
+        formdata.append("ProjectCompletedSchedule", projBool);
+    }
+    else {
+        if ($j("#ProjectCompletedScheduleYes").is(':checked')) {
+            formdata.append("ProjectCompletedSchedule", true);
+        }
+        else if ($j("#ProjectCompletedScheduleNo").is(':checked')) {
+            formdata.append("ProjectCompletedSchedule", false);
+        }
+        else {
+            formdata.append("ProjectCompletedSchedule", projBool);
+        }
+    }
+   
+    formdata.append("ProjectCRReceivedDate", $j("#ProjectCRReceivedDate").val());
+    formdata.append("FinalProjectCRReceivedDate", $j("#FinalProjectCRReceivedDate").val());
+    formdata.append("NoOfCRReceivedDuringUAT", $j("#NoOfCRReceivedDuringUAT").val());
+    formdata.append("UATDeliveryDate", $j("#UATDeliveryDate").val());
+    formdata.append("UATSignoffDate", $j("#UATSignoffDate").val());
+    formdata.append("ProjectCRLiveDate", $j("#ProjectCRLiveDate").val());
+    formdata.append("FirstCommittedLiveDate", $j("#FirstCommittedLiveDate").val());
+    formdata.append("TAT", $j("#TAT").val());
+    formdata.append("NoOfShowstoppersPostGoLive", $j("#NoOfShowstoppersPostGoLive").val());
+    formdata.append("UnitLead", $j("#UnitLead").val());
+    formdata.append("Manager", $j("#Manager").val());
+    formdata.append("ReasonRCA", $j("#ReasonRCA").val());
+    $j.ajax({
+        url: '/Modal/UpdateCRDetails',
+        type: "POST",
+        contentType: false, // Not to set any content header
+        processData: false, // Not to process data
+        data: formdata,
+        async: false,
+        success: function (result) {
+            if (result != "") {
+                alert(result);
+                keyFlag = 0;
+                projFlag = 0;
+                keyBool = null;
+                projBool = null;
+            }
+        },
+        error: function (err) {
+            alert(err.statusText);
+        }
+    });
+
+});
+
+
+
+
 
