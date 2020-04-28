@@ -39,7 +39,12 @@ namespace CR_Details.BAL
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
             return DALCRDetails.getCRAttachFiles(AttachFileId);
         }
-    
+        
+        public static List<DateTime?> GetExpectedDates()
+        {
+            DAL.CRDetails DALCRDetails = new DAL.CRDetails();
+            return DALCRDetails.GetExpectedDates();
+        }
         public static CR_Details.Models.CRAttachFiles getCRAttachFile(int? FileId)
         {
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();

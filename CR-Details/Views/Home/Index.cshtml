@@ -2,8 +2,110 @@
 @{
     ViewBag.Title = "Home Page";
 }
+
 <script>
-    $(function () {
+    var keyBool = null;
+    var projBool = null;
+    function keyProjectsResult(radio) {
+        var selected = radio.value;
+        if (selected == "Yes")
+            keyBool = true;
+        else if (selected == "No")
+            keyBool = false;
+    }
+
+    function ProjectCompletedScheduleResult(radio) {
+        var selected = radio.value;
+        if (selected == "Yes")
+            projBool = true;
+        else if (selected == "No")
+            projBool = false;
+    }
+
+    $(document).ready(function () {
+
+        var options = {};
+        options.url = "/Home/GetExpectedDates";
+        options.dataType = "json";
+        options.contentType = "application/json";
+        options.success = function (ExpectedDates) {
+            alert(JSON.stringify(ExpectedDates));
+        };
+        options.error = function () { alert("Error retrieving ExpectedDates data!"); };
+        $.ajax(options);
+
+        var Alldays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        var disableDates = ["2012/11/26", "2012/11/28", "2012/12/05"]; // yyyy/MM/dd
+        var disableDays = ["Sunday"];
+
+    
+
+
+        $(function () {
+            var $dp1 = $("#ExpextedDate");
+            $dp1.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+
+            var $dp2 = $("#ProjectCRReceivedDate");
+            $dp2.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+
+            var $dp3 = $("#FinalProjectCRReceivedDate");
+            $dp3.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+
+            var $dp4 = $("#UATDeliveryDate");
+            $dp4.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+
+            var $dp5 = $("#UATSignoffDate");
+            $dp5.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+            
+            var $dp6 = $("#ProjectCRLiveDate");
+            $dp6.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+
+            var $dp7 = $("#FirstCommittedLiveDate");
+            $dp7.datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: 0,
+                dateFormat: "dd-MM-yy",
+                yearRange: "-100:+20",
+            });
+        });
+
         var me = getUrlVars()["user"];
         if (me != "admin") {
             alert("normal");
@@ -20,12 +122,12 @@
             $('#noShowstoppers').hide();
             $('#projCompSchdl').hide();
             $('#manager').hide();
-            $('#reason').hide();
-            //$('#upload').hide();
         }
         else {
             alert("Admin");
         }
+
+
         // Read a page's GET URL variables and return them as an associative array.
         function getUrlVars() {
             var vars = [], hash;
@@ -37,35 +139,11 @@
             }
             return vars;
         }
-    });
 
-    //upload file code
-    var formdata = new FormData(); //FormData object
-    var keyBool = null;
-    var projBool = null;
-    function keyProjectsResult(radio) {
-        var selected = radio.value;
-        if (selected == "Yes")
-            keyBool = true;
-        //formdata.append("KeyProjects", true);
-        //alert($("#InfoButton").val());
-        else if (selected == "No")
-            keyBool = false;
-            //formdata.append("KeyProjects", false);
-        alert(keyBool);
-    }
+        //upload file code
+        var formdata = new FormData(); //FormData object
 
-    function ProjectCompletedScheduleResult(radio) {
-        var selected = radio.value;
-        if (selected == "Yes")
-            projBool = true;
-        //formdata.append("ProjectCompletedSchedule", true);
-        else if (selected == "No")
-            projBool = false;
-            //formdata.append("ProjectCompletedSchedule", false);
-    }
-
-    $(document).ready(function () {
+        //$(document).ready(function () {
         $(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
         $(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
         $(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
@@ -93,42 +171,122 @@
 
 
         $("#btnSubmit").click(function () {
-            formdata.append("CrTitle", $("#CrTitle").val());
-            formdata.append("CrDescription", $("#CrDescription").val());
-            formdata.append("ComplexityList", $("#ComplexityList").val());
-            formdata.append("DepartmentList", $("#DepartmentList").val());
-            formdata.append("CategoryList", $("#CategoryList").val()); 
-            formdata.append("KeyProjects", keyBool);
-            formdata.append("ProjectCompletedSchedule", projBool);
-            formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
-            formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
-            formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
-            formdata.append("UATDeliveryDate", $("#UATDeliveryDate").val());
-            formdata.append("UATSignoffDate", $("#UATSignoffDate").val());
-            formdata.append("ProjectCRLiveDate", $("#ProjectCRLiveDate").val());
-            formdata.append("FirstCommittedLiveDate", $("#FirstCommittedLiveDate").val());
-            formdata.append("TAT", $("#TAT").val());
-            formdata.append("NoOfShowstoppersPostGoLive", $("#NoOfShowstoppersPostGoLive").val());
-            formdata.append("UnitLead", $("#UnitLead").val());
-            formdata.append("Manager", $("#Manager").val());
-            formdata.append("ReasonRCA", $("#ReasonRCA").val());
-            formdata.append('uploadername', fileInput);
-            $.ajax({
-                url: '/Home/CRDetails',
-                type: "POST",
-                contentType: false, // Not to set any content header
-                processData: false, // Not to process data
-                data: formdata,
-                async: false,
-                success: function (result) {
-                    if (result != "") {
-                        alert(result);
-                    }
-                },
-                error: function (err) {
-                    alert(err.statusText);
+            //validation code start here
+            var isValid = true;
+            if ($("#CrTitle").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
+                isValid = false;
+            }
+            else if ($("#CrDescription").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
+                isValid = false;
+            }
+            else if ($("#DepartmentList").val() == "" || $("#DepartmentList").val() == "null" || $("#DepartmentList").val() == null) {
+                isValid = false;
+            }
+            else if ($("#CategoryList").val() == "" || $("#CategoryList").val() == "null" || $("#CategoryList").val() == null) {
+                isValid = false;
+            }
+            else if (keyBool == "" || keyBool == null || keyBool == "null") {
+                isValid = false;
+            }
+            else if ($("#ExpextedDate").val() == "" || $("#ExpextedDate").val() == "null" || $("#ExpextedDate").val() == null) {
+                isValid = false;
+            }
+            else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
+                isValid = false;
+            }
+            else {
+                isValid = true;
+            }
+
+            var me = getUrlVars()["user"];
+            if (me == "admin") {
+                alert("admin");
+                if ($("#ComplexityList").val() == "" || $("#ComplexityList").val() == "null" || $("#ComplexityList").val() == null) {
+                    isValid = false;
                 }
-            });
+                else if (projBool == "" || projBool == null || projBool == "null") {
+                    isValid = false;
+                }
+                else if ($("#ProjectCRReceivedDate").val() == "" || $("#ProjectCRReceivedDate").val() == "null" || $("#ProjectCRReceivedDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#FinalProjectCRReceivedDate").val() == "" || $("#FinalProjectCRReceivedDate").val() == "null" || $("#FinalProjectCRReceivedDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#NoOfCRReceivedDuringUAT").val() == "" || $("#NoOfCRReceivedDuringUAT").val() == "null" || $("#NoOfCRReceivedDuringUAT").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#UATDeliveryDate").val() == "" || $("#UATDeliveryDate").val() == "null" || $("#UATDeliveryDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#UATSignoffDate").val() == "" || $("#UATSignoffDate").val() == "null" || $("#UATSignoffDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#ProjectCRLiveDate").val() == "" || $("#ProjectCRLiveDate").val() == "null" || $("#ProjectCRLiveDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#FirstCommittedLiveDate").val() == "" || $("#FirstCommittedLiveDate").val() == "null" || $("#FirstCommittedLiveDate").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#TAT").val() == "" || $("#TAT").val() == "null" || $("#TAT").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#NoOfShowstoppersPostGoLive").val() == "" || $("#NoOfShowstoppersPostGoLive").val() == "null" || $("#NoOfShowstoppersPostGoLive").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#UnitLead").val() == "" || $("#UnitLead").val() == "null" || $("#UnitLead").val() == null) {
+                    isValid = false;
+                }
+                else if ($("#Manager").val() == "" || $("#Manager").val() == "null" || $("#Manager").val() == null) {
+                    isValid = false;
+                }
+                else {
+                    isValid = true;
+                }
+            }
+
+            if (isValid) {
+                formdata.append("CrTitle", $("#CrTitle").val());
+                formdata.append("CrDescription", $("#CrDescription").val());
+                formdata.append("ComplexityList", $("#ComplexityList").val());
+                formdata.append("DepartmentList", $("#DepartmentList").val());
+                formdata.append("CategoryList", $("#CategoryList").val());
+                formdata.append("KeyProjects", keyBool);
+                formdata.append("ProjectCompletedSchedule", projBool);
+                formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
+                formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
+                formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
+                formdata.append("UATDeliveryDate", $("#UATDeliveryDate").val());
+                formdata.append("UATSignoffDate", $("#UATSignoffDate").val());
+                formdata.append("ProjectCRLiveDate", $("#ProjectCRLiveDate").val());
+                formdata.append("FirstCommittedLiveDate", $("#FirstCommittedLiveDate").val());
+                formdata.append("TAT", $("#TAT").val());
+                formdata.append("NoOfShowstoppersPostGoLive", $("#NoOfShowstoppersPostGoLive").val());
+                formdata.append("UnitLead", $("#UnitLead").val());
+                formdata.append("Manager", $("#Manager").val());
+                formdata.append("ExpextedDate", $("#ExpextedDate").val());
+                formdata.append("ReasonRCA", $("#ReasonRCA").val());
+                formdata.append('uploadername', fileInput);
+                $.ajax({
+                    url: '/Home/CRDetails',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: formdata,
+                    async: false,
+                    success: function (result) {
+                        if (result != "") {
+                            alert(result);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            }
+            else {
+                alert("Please Enter Required fields input");
+            }
         });
     });
     function DeleteFile(Fileid, FileName) {
@@ -216,7 +374,7 @@
             })
         </div>
         <div id="systemName" class="form-group required col-md-6">
-            @Html.LabelFor(model => model.CategoryList, "System Name ", htmlAttributes: new
+            @Html.LabelFor(model => model.CategoryList, "Display Name ", htmlAttributes: new
                            {
                                @class = "control-label col-md-5"
                            })
@@ -235,11 +393,11 @@
     <div class="form-group-sm col-md-12">
         <div id="keyProject" class="form-group required col-md-6">
             @*@Html.LabelFor(model => model.KeyProjects, "Key Projects ", htmlAttributes: new
-        {
-                        @class = "control-label col-md-5"
-        })
-        @Html.RadioButtonFor(model => model.KeyProjects, true)Yes
-        @Html.RadioButtonFor(model => model.KeyProjects, false) No*@
+                {
+                                @class = "control-label col-md-5"
+                })
+                @Html.RadioButtonFor(model => model.KeyProjects, true)Yes
+                @Html.RadioButtonFor(model => model.KeyProjects, false) No*@
             @Html.LabelFor(model => model.KeyProjects, "Key Projects ", htmlAttributes: new
                             {
                                             @class = "control-label col-md-5"
@@ -252,7 +410,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.ProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
             @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -262,7 +420,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.FinalProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.FinalProjectCRReceivedDate, new { htmlAttributes = new { @class = "form-control", type = "text"} })
             @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
         </div>
         <div id="UATDate" class="form-group required col-md-6">
@@ -270,7 +428,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.UATDeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.UATDeliveryDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
             @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -280,7 +438,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.UATSignoffDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.UATSignoffDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
             @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
         </div>
         <div id="crLiveDate" class="form-group required col-md-6">
@@ -288,7 +446,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.ProjectCRLiveDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ProjectCRLiveDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
             @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -298,7 +456,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.FirstCommittedLiveDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.FirstCommittedLiveDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
             @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
         </div>
         <div id="lead" class="form-group required col-md-6">
@@ -346,11 +504,11 @@
         </div>
         <div id="projCompSchdl" class="form-group col-md-6">
             @*@Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
-        {
-            @class = "control-label col-md-5"
-        })
-        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true)Yes
-        @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No*@
+                {
+                    @class = "control-label col-md-5"
+                })
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true)Yes
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No*@
             @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
                           {
                               @class = "control-label col-md-5"
@@ -375,8 +533,18 @@
                   @class = "text-danger"
             })
         </div>
+        <div id="crLiveDate" class="form-group required col-md-6">
+            @Html.LabelFor(model => model.ExpextedDate, "Expected Date ", htmlAttributes: new
+            {
+                @class = "control-label col-md-5"
+            })
+            @Html.EditorFor(model => model.ExpextedDate, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+            @Html.ValidationMessageFor(model => model.ExpextedDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group-sm col-md-12">
         <div class="form-group required col-md-6">
-            @Html.LabelFor(model => model.ReasonRCA, "	Reason / RCA: ", htmlAttributes: new
+            @Html.LabelFor(model => model.ReasonRCA, "Reason / RCA ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
@@ -390,7 +558,6 @@
             })
         </div>
     </div>
-
     <div class="form-group-sm col-md-12">
         <div id="upload" class="form-group col-md-6">
             <div class="col-md-5">

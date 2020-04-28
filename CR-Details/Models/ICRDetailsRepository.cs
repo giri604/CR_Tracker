@@ -16,5 +16,7 @@ namespace CR_Details.Models
         CRDetails GetRDetail(int crId);
         List<CRAttachFiles> getCRAttachFiles(int? AttachFileId);
         CRAttachFiles getCRAttachFile(int? FileId);
+
+        List<DateTime?> GetExpectedDates();
     }
 }

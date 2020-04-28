@@ -10,6 +10,7 @@ namespace CR_Details.Models
     public class CRDetails
     {
         public int SrNo { get; set; }
+        [Required]
         public string CrTitle { get; set; }
         [Required]
         public string CrDescription { get; set; }
@@ -48,6 +49,9 @@ namespace CR_Details.Models
         public int? NoOfShowstoppersPostGoLive { get; set; } = null;
         public Lead? UnitLead { get; set; } = null;
         public Lead? Manager { get; set; } = null;
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? ExpextedDate { get; set; }
         public string ReasonRCA { get; set; }
         public int? AttachFileId { get; set; } = null;
 

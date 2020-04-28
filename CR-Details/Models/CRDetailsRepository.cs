@@ -26,6 +26,14 @@ namespace CR_Details.Models
             return CRAttachFiles;
         }
 
+        public List<DateTime?> GetExpectedDates()
+        {
+            List<DateTime?> ExpectedDates = new List<DateTime?>();
+            BAL.CRDetails BALCRDetails = new BAL.CRDetails();
+            ExpectedDates = BAL.CRDetails.GetExpectedDates();
+            return ExpectedDates;
+        }
+
         public CRDetails GetRDetail(int crId)
         {
             CRDetails cRDetails = new CRDetails();

@@ -52,6 +52,7 @@ namespace CR_Details.DAL
                                                                             cRDetails.NoOfShowstoppersPostGoLive,
                                                                             cRDetails.UnitLead,
                                                                             cRDetails.Manager,
+                                                                            cRDetails.ExpextedDate,
                                                                             cRDetails.ReasonRCA);
                 CrIDOut = (m_dsCRMst.Tables[0].Rows[0]["SRNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SRNo"])) : 0;
             }
@@ -229,19 +230,33 @@ namespace CR_Details.DAL
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetCRAttachFiles", AttachFileId);
                 if (m_dsCRMst.Tables.Count > 0)
                 {
-                    for (int i = 0; i <= m_dsCRMst.Tables.Count; i++)
+                    foreach (DataTable table in m_dsCRMst.Tables)
                     {
-                        cRAttach = new Models.CRAttachFiles();
-                        cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[i]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["FileID"])) : 0;
-                        cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[i]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["SrNo"])) : 0;
-                        cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[i]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["FileName"])) : string.Empty;
-                        cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["ContentType"])) : string.Empty;
-                        //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
-                        //cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[i]["ContentType"] : null;
-                        cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(m_dsCRMst.Tables[0].Rows[i]["ContentType"].ToString()) : null;
+                        foreach (DataRow row in table.Rows)
+                        {
+                            cRAttach = new Models.CRAttachFiles();
+                            cRAttach.FileID = (row["FileID"] != DBNull.Value) ? (Convert.ToInt32(row["FileID"])) : 0;
+                            cRAttach.SrNo = (row["SrNo"] != DBNull.Value) ? (Convert.ToInt32(row["SrNo"])) : 0;
+                            cRAttach.FileName = (row["FileName"] != DBNull.Value) ? (Convert.ToString(row["FileName"])) : string.Empty;
+                            cRAttach.ContentType = (row["ContentType"] != DBNull.Value) ? (Convert.ToString(row["ContentType"])) : string.Empty;
+                            cRAttach.AttachDocument = (row["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(row["ContentType"].ToString()) : null;
 
-                        cRAttachFiles.Add(cRAttach);
+                            cRAttachFiles.Add(cRAttach);
+                        }
                     }
+                    //for (int i = 0; i <= m_dsCRMst.Tables.Count; i++)
+                    //{
+                    //    cRAttach = new Models.CRAttachFiles();
+                    //    cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[i]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["FileID"])) : 0;
+                    //    cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[i]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["SrNo"])) : 0;
+                    //    cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[i]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["FileName"])) : string.Empty;
+                    //    cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["ContentType"])) : string.Empty;
+                    //    //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
+                    //    //cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[i]["ContentType"] : null;
+                    //    cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(m_dsCRMst.Tables[0].Rows[i]["ContentType"].ToString()) : null;
+
+                    //    cRAttachFiles.Add(cRAttach);
+                    //}
 
                 }
                 else
@@ -297,6 +312,46 @@ namespace CR_Details.DAL
             }
             return cRAttach;
         }
+        #endregion
+
+        // List<DateTime> GetExpectedDates()
+        #region "GetExpectedDates"
+        public List<DateTime?> GetExpectedDates()
+        {
+            DateTime validValue;
+            List<DateTime?> ExpextedDates = new List<DateTime?>();
+            try
+            {
+                m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetExpectedDates");
+                if (m_dsCRMst.Tables.Count > 0)
+                {
+                    foreach (DataTable table in m_dsCRMst.Tables)
+                    {
+                        foreach (DataRow row in table.Rows)
+                        {
+                            var ExpextedDate = DateTime.TryParse(Convert.ToString(row["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
+                            ExpextedDates.Add(ExpextedDate);
+                        }
+                    }
+
+                }
+                else
+                {
+                    return ExpextedDates;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return ExpextedDates;
+            }
+            finally
+            {
+                SQL.SQLLayer.CloseConnection(m_conn);
+            }
+            return ExpextedDates;
+        }
+
         #endregion
     }
 }

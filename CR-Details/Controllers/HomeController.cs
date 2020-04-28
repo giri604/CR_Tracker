@@ -29,24 +29,14 @@ namespace CR_Details.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult CRDetails(CRDetails cRDetails)
-        //{
-        //    int CrID = repository.SaveCRDetails(cRDetails, null);
+        [HttpGet]
+        public JsonResult GetExpectedDates()
+        {
+            //NorthwindEntities db = new NorthwindEntities();
+            var ExpectedDates = repository.GetExpectedDates();
+            return Json(ExpectedDates, JsonRequestBehavior.AllowGet);
+        }
 
-        //    int fileID = 0;
-        //    string uname = Request["uploadername"];
-        //    HttpFileCollectionBase files = Request.Files;
-        //    for (int i = 0; i < files.Count; i++)
-        //    {
-        //        HttpPostedFileBase file = files[i];
-        //        //insert file into CRAttachFiles table and get id return for CRDetails
-        //        fileID = repository.SaveCRAttachFiles(CrID, file);
-
-        //    }
-        //    cRDetails.AttachFileId = fileID;
-        //    return View();
-        //}
         [HttpPost]
         public ActionResult CRDetails(FormCollection formCollection)
         {
@@ -95,6 +85,7 @@ namespace CR_Details.Controllers
                 var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
                 cRDetails.Manager = managerType;
             }
+            cRDetails.ExpextedDate = DateTime.TryParse((formCollection["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.ReasonRCA = formCollection["ReasonRCA"];
 
 
