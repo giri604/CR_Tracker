@@ -31,6 +31,7 @@ CREATE PROCEDURE [dbo].[AddCRDetails]
 @NoOdShowstoppersPostGoLive int = null,
 @UnitLead nvarchar(50) = null,
 @Manager nvarchar(50) = null,
+@ExpextedDate nvarchar(50) = null,
 @ReasonRCA nvarchar(50) = null,
 @SrNoOut int = NULL Output
 
@@ -55,6 +56,7 @@ insert into [dbo].[CRDetails]
 		  ,[NoOfShowstoppersPostGoLive]
 		  ,[UnitLead]
 		  ,[Manager]
+		  ,[ExpextedDate]
 		  ,[ReasonRCA])
 		  values
 		 (@CrTitle,
@@ -75,8 +77,10 @@ insert into [dbo].[CRDetails]
 		  @NoOdShowstoppersPostGoLive,
 		  @UnitLead,
 		  @Manager,
+		  @ExpextedDate,
 		  @ReasonRCA)
-select SCOPE_IDENTITY() as SRNo;		  
+
+select SCOPE_IDENTITY() as SRNo;
 END
 GO
 
