@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -316,10 +317,10 @@ namespace CR_Details.DAL
 
         // List<DateTime> GetExpectedDates()
         #region "GetExpectedDates"
-        public List<DateTime?> GetExpectedDates()
+        public List<string> GetExpectedDates()
         {
-            DateTime validValue;
-            List<DateTime?> ExpextedDates = new List<DateTime?>();
+            //DateTime validValue;
+            List<string> ExpextedDates = new List<string>();
             try
             {
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetExpectedDates");
@@ -329,7 +330,15 @@ namespace CR_Details.DAL
                     {
                         foreach (DataRow row in table.Rows)
                         {
-                            var ExpextedDate = DateTime.TryParse(Convert.ToString(row["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
+                            //var ExpextedDate = DateTime.TryParse(Convert.ToString(row["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
+                            //ExpextedDates.Add(ExpextedDate);
+                            //DateTime.TryParseExact(dateString, "M/dd/yyyy hh:mm", enUS,DateTimeStyles.None, out dateValue)
+                            //var ExpextedDate = DateTime.TryParseExact(Convert.ToString(row["ExpextedDate"]), "yyyy/MM/dd", enUS, DateTimeStyles.None, out validValue) ? validValue.Date : (DateTime?)null;
+                            //var ExpextedDate = Convert.ToDateTime(Convert.ToString(row["ExpextedDate"])).Date;
+                            var ExpextedDate = Convert.ToDateTime(Convert.ToString(row["ExpextedDate"])).ToString("yyyy/MM/dd");
+                            //var ExpextedDate = myDate.ToString("yyyy/MM/dd");
+
+
                             ExpextedDates.Add(ExpextedDate);
                         }
                     }

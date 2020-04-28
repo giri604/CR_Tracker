@@ -32,7 +32,6 @@ namespace CR_Details.Controllers
         [HttpGet]
         public JsonResult GetExpectedDates()
         {
-            //NorthwindEntities db = new NorthwindEntities();
             var ExpectedDates = repository.GetExpectedDates();
             return Json(ExpectedDates, JsonRequestBehavior.AllowGet);
         }

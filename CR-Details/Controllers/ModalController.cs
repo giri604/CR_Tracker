@@ -77,17 +77,17 @@ namespace CR_Details.Controllers
             SrNo = (formCollection["SrNo"] != "") ? (Convert.ToInt32(formCollection["SrNo"])) : 0;
             cRDetails.CrTitle = formCollection["CrTitle"];
             cRDetails.CrDescription = formCollection["CrDescription"];
-            if (formCollection["ComplexityList"] != "null")
+            if (formCollection["ComplexityList"] != "")
             {
                 var complexType = (Models.Complexity)Enum.Parse(typeof(Models.Complexity), Convert.ToString(formCollection["ComplexityList"]));
                 cRDetails.ComplexityList = complexType;
             }
-            if (formCollection["DepartmentList"] != "null")
+            if (formCollection["DepartmentList"] != "")
             {
                 var departmentType = (Models.Department)Enum.Parse(typeof(Models.Department), Convert.ToString(formCollection["DepartmentList"]));
                 cRDetails.DepartmentList = departmentType;
             }
-            if (formCollection["CategoryList"] != "null")
+            if (formCollection["CategoryList"] != "")
             {
                 var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(formCollection["CategoryList"]));
                 cRDetails.CategoryList = categoryType;
@@ -103,12 +103,12 @@ namespace CR_Details.Controllers
             cRDetails.FirstCommittedLiveDate = DateTime.TryParse((formCollection["FirstCommittedLiveDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.TAT = formCollection["TAT"];
             cRDetails.NoOfShowstoppersPostGoLive = (formCollection["NoOfShowstoppersPostGoLive"] != "") ? (Convert.ToInt32(formCollection["NoOfShowstoppersPostGoLive"])) : 0;
-            if (formCollection["UnitLead"] != "null")
+            if (formCollection["UnitLead"] != "")
             {
                 var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
                 cRDetails.UnitLead = leadType;
             }
-            if (formCollection["Manager"] != "null")
+            if (formCollection["Manager"] != "")
             {
                 var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
                 cRDetails.Manager = managerType;

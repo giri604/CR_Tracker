@@ -40,7 +40,7 @@ namespace CR_Details.BAL
             return DALCRDetails.getCRAttachFiles(AttachFileId);
         }
         
-        public static List<DateTime?> GetExpectedDates()
+        public static List<string> GetExpectedDates()
         {
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
             return DALCRDetails.GetExpectedDates();

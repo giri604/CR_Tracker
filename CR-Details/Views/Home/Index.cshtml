@@ -23,33 +23,62 @@
     }
 
     $(document).ready(function () {
-
+        var disableDates = [];
         var options = {};
         options.url = "/Home/GetExpectedDates";
         options.dataType = "json";
         options.contentType = "application/json";
         options.success = function (ExpectedDates) {
-            alert(JSON.stringify(ExpectedDates));
+            //disableDates = ExpectedDates;
+             disableDates = $.map(ExpectedDates, function (value, index) {
+                return [value];
+            });
+            alert(disableDates);
+            //var ExpectedDatesArray = $.parseJSON(JSON.stringify(ExpectedDates));
+            //$.each(ExpectedDates, function (key, value) {
+            //    alert(value);
+            //});
         };
         options.error = function () { alert("Error retrieving ExpectedDates data!"); };
         $.ajax(options);
 
         var Alldays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        var disableDates = ["2012/11/26", "2012/11/28", "2012/12/05"]; // yyyy/MM/dd
+        //var disableDates = ["2012/11/26", "2012/11/28", "2012/12/05"]; // yyyy/MM/dd
         var disableDays = ["Sunday"];
 
-    
-
+        function ShowDisableDates(date){
+            ymd = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
+            day = new Date(ymd).getDay();
+            if ($.inArray(ymd, disableDates) < 0 && $.inArray(Alldays[day], disableDays) < 0) {
+                return [true, "enabled", "Available"];
+            } else {
+                return [false, "disabled", "Un-Available"];
+            }
+        }
 
         $(function () {
-            var $dp1 = $("#ExpextedDate");
-            $dp1.datepicker({
+            $("#ExpextedDate").datepicker({
+                beforeShowDay: ShowDisableDates,
                 changeYear: true,
                 changeMonth: true,
                 minDate: 0,
                 dateFormat: "dd-MM-yy",
                 yearRange: "-100:+20",
             });
+        });
+
+    
+
+
+        $(function () {
+            //var $dp1 = $("#ExpextedDate");
+            //$dp1.datepicker({
+            //    changeYear: true,
+            //    changeMonth: true,
+            //    minDate: 0,
+            //    dateFormat: "dd-MM-yy",
+            //    yearRange: "-100:+20",
+            //});
 
             var $dp2 = $("#ProjectCRReceivedDate");
             $dp2.datepicker({
@@ -306,6 +335,18 @@
     .form-group.required .control-label:after {
         content: "*";
         color: red;
+    }
+    .ui-datepicker td.ui-state-disabled > span {
+        background: #e60000;
+        color: white;
+    }
+    .ui-datepicker .ui-state-default {
+        background: #009933;
+        color: white;
+    }
+
+    .ui-datepicker td.ui-state-disabled {
+        opacity: 100;
     }
 </style>
 @*@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))*@

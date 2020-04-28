@@ -192,3 +192,17 @@ float: left;
 .table th {
     border-top: none;
 }
+
+.ui-datepicker td.ui-state-disabled > span {
+    background: #e60000;
+    color: white;
+}
+
+.ui-datepicker .ui-state-default {
+    background: #009933;
+    color: white;
+}
+
+.ui-datepicker td.ui-state-disabled {
+    opacity: 100;
+}

@@ -300,16 +300,90 @@ $('#cr_details').on('show.bs.modal', function (e) {
         data: { "crID": bookId },
         datatype: "json",
         success: function (data) {
+            //console.log(data);
             //alert(JSON.stringify(data));
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
             $j('#message').hide();
+            //console.log($j("#UnitLead").val());
+            //if ($j("#UnitLead").val() != "") {
+            //    alert("disable");
+            //    $j('#UnitLead').prop("disabled", true);
+            //}
 
         },
         error: function () {
             alert("Error: Dynamic content load failed.");
         }
     });
+
+
+
+    var $dp2 = $j("#ProjectCRReceivedDate");
+    $dp2.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    var $dp3 = $j("#FinalProjectCRReceivedDate");
+    $dp3.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    var $dp4 = $j("#UATDeliveryDate");
+    $dp4.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    var $dp5 = $j("#UATSignoffDate");
+    $dp5.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    var $dp6 = $j("#ProjectCRLiveDate");
+    $dp6.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    var $dp7 = $j("#FirstCommittedLiveDate");
+    $dp7.datepicker({
+        changeYear: true,
+        changeMonth: true,
+        minDate: 0,
+        dateFormat: "dd-MM-yy",
+        yearRange: "-100:+20",
+    });
+
+    if (typeof $j("#UnitLead").val() === "undefined") {
+        //alert("lead is empty");
+    }
+    else if ($j("#UnitLead").val() == "") {
+        //alert("lead is empty 2");
+
+    }
+    else {
+        $j('#UnitLead').prop("disabled", true);
+    }
+
 });
 
 
@@ -404,6 +478,8 @@ $(document).on("click", "#btnSubmit", function (event) {
     });
 
 });
+
+
 
 
 

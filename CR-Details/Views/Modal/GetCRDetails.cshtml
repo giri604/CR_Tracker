@@ -96,14 +96,14 @@
                     @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date")
                 </td>
                 <td id="txtProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "Project CR Received Date" } })
+                    @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblFinalProjectCRReceivedDate">
                     @Html.LabelFor(model => model.KeyProjects, "Final Project / CR Received Date")
                 </td>
                 <td id="txtFinalProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "Final Project CR Received Date" } })
+                    @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -112,14 +112,14 @@
                     @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date")
                 </td>
                 <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "UAT Delivery Date" } })
+                    @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblUATSignoffDate">
                     @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date")
                 </td>
                 <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "UAT Signoff Date" } })
+                    @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -128,14 +128,14 @@
                     @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date")
                 </td>
                 <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "Project CR Live Date" } })
+                    @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
                 </td>
                 <td id="lblUATSignoffDate">
                     @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date")
                 </td>
                 <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12 date-picker", placeholder = "First Committed Live Date" } })
+                    @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
                     @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
                 </td>
             </tr>
