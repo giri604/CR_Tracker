@@ -57,7 +57,7 @@ namespace CR_Details.DAL
                                                                             cRDetails.ReasonRCA);
                 CrIDOut = (m_dsCRMst.Tables[0].Rows[0]["SRNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SRNo"])) : 0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return CrIDOut;
             }

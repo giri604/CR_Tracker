@@ -18,6 +18,7 @@
                     {
                           @class = "text-danger"
                     })
+                    <span id="CrTitleError" style="color: red"></span>
                 </td>
                 <td id="lblDescription">
                     @Html.LabelFor(model => model.CrDescription, "CR description", new { htmlAttributes = new { @class = "form-control col-md-7" } })
@@ -159,7 +160,7 @@
                     @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR")
                 </td>
                 <td id="txtNoOfCRReceivedDuringUAT">
-                    @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                    @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-md-12", @min = "0" } })
                     @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
                 </td>
             </tr>

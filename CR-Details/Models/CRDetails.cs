@@ -28,6 +28,7 @@ namespace CR_Details.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FinalProjectCRReceivedDate { get; set; }
 
+        [Range(0,Int32.MaxValue)]
         public int? NoOfCRReceivedDuringUAT { get; set; } = null;
 
         [DataType(DataType.Date)]

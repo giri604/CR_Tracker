@@ -65,6 +65,7 @@ namespace CR_Details.Controllers
             }
 
             return File(bytes, contentType, fileName);
+
         }
 
         //UpdateCRDetails

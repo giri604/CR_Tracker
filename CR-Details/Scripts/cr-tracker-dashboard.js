@@ -187,29 +187,29 @@ var areaChartData = {
         pointHighlightStroke: 'rgba(60,141,188,1)',
         data: [28, 48, 40, 35, 50, 27, 50]
     },
-      {
-          label: 'Total CR Raised',
-          backgroundColor: 'rgba(210, 214, 222, 1)',
-          borderColor: 'rgba(210, 214, 222, 1)',
-          pointRadius: false,
-          pointColor: 'rgba(210, 214, 222, 1)',
-          pointStrokeColor: '#c1c7d1',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data: [65, 59, 80, 81, 56, 55, 90]
-      },
+    {
+        label: 'Total CR Raised',
+        backgroundColor: 'rgba(210, 214, 222, 1)',
+        borderColor: 'rgba(210, 214, 222, 1)',
+        pointRadius: false,
+        pointColor: 'rgba(210, 214, 222, 1)',
+        pointStrokeColor: '#c1c7d1',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data: [65, 59, 80, 81, 56, 55, 90]
+    },
 
-      {
-          label: 'Pending',
-          backgroundColor: 'rgba(230,147,155,1)',
-          borderColor: 'rgba(60,141,188,0.8)',
-          pointRadius: false,
-          pointColor: '#3b8bba',
-          pointStrokeColor: 'rgba(60,141,188,1)',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data: [35, 48, 40, 25, 36, 27, 40]
-      },
+    {
+        label: 'Pending',
+        backgroundColor: 'rgba(230,147,155,1)',
+        borderColor: 'rgba(60,141,188,0.8)',
+        pointRadius: false,
+        pointColor: '#3b8bba',
+        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data: [35, 48, 40, 25, 36, 27, 40]
+    },
 
     ]
 }
@@ -239,7 +239,7 @@ $('#example1 tbody').on('click', 'tr', function () {
 var formdata = new FormData();
 
 $("#fileInput").on("change", function () {
-    alert("fileInput called");
+    //alert("fileInput called");
     var fileInput = document.getElementById('fileInput');
     //Iterating through each files selected in fileInput  
     for (i = 0; i < fileInput.files.length; i++) {
@@ -260,16 +260,10 @@ $("#fileInput").on("change", function () {
     $('#fileInput').val('');
 });
 
-function DeleteFile(FileName) {
-    alert("delete clicked");
-    //formdata.delete(FileName)
-    //$("#" + Fileid).remove();
-    //chkatchtbl();
-}
 
 function DownloadFile(fileId) {
     var $j = jQuery.noConflict();
-    alert("download clicked");
+    //alert("download clicked");
     $j("#hfFileId").val(fileId);
     $j("#btnDownload")[0].click();
 };
@@ -282,7 +276,7 @@ function chkatchtbl() {
     } else {
         $("#FilesList").css("visibility", "hidden");
     }
-} 
+}
 
 
 //triggered when modal is about to be shown
@@ -304,16 +298,9 @@ $('#cr_details').on('show.bs.modal', function (e) {
             //alert(JSON.stringify(data));
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
-            $j('#message').hide();
-            //console.log($j("#UnitLead").val());
-            //if ($j("#UnitLead").val() != "") {
-            //    alert("disable");
-            //    $j('#UnitLead').prop("disabled", true);
-            //}
-
         },
         error: function () {
-            alert("Error: Dynamic content load failed.");
+            //alert("Error: Dynamic content load failed.");
         }
     });
 
@@ -406,78 +393,222 @@ function ToggleProjectCompletedSchedule(el) {
 $(document).on("click", "#btnSubmit", function (event) {
     var formdata = new FormData(); //FormData object
     var $j = jQuery.noConflict();
-    //var bookId = $j(event.relatedTarget).data('book-id');
-    //alert(CRSrNo);
-    formdata.append("SrNo", $j("#SrNo").val());
-    formdata.append("CrTitle", $j("#CrTitle").val());
-    formdata.append("CrDescription", $j("#CrDescription").val());
-    formdata.append("ComplexityList", $j("#ComplexityList").val());
-    formdata.append("DepartmentList", $j("#DepartmentList").val());
-    formdata.append("CategoryList", $j("#CategoryList").val());
-    if (keyFlag == 1) {
-        formdata.append("KeyProjects", keyBool);
+
+    //Fields null check
+  
+    var isValid = true;
+    if ($j("#CrTitle").val() == "" || $j("#CrDescription").val() == "null" || $j("#CrDescription").val() == null) {
+        console.log("CrTitle is empty");
+        isValid = false;
+    }
+    else if ($j("#CrDescription").val() == "" || $j("#CrDescription").val() == "null" || $j("#CrDescription").val() == null) {
+        console.log("CrDescription is empty");
+        isValid = false;
+    }
+    else if ($j("#DepartmentList").val() == "" || $j("#DepartmentList").val() == "null" || $j("#DepartmentList").val() == null) {
+        console.log("DepartmentList is empty");
+        isValid = false;
+    }
+    else if ($j("#CategoryList").val() == "" || $j("#CategoryList").val() == "null" || $j("#CategoryList").val() == null) {
+        console.log("CategoryList is empty");
+        isValid = false;
+    }
+    else if ($j("#KeyProjectsYes").is(':checked') == false && $j("#KeyProjectsNo").is(':checked') == false ) {
+        console.log("KeyProjects is empty");
+        isValid = false;
+    }
+    //else if ($j("#ExpextedDate").val() == "" || $j("#ExpextedDate").val() == "null" || $j("#ExpextedDate").val() == null) {
+    //    isValid = false;
+    //}
+    else if ($j("#ReasonRCA").val() == "" || $j("#ReasonRCA").val() == "null" || $j("#ReasonRCA").val() == null) {
+        console.log("ReasonRCA is empty");
+        isValid = false;
+    }
+    else if ($j("#ComplexityList").val() == "" || $j("#ComplexityList").val() == "null" || $j("#ComplexityList").val() == null) {
+        console.log("ComplexityList is empty");
+        isValid = false;
+    }
+    else if ($j("#ProjectCompletedScheduleYes").is(':checked') == false && $j("#ProjectCompletedScheduleNo").is(':checked') == false) {
+        console.log("ProjectCompletedScheduleNo is empty");
+        isValid = false;
+    }
+    else if ($j("#ProjectCRReceivedDate").val() == "" || $j("#ProjectCRReceivedDate").val() == "null" || $j("#ProjectCRReceivedDate").val() == null) {
+        console.log("ProjectCRReceivedDate is empty");
+        isValid = false;
+    }
+    else if ($j("#FinalProjectCRReceivedDate").val() == "" || $j("#FinalProjectCRReceivedDate").val() == "null" || $j("#FinalProjectCRReceivedDate").val() == null) {
+        console.log("FinalProjectCRReceivedDate is empty");
+        isValid = false;
+    }
+    else if ($j("#NoOfCRReceivedDuringUAT").val() == "" || $j("#NoOfCRReceivedDuringUAT").val() == "null" || $j("#NoOfCRReceivedDuringUAT").val() == null) {
+        console.log("NoOfCRReceivedDuringUAT is empty");
+        isValid = false;
+    }
+    else if ($j("#UATDeliveryDate").val() == "" || $j("#UATDeliveryDate").val() == "null" || $j("#UATDeliveryDate").val() == null) {
+        console.log("UATDeliveryDate is empty");
+        isValid = false;
+    }
+    else if ($j("#UATSignoffDate").val() == "" || $j("#UATSignoffDate").val() == "null" || $j("#UATSignoffDate").val() == null) {
+        console.log("UATSignoffDate is empty");
+        isValid = false;
+    }
+    else if ($j("#ProjectCRLiveDate").val() == "" || $j("#ProjectCRLiveDate").val() == "null" || $j("#ProjectCRLiveDate").val() == null) {
+        console.log("ProjectCRLiveDate is empty");
+        isValid = false;
+    }
+    else if ($j("#FirstCommittedLiveDate").val() == "" || $j("#FirstCommittedLiveDate").val() == "null" || $j("#FirstCommittedLiveDate").val() == null) {
+        console.log("FirstCommittedLiveDate is empty");
+        isValid = false;
+    }
+    else if ($j("#TAT").val() == "" || $j("#TAT").val() == "null" || $j("#TAT").val() == null) {
+        console.log("TAT is empty");
+        isValid = false;
+    }
+    else if ($j("#NoOfShowstoppersPostGoLive").val() == "" || $j("#NoOfShowstoppersPostGoLive").val() == "null" || $j("#NoOfShowstoppersPostGoLive").val() == null) {
+        console.log("NoOfShowstoppersPostGoLive is empty");
+        isValid = false;
+    }
+    else if ($j("#UnitLead").val() == "" || $j("#UnitLead").val() == "null" || $j("#UnitLead").val() == null) {
+        console.log("UnitLead is empty");
+        isValid = false;
+    }
+    else if ($j("#Manager").val() == "" || $j("#Manager").val() == "null" || $j("#Manager").val() == null) {
+        console.log("Manager is empty");
+        isValid = false;
     }
     else {
-        if ($j("#KeyProjectsYes").is(':checked')) {
-            formdata.append("KeyProjects", true);
-        }
-        else if ($j("#KeyProjectsNo").is(':checked')) {
-            formdata.append("KeyProjects", false);
-        }
-        else {
+        isValid = true;
+    }
+
+    if (isValid) {
+        formdata.append("SrNo", $j("#SrNo").val());
+        formdata.append("CrTitle", $j("#CrTitle").val());
+        formdata.append("CrDescription", $j("#CrDescription").val());
+        formdata.append("ComplexityList", $j("#ComplexityList").val());
+        formdata.append("DepartmentList", $j("#DepartmentList").val());
+        formdata.append("CategoryList", $j("#CategoryList").val());
+        if (keyFlag == 1) {
             formdata.append("KeyProjects", keyBool);
         }
-    
-    }
-    if (projFlag == 1) {
-        formdata.append("ProjectCompletedSchedule", projBool);
-    }
-    else {
-        if ($j("#ProjectCompletedScheduleYes").is(':checked')) {
-            formdata.append("ProjectCompletedSchedule", true);
-        }
-        else if ($j("#ProjectCompletedScheduleNo").is(':checked')) {
-            formdata.append("ProjectCompletedSchedule", false);
-        }
         else {
+            if ($j("#KeyProjectsYes").is(':checked')) {
+                formdata.append("KeyProjects", true);
+            }
+            else if ($j("#KeyProjectsNo").is(':checked')) {
+                formdata.append("KeyProjects", false);
+            }
+            else {
+                formdata.append("KeyProjects", keyBool);
+            }
+
+        }
+        if (projFlag == 1) {
             formdata.append("ProjectCompletedSchedule", projBool);
         }
-    }
-   
-    formdata.append("ProjectCRReceivedDate", $j("#ProjectCRReceivedDate").val());
-    formdata.append("FinalProjectCRReceivedDate", $j("#FinalProjectCRReceivedDate").val());
-    formdata.append("NoOfCRReceivedDuringUAT", $j("#NoOfCRReceivedDuringUAT").val());
-    formdata.append("UATDeliveryDate", $j("#UATDeliveryDate").val());
-    formdata.append("UATSignoffDate", $j("#UATSignoffDate").val());
-    formdata.append("ProjectCRLiveDate", $j("#ProjectCRLiveDate").val());
-    formdata.append("FirstCommittedLiveDate", $j("#FirstCommittedLiveDate").val());
-    formdata.append("TAT", $j("#TAT").val());
-    formdata.append("NoOfShowstoppersPostGoLive", $j("#NoOfShowstoppersPostGoLive").val());
-    formdata.append("UnitLead", $j("#UnitLead").val());
-    formdata.append("Manager", $j("#Manager").val());
-    formdata.append("ReasonRCA", $j("#ReasonRCA").val());
-    $j.ajax({
-        url: '/Modal/UpdateCRDetails',
-        type: "POST",
-        contentType: false, // Not to set any content header
-        processData: false, // Not to process data
-        data: formdata,
-        async: false,
-        success: function (result) {
-            if (result != "") {
-                alert(result);
-                keyFlag = 0;
-                projFlag = 0;
-                keyBool = null;
-                projBool = null;
+        else {
+            if ($j("#ProjectCompletedScheduleYes").is(':checked')) {
+                formdata.append("ProjectCompletedSchedule", true);
             }
-        },
-        error: function (err) {
-            alert(err.statusText);
+            else if ($j("#ProjectCompletedScheduleNo").is(':checked')) {
+                formdata.append("ProjectCompletedSchedule", false);
+            }
+            else {
+                formdata.append("ProjectCompletedSchedule", projBool);
+            }
         }
-    });
+
+        formdata.append("ProjectCRReceivedDate", $j("#ProjectCRReceivedDate").val());
+        formdata.append("FinalProjectCRReceivedDate", $j("#FinalProjectCRReceivedDate").val());
+        formdata.append("NoOfCRReceivedDuringUAT", $j("#NoOfCRReceivedDuringUAT").val());
+        formdata.append("UATDeliveryDate", $j("#UATDeliveryDate").val());
+        formdata.append("UATSignoffDate", $j("#UATSignoffDate").val());
+        formdata.append("ProjectCRLiveDate", $j("#ProjectCRLiveDate").val());
+        formdata.append("FirstCommittedLiveDate", $j("#FirstCommittedLiveDate").val());
+        formdata.append("TAT", $j("#TAT").val());
+        formdata.append("NoOfShowstoppersPostGoLive", $j("#NoOfShowstoppersPostGoLive").val());
+        formdata.append("UnitLead", $j("#UnitLead").val());
+        formdata.append("Manager", $j("#Manager").val());
+        formdata.append("ReasonRCA", $j("#ReasonRCA").val());
+        $j.ajax({
+            url: '/Modal/UpdateCRDetails',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: formdata,
+            async: false,
+            success: function (result) {
+                if (result != "") {
+                    alert(result);
+                    keyFlag = 0;
+                    projFlag = 0;
+                    keyBool = null;
+                    projBool = null;
+                    $j('#cr_details').modal('toggle'); //or  $('#IDModal').modal('hide');
+                    return false;
+                }
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+    else {
+        alert("Please Enter Required fields input");
+    }
+});
+
+
+$(document).on("keypress", "#CrTitle", function (e) {
+    var $j = jQuery.noConflict();
+    var keyCode = e.keyCode || e.which;
+
+    $j("#CrTitleError").html("");
+
+    //Regex for Valid Characters i.e. Alphabets and Numbers.
+    var regex = /^[A-Za-z0-9]+$/;
+
+    //Validate TextBox value against the Regex.
+    var isValid = regex.test(String.fromCharCode(keyCode));
+    if (!isValid) {
+        $j("#CrTitleError").html("Only Alphabets and Numbers allowed.");
+    }
+
+    return isValid;
+});
+
+$(document).on("keyup", "#NoOfShowstoppersPostGoLive", function () {
+//$('#NoOfShowstoppersPostGoLive').keyup(function () {
+    this.value = this.value.replace(/[^0-9\.]/g, '');
 
 });
+
+$(document).on("keypress", "#NoOfShowstoppersPostGoLive", function (evt) {
+//$("#NoOfShowstoppersPostGoLive").keypress(function (e) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode != 46 && charCode > 31
+        && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+});
+
+$(document).on("keyup", "#NoOfCRReceivedDuringUAT", function () {
+//$('#NoOfCRReceivedDuringUAT').keyup(function () {
+
+    this.value = this.value.replace(/[^0-9\.]/g, '');
+
+});
+
+$(document).on("keypress", "#NoOfCRReceivedDuringUAT", function (evt) {
+//$("#NoOfCRReceivedDuringUAT").keypress(function (e) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode != 46 && charCode > 31
+        && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+});
+
 
 
 

@@ -4,6 +4,8 @@
 }
 
 <script>
+
+  
     var keyBool = null;
     var projBool = null;
     function keyProjectsResult(radio) {
@@ -57,6 +59,7 @@
         }
 
         $(function () {
+            $("#ExpextedDate").attr("readonly", "true");
             $("#ExpextedDate").datepicker({
                 beforeShowDay: ShowDisableDates,
                 changeYear: true,
@@ -67,18 +70,64 @@
             });
         });
 
-    
+        $(function () {
+            $("#CrTitle").keypress(function (e) {
+                var keyCode = e.keyCode || e.which;
+
+                $("#CrTitleError").html("");
+
+                //Regex for Valid Characters i.e. Alphabets and Numbers.
+                var regex = /^[A-Za-z0-9]+$/;
+
+                //Validate TextBox value against the Regex.
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#CrTitleError").html("Only Alphabets and Numbers allowed.");
+                }
+
+                return isValid;
+            });
+        });
+
+        $('#NoOfShowstoppersPostGoLive').keyup(function () {
+
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+
+        });
+
+        $("#NoOfShowstoppersPostGoLive").keypress(function (e) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        });
+
+        $('#NoOfCRReceivedDuringUAT').keyup(function () {
+
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+
+        });
+
+        $("#NoOfCRReceivedDuringUAT").keypress(function (e) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        });
+
 
 
         $(function () {
-            //var $dp1 = $("#ExpextedDate");
-            //$dp1.datepicker({
-            //    changeYear: true,
-            //    changeMonth: true,
-            //    minDate: 0,
-            //    dateFormat: "dd-MM-yy",
-            //    yearRange: "-100:+20",
-            //});
+            $("#ProjectCRReceivedDate").attr("readonly", "true");
+            $("#FinalProjectCRReceivedDate").attr("readonly", "true");
+            $("#UATDeliveryDate").attr("readonly", "true");
+            $("#UATSignoffDate").attr("readonly", "true");
+            $("#ProjectCRLiveDate").attr("readonly", "true");
+            $("#FirstCommittedLiveDate").attr("readonly", "true");
 
             var $dp2 = $("#ProjectCRReceivedDate");
             $dp2.datepicker({
@@ -197,9 +246,23 @@
             chkatchtbl();
             $('#fileInput').val('');
         });
+        
+        function formatDate(date) {
+            var d = new Date(date.split("/").reverse().join("-"));
+            var dd = d.getDate();
+            var mm = d.getMonth() + 1;
+            if (mm.toString().length == 1) {
+                mm = ('0' + mm).slice(-2);
+            }
+            var yy = d.getFullYear();
+            var newdate = yy + "-" + mm + "-" + dd;
+            alert(newdate);
+            return newdate;
+        }
 
 
         $("#btnSubmit").click(function () {
+
             //validation code start here
             var isValid = true;
             if ($("#CrTitle").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
@@ -367,6 +430,7 @@
             {
                   @class = "text-danger"
             })
+            <span id="CrTitleError" style="color: red"></span>
         </div>
         <div id="description" class="form-group required col-md-6">
             @Html.LabelFor(model => model.CrDescription, "CR description ", htmlAttributes: new
@@ -522,7 +586,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
             @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
         </div>
         <div id="tat" class="form-group col-md-6">
@@ -540,7 +604,7 @@
             {
                 @class = "control-label col-md-5"
             })
-            @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
             @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
         </div>
         <div id="projCompSchdl" class="form-group col-md-6">
@@ -622,7 +686,7 @@
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button id="btnSubmit" class="btn btn-success">Save changes</button>
+        <button id="btnSubmit" type="button" class="btn btn-success">Save changes</button>
     </div>
 
 

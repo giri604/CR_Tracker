@@ -1,6 +1,7 @@
 ﻿using CR_Details.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,6 +40,7 @@ namespace CR_Details.Controllers
         [HttpPost]
         public ActionResult CRDetails(FormCollection formCollection)
         {
+            IFormatProvider culture = new CultureInfo("en-US", true);
             DateTime validValue;
             string uname = Request["uploadername"];
             HttpFileCollectionBase files = Request.Files;

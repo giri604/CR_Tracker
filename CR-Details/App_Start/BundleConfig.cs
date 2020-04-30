@@ -10,7 +10,9 @@ namespace CR_Details
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-3.4.1.min.js",
-                         "~/Scripts/jquery-ui.min.js"));
+                         "~/Scripts/jquery-ui.min.js",
+                         "~/Scripts/jquery.validate.min.js",
+                         "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
             //         "~/Scripts/jquery-ui.min.js"));
