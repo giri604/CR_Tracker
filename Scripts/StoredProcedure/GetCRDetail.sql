@@ -13,11 +13,11 @@ GO
 -- Create date: 20 apr 2020
 -- =============================================
 CREATE PROCEDURE [dbo].[GetCRDetail]
-@SrNo int
+@CR_ID int
 
 AS
 BEGIN
-	SELECT [dbo].[CRDetails].* from CRDetails where SrNo = @SrNo
+	SELECT [dbo].[CRDetails].* from CRDetails where CR_ID = @CR_ID
 END
 GO
 

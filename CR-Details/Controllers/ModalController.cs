@@ -42,7 +42,7 @@ namespace CR_Details.Controllers
             {
                 HttpPostedFileBase file = files[i];
                 //insert file into CRAttachFiles table and get id return for CRDetails
-                fileID = repository.SaveCRAttachFiles(cRDetails.SrNo, file);
+                fileID = repository.SaveCRAttachFiles(cRDetails.CR_ID, file);
 
             }
             cRDetails.AttachFileId = fileID;
@@ -73,9 +73,9 @@ namespace CR_Details.Controllers
         public ActionResult UpdateCRDetails(FormCollection formCollection)
         {
             DateTime validValue;
-            int SrNo = 0;
+            int CR_ID = 0;
             CR_Details.Models.CRDetails cRDetails = new CRDetails();
-            SrNo = (formCollection["SrNo"] != "") ? (Convert.ToInt32(formCollection["SrNo"])) : 0;
+            CR_ID = (formCollection["CR_ID"] != "") ? (Convert.ToInt32(formCollection["CR_ID"])) : 0;
             cRDetails.CrTitle = formCollection["CrTitle"];
             cRDetails.CrDescription = formCollection["CrDescription"];
             if (formCollection["ComplexityList"] != "")
@@ -116,7 +116,7 @@ namespace CR_Details.Controllers
             }
             cRDetails.ReasonRCA = formCollection["ReasonRCA"];
 
-            string message = repository.UpdateCRDetails(cRDetails, SrNo);
+            string message = repository.UpdateCRDetails(cRDetails, CR_ID);
             return Content(message);
 
         }

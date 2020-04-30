@@ -42,10 +42,10 @@ namespace CR_Details.Models
             return cRDetails;
         }
 
-        public int SaveCRAttachFiles(int SrNo, HttpPostedFileBase attachFile)
+        public int SaveCRAttachFiles(int CR_ID, HttpPostedFileBase attachFile)
         {
             BAL.CRDetails BALCRDetails = new BAL.CRDetails();
-            int message = BAL.CRDetails.AddCRAttachFiles(SrNo, attachFile);
+            int message = BAL.CRDetails.AddCRAttachFiles(CR_ID, attachFile);
             return message;
         }
 
@@ -56,10 +56,10 @@ namespace CR_Details.Models
             return message;
         }
 
-        public string UpdateCRDetails(CRDetails cRDetails, int SrNo)
+        public string UpdateCRDetails(CRDetails cRDetails, int CR_ID)
         {
             BAL.CRDetails BALCRDetails = new BAL.CRDetails();
-            string message = BAL.CRDetails.UpdateCRDetails(cRDetails, SrNo);
+            string message = BAL.CRDetails.UpdateCRDetails(cRDetails, CR_ID);
             return message;
         }
     }

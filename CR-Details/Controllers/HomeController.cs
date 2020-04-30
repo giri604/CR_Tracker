@@ -86,7 +86,7 @@ namespace CR_Details.Controllers
                 var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
                 cRDetails.Manager = managerType;
             }
-            cRDetails.ExpextedDate = DateTime.TryParse((formCollection["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
+            cRDetails.ExpectedDate = DateTime.TryParse((formCollection["ExpectedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.ReasonRCA = formCollection["ReasonRCA"];
 
 

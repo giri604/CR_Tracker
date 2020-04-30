@@ -9,9 +9,12 @@ namespace CR_Details.Models
 {
     public class CRDetails
     {
-        public int SrNo { get; set; }
+        [Key]
+        public int CR_ID { get; set; }
+
         [Required]
         public string CrTitle { get; set; }
+
         [Required]
         public string CrDescription { get; set; }
         public Complexity? ComplexityList { get; set; } = null;
@@ -52,7 +55,7 @@ namespace CR_Details.Models
         public Lead? Manager { get; set; } = null;
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime? ExpextedDate { get; set; }
+        public DateTime? ExpectedDate { get; set; }
         public string ReasonRCA { get; set; }
         public int? AttachFileId { get; set; } = null;
 

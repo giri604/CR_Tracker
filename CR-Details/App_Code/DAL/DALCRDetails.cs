@@ -53,9 +53,9 @@ namespace CR_Details.DAL
                                                                             cRDetails.NoOfShowstoppersPostGoLive,
                                                                             cRDetails.UnitLead,
                                                                             cRDetails.Manager,
-                                                                            cRDetails.ExpextedDate,
+                                                                            cRDetails.ExpectedDate,
                                                                             cRDetails.ReasonRCA);
-                CrIDOut = (m_dsCRMst.Tables[0].Rows[0]["SRNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SRNo"])) : 0;
+                CrIDOut = (m_dsCRMst.Tables[0].Rows[0]["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["CR_ID"])) : 0;
             }
             catch (Exception)
             {
@@ -70,14 +70,14 @@ namespace CR_Details.DAL
         #endregion
 
         #region "UpdateCRDetails"
-        public string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int SrNo)
+        public string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int CR_ID)
         {
             try
             {
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn,
                                                                           null,
                                                                           "[dbo].[UpdateCRDetails]",
-                                                                          SrNo,
+                                                                          CR_ID,
                                                                           cRDetails.CrTitle,
                                                                           cRDetails.CrDescription,
                                                                           cRDetails.ComplexityList,
@@ -113,9 +113,9 @@ namespace CR_Details.DAL
         #endregion
 
         #region "AddCRAttachFiles"
-        public int AddCRAttachFiles(int SrNo, HttpPostedFileBase attachFile)
+        public int AddCRAttachFiles(int CR_ID, HttpPostedFileBase attachFile)
         {
-            int OutSrno = 0;
+            int OutCR_ID = 0;
             byte[] bytes;
             using (BinaryReader br = new BinaryReader(attachFile.InputStream))
             {
@@ -124,10 +124,10 @@ namespace CR_Details.DAL
             try
             {
                 var Filename = Path.GetFileName(attachFile.FileName);
-                OutSrno = Convert.ToInt32(SQL.SQLLayer.ExecuteScalar(m_conn,
+                OutCR_ID = Convert.ToInt32(SQL.SQLLayer.ExecuteScalar(m_conn,
                                                 null,
                                                 "[dbo].AddCRAttachments",
-                                                SrNo,
+                                                CR_ID,
                                                 Filename,
                                                 attachFile.ContentType,
                                                 bytes));
@@ -135,13 +135,13 @@ namespace CR_Details.DAL
             catch (Exception ex)
             {
 
-                OutSrno = 0;
+                OutCR_ID = 0;
             }
             finally
             {
                 SQL.SQLLayer.CloseConnection(m_conn);
             }
-            return OutSrno;
+            return OutCR_ID;
         }
         #endregion
 
@@ -157,7 +157,7 @@ namespace CR_Details.DAL
                 {
                     //Add more Fields here
                     cRDetail.CrTitle = (m_dsCRMst.Tables[0].Rows[0]["CrTitle"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CrTitle"])) : string.Empty;
-                    cRDetail.SrNo = (m_dsCRMst.Tables[0].Rows[0]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SrNo"])) : 0;
+                    cRDetail.CR_ID = (m_dsCRMst.Tables[0].Rows[0]["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["CR_ID"])) : 0;
                     cRDetail.CrDescription = (m_dsCRMst.Tables[0].Rows[0]["CrDescription"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CrDescription"])) : string.Empty;
                     if (m_dsCRMst.Tables[0].Rows[0]["ComplexityList"] != DBNull.Value)
                     {
@@ -204,12 +204,12 @@ namespace CR_Details.DAL
                 }
                 else
                 {
-                    cRDetail.SrNo = 0;
+                    cRDetail.CR_ID = 0;
                 }
             }
             catch (Exception ex)
             {
-                cRDetail.SrNo = 0;
+                cRDetail.CR_ID = 0;
                 return cRDetail;
             }
             finally
@@ -237,7 +237,7 @@ namespace CR_Details.DAL
                         {
                             cRAttach = new Models.CRAttachFiles();
                             cRAttach.FileID = (row["FileID"] != DBNull.Value) ? (Convert.ToInt32(row["FileID"])) : 0;
-                            cRAttach.SrNo = (row["SrNo"] != DBNull.Value) ? (Convert.ToInt32(row["SrNo"])) : 0;
+                            cRAttach.CR_ID = (row["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(row["CR_ID"])) : 0;
                             cRAttach.FileName = (row["FileName"] != DBNull.Value) ? (Convert.ToString(row["FileName"])) : string.Empty;
                             cRAttach.ContentType = (row["ContentType"] != DBNull.Value) ? (Convert.ToString(row["ContentType"])) : string.Empty;
                             cRAttach.AttachDocument = (row["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(row["ContentType"].ToString()) : null;
@@ -249,7 +249,7 @@ namespace CR_Details.DAL
                     //{
                     //    cRAttach = new Models.CRAttachFiles();
                     //    cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[i]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["FileID"])) : 0;
-                    //    cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[i]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["SrNo"])) : 0;
+                    //    cRAttach.CR_ID = (m_dsCRMst.Tables[0].Rows[i]["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[i]["CR_ID"])) : 0;
                     //    cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[i]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["FileName"])) : string.Empty;
                     //    cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[i]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[i]["ContentType"])) : string.Empty;
                     //    //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
@@ -290,7 +290,7 @@ namespace CR_Details.DAL
                 {
                     cRAttach = new Models.CRAttachFiles();
                     cRAttach.FileID = (m_dsCRMst.Tables[0].Rows[0]["FileID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["FileID"])) : 0;
-                    cRAttach.SrNo = (m_dsCRMst.Tables[0].Rows[0]["SrNo"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["SrNo"])) : 0;
+                    cRAttach.CR_ID = (m_dsCRMst.Tables[0].Rows[0]["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["CR_ID"])) : 0;
                     cRAttach.FileName = (m_dsCRMst.Tables[0].Rows[0]["FileName"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["FileName"])) : string.Empty;
                     cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ContentType"])) : string.Empty;
                     //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
@@ -320,7 +320,7 @@ namespace CR_Details.DAL
         public List<string> GetExpectedDates()
         {
             //DateTime validValue;
-            List<string> ExpextedDates = new List<string>();
+            List<string> ExpectedDates = new List<string>();
             try
             {
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn, null, "GetExpectedDates");
@@ -330,35 +330,35 @@ namespace CR_Details.DAL
                     {
                         foreach (DataRow row in table.Rows)
                         {
-                            //var ExpextedDate = DateTime.TryParse(Convert.ToString(row["ExpextedDate"]), out validValue) ? validValue : (DateTime?)null;
-                            //ExpextedDates.Add(ExpextedDate);
+                            //var ExpectedDate = DateTime.TryParse(Convert.ToString(row["ExpectedDate"]), out validValue) ? validValue : (DateTime?)null;
+                            //ExpectedDates.Add(ExpectedDate);
                             //DateTime.TryParseExact(dateString, "M/dd/yyyy hh:mm", enUS,DateTimeStyles.None, out dateValue)
-                            //var ExpextedDate = DateTime.TryParseExact(Convert.ToString(row["ExpextedDate"]), "yyyy/MM/dd", enUS, DateTimeStyles.None, out validValue) ? validValue.Date : (DateTime?)null;
-                            //var ExpextedDate = Convert.ToDateTime(Convert.ToString(row["ExpextedDate"])).Date;
-                            var ExpextedDate = Convert.ToDateTime(Convert.ToString(row["ExpextedDate"])).ToString("yyyy/MM/dd");
-                            //var ExpextedDate = myDate.ToString("yyyy/MM/dd");
+                            //var ExpectedDate = DateTime.TryParseExact(Convert.ToString(row["ExpectedDate"]), "yyyy/MM/dd", enUS, DateTimeStyles.None, out validValue) ? validValue.Date : (DateTime?)null;
+                            //var ExpectedDate = Convert.ToDateTime(Convert.ToString(row["ExpectedDate"])).Date;
+                            var ExpectedDate = Convert.ToDateTime(Convert.ToString(row["ExpectedDate"])).ToString("yyyy/MM/dd");
+                            //var ExpectedDate = myDate.ToString("yyyy/MM/dd");
 
 
-                            ExpextedDates.Add(ExpextedDate);
+                            ExpectedDates.Add(ExpectedDate);
                         }
                     }
 
                 }
                 else
                 {
-                    return ExpextedDates;
+                    return ExpectedDates;
                 }
             }
             catch (Exception ex)
             {
 
-                return ExpextedDates;
+                return ExpectedDates;
             }
             finally
             {
                 SQL.SQLLayer.CloseConnection(m_conn);
             }
-            return ExpextedDates;
+            return ExpectedDates;
         }
 
         #endregion

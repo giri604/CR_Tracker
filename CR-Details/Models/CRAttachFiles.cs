@@ -10,7 +10,7 @@ namespace CR_Details.Models
     {
         [Key]
         public int FileID { get; set; }
-        public int SrNo { get; set; }
+        public int CR_ID { get; set; }
         public string FileName { get; set; }
         public string ContentType { get; set; }
         public byte[] AttachDocument { get; set; }

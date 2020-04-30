@@ -417,7 +417,7 @@ $(document).on("click", "#btnSubmit", function (event) {
         console.log("KeyProjects is empty");
         isValid = false;
     }
-    //else if ($j("#ExpextedDate").val() == "" || $j("#ExpextedDate").val() == "null" || $j("#ExpextedDate").val() == null) {
+    //else if ($j("#ExpectedDate").val() == "" || $j("#ExpectedDate").val() == "null" || $j("#ExpectedDate").val() == null) {
     //    isValid = false;
     //}
     else if ($j("#ReasonRCA").val() == "" || $j("#ReasonRCA").val() == "null" || $j("#ReasonRCA").val() == null) {
@@ -481,7 +481,7 @@ $(document).on("click", "#btnSubmit", function (event) {
     }
 
     if (isValid) {
-        formdata.append("SrNo", $j("#SrNo").val());
+        formdata.append("CR_ID", $j("#CR_ID").val());
         formdata.append("CrTitle", $j("#CrTitle").val());
         formdata.append("CrDescription", $j("#CrDescription").val());
         formdata.append("ComplexityList", $j("#ComplexityList").val());

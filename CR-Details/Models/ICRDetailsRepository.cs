@@ -11,8 +11,8 @@ namespace CR_Details.Models
     {
         int SaveCRDetails(CRDetails cRDetails, HttpPostedFileBase attachFile);
         //UpdateCRDetails(cRDetails)
-        string UpdateCRDetails(CRDetails cRDetails, int SrNo);
-        int SaveCRAttachFiles(int SrNo, HttpPostedFileBase attachFile);
+        string UpdateCRDetails(CRDetails cRDetails, int CR_ID);
+        int SaveCRAttachFiles(int CR_ID, HttpPostedFileBase attachFile);
         CRDetails GetRDetail(int crId);
         List<CRAttachFiles> getCRAttachFiles(int? AttachFileId);
         CRAttachFiles getCRAttachFile(int? FileId);

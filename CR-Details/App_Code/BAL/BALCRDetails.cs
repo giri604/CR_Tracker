@@ -18,15 +18,15 @@ namespace CR_Details.BAL
             return DALCRDetails.ADDCRDetail(cRDetails, attachFile);
         }
     
-        public static string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int SrNo)
+        public static string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int CR_ID)
         {
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
-            return DALCRDetails.UpdateCRDetails(cRDetails, SrNo);
+            return DALCRDetails.UpdateCRDetails(cRDetails, CR_ID);
         }
-        public static int AddCRAttachFiles(int SrNo, HttpPostedFileBase attachFile)
+        public static int AddCRAttachFiles(int CR_ID, HttpPostedFileBase attachFile)
         {
             DAL.CRDetails DALCRDetails = new DAL.CRDetails();
-            return DALCRDetails.AddCRAttachFiles(SrNo, attachFile);
+            return DALCRDetails.AddCRAttachFiles(CR_ID, attachFile);
         }
         public static CR_Details.Models.CRDetails GetCRDetail(int crId)
         {
