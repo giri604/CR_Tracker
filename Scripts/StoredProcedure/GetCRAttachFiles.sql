@@ -1,4 +1,3 @@
-USE [MyDemoDB]
 GO
 
 /****** Object:  StoredProcedure [dbo].[GetCRAttachFiles]    Script Date: 23 Apr 2020 7:13:27 PM ******/
@@ -20,17 +19,18 @@ BEGIN
     SET NOCOUNT ON;
 
 SELECT [FileID]
-	  ,[SrNo]
+	  ,[CR_ID]
       ,[FileName]
       ,[ContentType]
       ,[AttachDocument]
       ,[CreatedDate]
       ,[ModifiedDateTime]
-  FROM [MyDemoDB].[dbo].[CRAttachFiles] where SrNo = @AttachFileId
+  FROM [MyDemoDB].[dbo].[CRAttachFiles] where CR_ID = @AttachFileId
 
 	
 
 END
+
 GO
 
 

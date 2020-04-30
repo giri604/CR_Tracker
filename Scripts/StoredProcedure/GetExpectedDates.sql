@@ -1,4 +1,3 @@
-USE [MyDemoDB]
 GO
 
 /****** Object:  StoredProcedure [dbo].[GetExpectedDates]    Script Date: 28 Apr 2020 4:49:36 PM ******/
@@ -18,8 +17,8 @@ BEGIN
   
     SET NOCOUNT ON;
 
-SELECT [ExpextedDate]
-  FROM [MyDemoDB].[dbo].[CRDetails] where [ExpextedDate] is not null
+SELECT [ExpectedDate]
+  FROM [MyDemoDB].[dbo].[CRDetails] where [ExpectedDate] is not null
 
 	
 

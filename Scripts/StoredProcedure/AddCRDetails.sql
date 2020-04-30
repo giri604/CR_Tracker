@@ -1,7 +1,6 @@
-USE [MyDemoDB]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCRDetails]    Script Date: 20 Apr 2020 5:10:24 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCRDetails]******/
 SET ANSI_NULLS ON
 GO
 
@@ -20,20 +19,20 @@ CREATE PROCEDURE [dbo].[AddCRDetails]
 @Category nvarchar(50) = null,
 @ProjectCompletedSchedule bit = null,
 @KeyProjects bit = null,
-@ProjectCRReceivedDate nvarchar(50) = null,
-@FinalProjectCRReceivedDate nvarchar(50) = null,
+@ProjectCRReceivedDate DATE = null,
+@FinalProjectCRReceivedDate DATE = null,
 @NoOfCRReceivedDuringUAT int = null,
-@UATDeliveryDate nvarchar(50) = null,
-@UATSignoffDate nvarchar(50) = null,
-@ProjectCRLiveDate nvarchar(50) = null,
-@FirstCommittedLiveDate nvarchar(50) = null,
+@UATDeliveryDate DATE = null,
+@UATSignoffDate DATE = null,
+@ProjectCRLiveDate DATE = null,
+@FirstCommittedLiveDate DATE = null,
 @TAT nvarchar(50) = null,
 @NoOdShowstoppersPostGoLive int = null,
 @UnitLead nvarchar(50) = null,
 @Manager nvarchar(50) = null,
-@ExpextedDate nvarchar(50) = null,
+@ExpextedDate DATE = null,
 @ReasonRCA nvarchar(50) = null,
-@SrNoOut int = NULL Output
+@CR_IDOut int = NULL Output
 
 AS
 BEGIN
@@ -80,7 +79,7 @@ insert into [dbo].[CRDetails]
 		  @ExpextedDate,
 		  @ReasonRCA)
 
-select SCOPE_IDENTITY() as SRNo;
+select SCOPE_IDENTITY() as CR_ID;
 END
 GO
 

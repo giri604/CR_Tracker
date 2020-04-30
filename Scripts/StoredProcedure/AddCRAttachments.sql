@@ -1,15 +1,16 @@
-USE [MyDemoDB]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddCRAttachments]    Script Date: 20 Apr 2020 5:09:30 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddCRAttachments]    
+ -----------Created By Deepak Giri-------------------
+Script Date: 30-Apr-20 7:33:21 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create procedure [dbo].[AddCRAttachments]
-@SrNo int,
+CREATE procedure [dbo].[AddCRAttachments]
+@CR_ID int,
 @Filename varchar(55),
 @ContentType nvarchar(255),
 @AttachDocument varbinary(max)
@@ -17,17 +18,17 @@ create procedure [dbo].[AddCRAttachments]
 As
 BEGIN
 Insert into [dbo].[CRAttachFiles] 
-		([SrNo]
+		([CR_ID]
       ,[FileName]
       ,[ContentType]
       ,[AttachDocument])
 values
-	(@SrNo,
+	(@CR_ID,
 	@Filename,
 	@ContentType,
 	@AttachDocument)
 
-update [dbo].[CRDetails] set AttachFileId = @SrNo where SrNo = @SrNo
+update [dbo].[CRDetails] set AttachFileId = @CR_ID where CR_ID = @CR_ID
 end
 	
 GO

@@ -1,4 +1,3 @@
-USE [MyDemoDB]
 GO
 
 /****** Object:  StoredProcedure [dbo].[UpdateCRDetails]    Script Date: 28 Apr 2020 4:50:09 PM ******/
@@ -12,8 +11,8 @@ GO
 -- Author:		Deepak Giri
 -- Create date: 22 apr 2020
 -- =============================================
-Create PROCEDURE [dbo].[UpdateCRDetails]
-@SrNo int = NULL,
+CREATE PROCEDURE [dbo].[UpdateCRDetails]
+@CR_ID int = NULL,
 @CrTitle nvarchar(50) = null,
 @CrDescription nvarchar(max) = null,
 @Complexity nvarchar(50) = null,
@@ -56,7 +55,7 @@ update [dbo].[CRDetails] set
 		  ,[UnitLead] = @UnitLead
 		  ,[Manager] = @Manager
 		  ,[ReasonRCA] = @ReasonRCA
-where SrNo = @SrNo
+where CR_ID = @CR_ID
 		  
 END
 GO

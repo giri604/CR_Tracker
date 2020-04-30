@@ -1,4 +1,3 @@
-USE [MyDemoDB]
 GO
 
 /****** Object:  StoredProcedure [dbo].[GetCRAttachFile]    Script Date: 24 Apr 2020 11:19:37 PM ******/
@@ -12,7 +11,7 @@ GO
 -- Author:		Deepak Giri
 -- Create date: 23 Apr 2020
 -- =============================================
-Create PROCEDURE [dbo].[GetCRAttachFile]
+CREATE PROCEDURE [dbo].[GetCRAttachFile]
 @FileID int
 AS
 BEGIN
@@ -20,7 +19,7 @@ BEGIN
     SET NOCOUNT ON;
 
 SELECT [FileID]
-	  ,[SrNo]
+	  ,[CR_ID]
       ,[FileName]
       ,[ContentType]
       ,[AttachDocument]
@@ -29,6 +28,7 @@ SELECT [FileID]
 	
 
 END
+
 GO
 
 
