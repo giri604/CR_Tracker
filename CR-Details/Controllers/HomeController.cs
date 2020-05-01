@@ -101,7 +101,8 @@ namespace CR_Details.Controllers
                 fileID = repository.SaveCRAttachFiles(CrID, file);
 
             }
-            return View();
+            //return Json("Added Successfully", JsonRequestBehavior.AllowGet);
+            return new EmptyResult();
         }
     }
 }

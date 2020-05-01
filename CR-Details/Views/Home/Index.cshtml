@@ -95,8 +95,8 @@
 
         });
 
-        $("#NoOfShowstoppersPostGoLive").keypress(function (e) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+        $("#NoOfShowstoppersPostGoLive").keypress(function (evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
             if (charCode != 46 && charCode > 31
                 && (charCode < 48 || charCode > 57))
                 return false;
@@ -110,8 +110,8 @@
 
         });
 
-        $("#NoOfCRReceivedDuringUAT").keypress(function (e) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+        $("#NoOfCRReceivedDuringUAT").keypress(function (evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
             if (charCode != 46 && charCode > 31
                 && (charCode < 48 || charCode > 57))
                 return false;
@@ -367,12 +367,12 @@
                     data: formdata,
                     async: false,
                     success: function (result) {
-                        if (result != "") {
-                            alert(result);
-                        }
+                        alert("added successfully");
                     },
-                    error: function (err) {
-                        alert(err.statusText);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                        console.log(xhr.responseText);
+                        alert(thrownError);
                     }
                 });
             }
@@ -686,7 +686,7 @@
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button id="btnSubmit" type="button" class="btn btn-success">Save changes</button>
+        <button id="btnSubmit" class="btn btn-success">Save changes</button>
     </div>
 
 
