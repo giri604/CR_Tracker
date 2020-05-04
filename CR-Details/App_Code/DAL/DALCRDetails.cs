@@ -69,6 +69,8 @@ namespace CR_Details.DAL
         #region "UpdateCRDetails"
         public string UpdateCRDetails(CR_Details.Models.CRDetails cRDetails, int CR_ID)
         {
+            // cRDetails.ProjectCRReceivedDate,
+            //string sqlFormattedDate = cRDetails.ProjectCRReceivedDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
             try
             {
                 m_dsCRMst = SQL.SQLLayer.ExecuteDataset(m_conn,
@@ -93,6 +95,7 @@ namespace CR_Details.DAL
                                                         cRDetails.NoOfShowstoppersPostGoLive,
                                                         cRDetails.UnitLead,
                                                         cRDetails.Manager,
+                                                        cRDetails.CRStatus,
                                                         cRDetails.ReasonRCA);
                 m_strmessage = "Record updated successfully";
             }
@@ -196,6 +199,12 @@ namespace CR_Details.DAL
                         var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["Manager"]));
                         cRDetail.Manager = managerType;
                     }
+                    if (m_dsCRMst.Tables[0].Rows[0]["CR_Status"] != DBNull.Value)
+                    {
+                        var statusType = (Models.CRStatus)Enum.Parse(typeof(Models.CRStatus), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["CR_Status"]));
+                        cRDetail.CRStatus = statusType;
+                    }
+
                     cRDetail.ReasonRCA = (m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ReasonRCA"])) : string.Empty;
                     cRDetail.AttachFileId = (m_dsCRMst.Tables[0].Rows[0]["AttachFileId"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["AttachFileId"])) : 0;
                 }

@@ -31,7 +31,7 @@ namespace CR_Details.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? FinalProjectCRReceivedDate { get; set; }
 
-        [Range(0,Int32.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public int? NoOfCRReceivedDuringUAT { get; set; } = null;
 
         [DataType(DataType.Date)]
@@ -53,6 +53,8 @@ namespace CR_Details.Models
         public int? NoOfShowstoppersPostGoLive { get; set; } = null;
         public Lead? UnitLead { get; set; } = null;
         public Lead? Manager { get; set; } = null;
+        public CRStatus? CRStatus { get; set; } = null;
+
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? ExpectedDate { get; set; }
@@ -97,5 +99,14 @@ namespace CR_Details.Models
         PravatSharma,
         [Display(Name = "Sagar Dasgupta")]
         SagarDasgupta
+    }
+
+    public enum CRStatus
+    {
+        Unassigned,
+        Pending,
+        Assigned,
+        Working,
+        UAT
     }
 }

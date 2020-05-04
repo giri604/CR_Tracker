@@ -65,7 +65,6 @@ namespace CR_Details.Controllers
             }
 
             return File(bytes, contentType, fileName);
-
         }
 
         //UpdateCRDetails
@@ -113,6 +112,11 @@ namespace CR_Details.Controllers
             {
                 var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
                 cRDetails.Manager = managerType;
+            }
+            if (formCollection["CRStatus"] != "")
+            {
+                var statusType = (Models.CRStatus)Enum.Parse(typeof(Models.CRStatus), Convert.ToString(formCollection["CRStatus"]));
+                cRDetails.CRStatus = statusType;
             }
             cRDetails.ReasonRCA = formCollection["ReasonRCA"];
 

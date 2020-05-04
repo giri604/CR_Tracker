@@ -1,3 +1,4 @@
+/****** Object:  Table [dbo].[CRDetails]    Script Date: 04 May 2020 9:32:47 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -40,4 +41,7 @@ CREATE TABLE [dbo].[CRDetails](
 GO
 
 ALTER TABLE [dbo].[CRDetails] ADD  CONSTRAINT [DF_CRDetails_Created]  DEFAULT (sysdatetime()) FOR [Created]
+GO
+
+ALTER TABLE [dbo].[CRDetails] ADD  CONSTRAINT [DF_CRDetails_CR_Status]  DEFAULT (N'Unassigned') FOR [CR_Status]
 GO

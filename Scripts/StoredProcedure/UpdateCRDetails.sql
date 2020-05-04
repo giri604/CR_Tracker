@@ -43,21 +43,21 @@ update [dbo].[CRDetails] set
 		  ,[CategoryList] = @Category
 		  ,[ProjectCompletedSchedule] = @ProjectCompletedSchedule
 		  ,[KeyProjects] = @KeyProjects
-		  ,[ProjectCRReceivedDate] = @ProjectCRReceivedDate
-		  ,[FinalProjectCRReceivedDate] = @FinalProjectCRReceivedDate
+		  ,[ProjectCRReceivedDate] = CONVERT(VARCHAR(10), CONVERT(date, @ProjectCRReceivedDate, 105), 23) 
+		  ,[FinalProjectCRReceivedDate] = CONVERT(VARCHAR(10), CONVERT(date, @FinalProjectCRReceivedDate, 105), 23)
 		  ,[NoOfCRReceivedDuringUAT] = @NoOfCRReceivedDuringUAT
-		  ,[UATDeliveryDate] = @UATDeliveryDate
-		  ,[UATSignoffDate] = @UATSignoffDate
-		  ,[ProjectCRLiveDate] = @ProjectCRLiveDate
-		  ,[FirstCommittedLiveDate] = @FirstCommittedLiveDate
+		  ,[UATDeliveryDate] = CONVERT(VARCHAR(10), CONVERT(date, @UATDeliveryDate, 105), 23) 
+		  ,[UATSignoffDate] = CONVERT(VARCHAR(10), CONVERT(date, @UATSignoffDate, 105), 23)
+		  ,[ProjectCRLiveDate] = CONVERT(VARCHAR(10), CONVERT(date, @ProjectCRLiveDate, 105), 23) 
+		  ,[FirstCommittedLiveDate] = CONVERT(VARCHAR(10), CONVERT(date, @FirstCommittedLiveDate, 105), 23) 
 		  ,[TAT] = @TAT
 		  ,[NoOfShowstoppersPostGoLive] = @NoOdShowstoppersPostGoLive
 		  ,[UnitLead] = @UnitLead
 		  ,[Manager] = @Manager
+		  ,[CR_Status] = @CRStatus
 		  ,[ReasonRCA] = @ReasonRCA
 where CR_ID = @CR_ID
 		  
 END
-GO
 
 

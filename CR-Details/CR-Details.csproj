@@ -175,6 +175,7 @@
     <Content Include="Scripts\amcharts-animated.js" />
     <Content Include="Scripts\amcharts-charts.js" />
     <Content Include="Scripts\amcharts-core.js" />
+    <Content Include="Scripts\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="CR_Tracker_Files\Time sheet for Apr 2020.xls" />

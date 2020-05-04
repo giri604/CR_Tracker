@@ -447,6 +447,22 @@ function ToggleProjectCompletedSchedule(el) {
     projBool = el.value;
 }
 
+function ToggleCRStatus(el) {
+    var CRStatus = el.value;
+}
+
+function ToggleUnitLead(el) {
+    var $j = jQuery.noConflict();
+    var CRStatus = { "Unassigned": 1, "Pending": 2, "Assigned": 3, "Working": 4, "UAT": 5 };
+    var lead = el.value;
+    if (lead != "") {
+        $j('#CRStatus').val('Assigned');
+        alert("value changed");
+    }
+}
+
+
+
 $j(document).on("click", "#btnSubmit", function (event) {
     var formdata = new FormData(); //FormData object
     var $j = jQuery.noConflict();
@@ -533,6 +549,10 @@ $j(document).on("click", "#btnSubmit", function (event) {
         console.log("Manager is empty");
         isValid = false;
     }
+    else if ($j("#CRStatus").val() == "" || $j("#CRStatus").val() == "null" || $j("#CRStatus").val() == null) {
+        console.log("CRStatus is empty");
+        isValid = false;
+    }
     else {
         isValid = true;
     }
@@ -585,6 +605,7 @@ $j(document).on("click", "#btnSubmit", function (event) {
         formdata.append("NoOfShowstoppersPostGoLive", $j("#NoOfShowstoppersPostGoLive").val());
         formdata.append("UnitLead", $j("#UnitLead").val());
         formdata.append("Manager", $j("#Manager").val());
+        formdata.append("CRStatus", $j("#CRStatus").val());
         formdata.append("ReasonRCA", $j("#ReasonRCA").val());
         $j.ajax({
             url: '/Modal/UpdateCRDetails',
@@ -601,6 +622,7 @@ $j(document).on("click", "#btnSubmit", function (event) {
                     keyBool = null;
                     projBool = null;
                     $j('#cr_details').modal('toggle'); //or  $j('#IDModal').modal('hide');
+                    $j('#cr_detailsP').load('/CR_Tracker/CR_Details_DataTableP');
                     return false;
                 }
             },
@@ -895,5 +917,3 @@ $j(document).on('click', '#btn_clear_dt,.btn-clear-date-filter', function () {
     $j('#txt_hidden_from_dt,#txt_hidden_to_dt').val('');
     Get_CR_Tracker_Table_Details_By_Filter("", "");
 });
-
-
