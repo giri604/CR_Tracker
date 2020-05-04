@@ -17,12 +17,12 @@ namespace CR_Details.Controllers
     public class CR_TrackerController : Controller
     {
         //ViewModel mymodel = new ViewModel();
-
+        static readonly ICRDetailsRepository repository = new CRDetailsRepository();
         #region Common Funtions
         public static string Get_Connection_String()
         {
             //Local
-            string connectionString = @"Data Source=DEEPAK;Initial Catalog=MyDemoDB;Integrated Security=true;";
+            string connectionString = @"Data Source=ADMIN-PC;Initial Catalog=MyDemoDB;Integrated Security=true;";
             return connectionString;
         }
 
@@ -55,7 +55,7 @@ namespace CR_Details.Controllers
         }
 
         #endregion
-        
+
         public ActionResult Index()
         {
             return View();
@@ -118,8 +118,8 @@ namespace CR_Details.Controllers
                 else if (!string.IsNullOrEmpty(FilterByDateFrom) && !string.IsNullOrEmpty(FilterByDateTo) && string.IsNullOrEmpty(MonthWiseStatus))
                 {
                     if (!string.IsNullOrEmpty(whereCondition.ToString()))
-                    { whereCondition.Append("AND ");}
-                   
+                    { whereCondition.Append("AND "); }
+
                     whereCondition.Append("( ProjectCRReceivedDate >= '" + FilterByDateFrom + "' AND ProjectCRReceivedDate <= '" + FilterByDateTo + "')");
                 }
 
@@ -300,47 +300,20 @@ namespace CR_Details.Controllers
         {
             try
             {
-                string whereCondition = "CR_ID = " + crID + "";
-                SqlParameter param = new SqlParameter(parameterName: "@WhereQuery", value: string.IsNullOrEmpty(whereCondition) ? Convert.DBNull : whereCondition);
-                DataTable cr_file_dt = Shared.DbHelper.GetDataTableWithParameterArraySql(Get_Connection_String(), "sp_Download_Files_In_Zip", param);
-                if (cr_file_dt != null && cr_file_dt.Rows.Count > 0)
+                List<CRAttachFiles> files = repository.getCRAttachFiles(crID);
+                using (ZipFile zip = new ZipFile())
                 {
-                    //convert datatable to onject list
-                    List<FileModel> files = new List<FileModel>();
-                    //string[] filePaths = Directory.GetFiles(Server.MapPath("~/CR_Tracker_Files/"));
-                    foreach (DataRow row in cr_file_dt.Rows)
+                    foreach (var objFile in files)
                     {
-                        string filePath = Server.MapPath("~/CR_Tracker_Files/" + row["FileName"].ToString());
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            files.Add(new FileModel()
-                            {
-                                FileName = Path.GetFileName(filePath),
-                                FilePath = filePath,
-                                IsSelected = true
-                            });
-                        }
+                        zip.AddEntry(objFile.FileName, objFile.AttachDocument);
                     }
-                    using (ZipFile zip = new ZipFile())
+                    string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+                    using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        zip.AlternateEncodingUsage = ZipOption.AsNecessary;
-                        zip.AddDirectoryByName("Files");
-                        foreach (FileModel file in files)
-                        {
-                            if (file.IsSelected)
-                            {
-                                zip.AddFile(file.FilePath, "Files");
-                            }
-                        }
-                        string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
-                        using (MemoryStream memoryStream = new MemoryStream())
-                        {
-                            zip.Save(memoryStream);
-                            return File(memoryStream.ToArray(), "application/zip", zipName);
-                        }
+                        zip.Save(memoryStream);
+                        return File(memoryStream.ToArray(), "application/zip", zipName);
                     }
                 }
-                return RedirectToAction("CR_Tracker_Dashboard");
             }
             catch (Exception ex)
             {

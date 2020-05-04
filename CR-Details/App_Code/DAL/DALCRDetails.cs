@@ -238,8 +238,7 @@ namespace CR_Details.DAL
                             cRAttach.CR_ID = (row["CR_ID"] != DBNull.Value) ? (Convert.ToInt32(row["CR_ID"])) : 0;
                             cRAttach.FileName = (row["FileName"] != DBNull.Value) ? (Convert.ToString(row["FileName"])) : string.Empty;
                             cRAttach.ContentType = (row["ContentType"] != DBNull.Value) ? (Convert.ToString(row["ContentType"])) : string.Empty;
-                            cRAttach.AttachDocument = (row["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(row["ContentType"].ToString()) : null;
-
+                            cRAttach.AttachDocument = (row["AttachDocument"] != DBNull.Value) ? (byte[])row["AttachDocument"] : null;
                             cRAttachFiles.Add(cRAttach);
                         }
                     }
@@ -293,7 +292,7 @@ namespace CR_Details.DAL
                     cRAttach.ContentType = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? (Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ContentType"])) : string.Empty;
                     //var data = (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"]; Encoding.UTF8.GetBytes
                     //cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[0]["ContentType"] : null;
-                    cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[0]["ContentType"] != DBNull.Value) ? Encoding.UTF8.GetBytes(m_dsCRMst.Tables[0].Rows[0]["ContentType"].ToString()) : null;
+                    cRAttach.AttachDocument = (m_dsCRMst.Tables[0].Rows[0]["AttachDocument"] != DBNull.Value) ? (byte[])m_dsCRMst.Tables[0].Rows[0]["AttachDocument"] : null;
                 }
                 else
                 {
