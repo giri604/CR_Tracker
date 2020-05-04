@@ -1,255 +1,419 @@
 ﻿@model CR_Details.Models.CRDetails
 
 
-<form role="form" method="POST" action="/Modal/DownloadFile">
+<div class="container-contact100" );">
+    <div>
+        <form class="contact100-form validate-form" role="form" method="POST" action="/Modal/DownloadFile">
 
-    <input type="hidden" id="hfFileId" name="FileId" />
-    <input type="submit" id="btnDownload" value="Download" style="display:none" />
+            <input type="hidden" id="hfFileId" name="FileId" />
+            <input type="submit" id="btnDownload" value="Download" style="display:none" />
 
-    <table class="col-md-12">
-        <tbody class="table">
-            <tr>
-                <td id="lblTitle">
-                    @Html.LabelFor(model => model.CrTitle, "CR Title")
-                </td>
-                <td id="txtTitle">
-                    @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.CrTitle, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                    <span id="CrTitleError" style="color: red"></span>
-                </td>
-                <td id="lblDescription">
-                    @Html.LabelFor(model => model.CrDescription, "CR description", new { htmlAttributes = new { @class = "form-control col-md-7" } })
-                </td>
-                <td id="txtDescription">
-                    @Html.TextAreaFor(model => model.CrDescription, htmlAttributes: new
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.CrTitle, "")<span class="label-input100">Enter CR Title *</span>
+                @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "input100" } })
+                @Html.ValidationMessageFor(model => model.CrTitle, "", new
+                {
+                      @class = "text-danger"
+                })
+                <span id="CrTitleError" style="color: red"></span>
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.CrDescription, "")<span class="label-input100">Enter CR Description *</span>
+                @Html.TextAreaFor(model => model.CrDescription, htmlAttributes: new
+           {
+               @class = "input100"
+           })
+                @Html.ValidationMessageFor(model => model.CrDescription, "", new
+                {
+                      @class = "text-danger"
+                })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.ComplexityList, "")<span class="label-input100">Complexity (Including CRs) *</span>
+                @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
+                "select a Complexity",
+                htmlAttributes: new
+                {
+                    @class = "input100"
+                })
+                @Html.ValidationMessageFor(model => model.ComplexityList, "", new
+                {
+                      @class = "text-danger"
+                })
+            </div>
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.DepartmentList, "")<span class="label-input100">Department *</span>
+                @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                   "select a Department",
+                   htmlAttributes: new
+                   {
+                       @class = "input100"
+                   })
+                @Html.ValidationMessageFor(model => model.DepartmentList, "", new
+                {
+                      @class = "text-danger"
+                })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.CategoryList, "")<span class="label-input100">System Name *</span>
+                @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                 "select a Category",
+                 htmlAttributes: new
+                 {
+                     @class = "input100"
+                 })
+                @Html.ValidationMessageFor(model => model.CategoryList, "", new
+                {
+                      @class = "text-danger"
+                })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.KeyProjects, "")<span class="label-input100">Key Projects *</span><br />
+                @Html.RadioButtonFor(model => model.KeyProjects, true, new { @class = "input101", id = "KeyProjectsYes", @onchange = "ToggleKeyProjects(this);" })<span>Yes    </span>
+                @Html.RadioButtonFor(model => model.KeyProjects, false, new { @class = "input101", id = "KeyProjectsNo", @onchange = "ToggleKeyProjects(this);" })<span>No</span>
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.ProjectCRReceivedDate, "")<span class="label-input100">Project / CR Received Date *</span>
+                @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.FinalProjectCRReceivedDate, "")<span class="label-input100">Final Project / CR Received Date *</span>
+                @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.UATDeliveryDate, "")<span class="label-input100">UAT delivery date *</span>
+                @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.UATSignoffDate, "")<span class="label-input100">UAT Signoff Date *</span>
+                @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.ProjectCRLiveDate, "")<span class="label-input100">Project / CR Live Date *</span>
+                @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.FirstCommittedLiveDate, "")<span class="label-input100">First Committed Live Date *</span>
+                @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "input100", type = "text" } })
+                @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.UnitLead, "")<span class="label-input100">Unit Lead *</span>
+                @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                      "select a Lead",
+                                      htmlAttributes: new
                                       {
-                                          @class = "form-control col-md-12"
+                                        @class = "input100"
                                       })
-                    @Html.ValidationMessageFor(model => model.CrDescription, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblComplexity">
-                    @Html.LabelFor(model => model.ComplexityList, "Complexity (Including CRs)")
-                </td>
-                <td id="txtComplexity">
-                    @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
-                    "select a Complexity",
-                    htmlAttributes: new
-                    {
-                        @class = "form-control col-md-12 select-complexity-placeholder"
-                    })
-                    @Html.ValidationMessageFor(model => model.ComplexityList, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-                <td id="lblDepartment">
-                    @Html.LabelFor(model => model.DepartmentList, "Department")
-                </td>
-                <td id="txtDepartment">
-                    @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
-                       "select a Department",
-                       htmlAttributes: new
-                       {
-                          @class = "form-control col-md-12 select-department-placeholder"
-                       })
-                    @Html.ValidationMessageFor(model => model.DepartmentList, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblCategoryList">
-                    @Html.LabelFor(model => model.CategoryList, "System Name")
-                </td>
-                <td id="txtCategoryList">
-                    @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
-                     "select a Category",
-                     htmlAttributes: new
-                     {
-                       @class = "form-control col-md-12 select-category-placeholder"
-                     })
-                    @Html.ValidationMessageFor(model => model.CategoryList, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-                <td id="lblKeyProjects">
-                    @Html.LabelFor(model => model.KeyProjects, "Key Projects")
-                </td>
-                <td id="txtKeyProjects">
-                    @Html.RadioButtonFor(model => model.KeyProjects, true, new {id = "KeyProjectsYes", @onchange = "ToggleKeyProjects(this);" })Yes
-                    @Html.RadioButtonFor(model => model.KeyProjects, false, new {id = "KeyProjectsNo", @onchange = "ToggleKeyProjects(this);" }) No
-                    @*@Html.RadioButton("Radio", Model.KeyProjects, true , new { onclick = "keyProjectsResult(this)" })  Yes
-                        @Html.RadioButton("Radio", Model.KeyProjects, false, new { onclick = "keyProjectsResult(this)" })  No*@
-                </td>
-            </tr>
-            <tr>
-                <td id="lblProjectCRReceivedDate">
-                    @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date")
-                </td>
-                <td id="txtProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
-                </td>
-                <td id="lblFinalProjectCRReceivedDate">
-                    @Html.LabelFor(model => model.KeyProjects, "Final Project / CR Received Date")
-                </td>
-                <td id="txtFinalProjectCRReceivedDate">
-                    @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblUATDeliveryDate">
-                    @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date")
-                </td>
-                <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
-                </td>
-                <td id="lblUATSignoffDate">
-                    @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date")
-                </td>
-                <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblUATDeliveryDate">
-                    @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date")
-                </td>
-                <td id="txtUATDeliveryDate">
-                    @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
-                </td>
-                <td id="lblUATSignoffDate">
-                    @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date")
-                </td>
-                <td id="txtUATSignoffDate">
-                    @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
-                    @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblUnitLead">
-                    @Html.LabelFor(model => model.UnitLead, "Unit Lead")
-                </td>
-                <td id="txtUnitLead">
-                    @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
-                                          "select a Lead",
-                                          htmlAttributes: new
-                                          {
-                                            @class = "form-control col-md-12 select-lead-placeholder"
-                                          })
-                    @Html.ValidationMessageFor(model => model.UnitLead, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-                <td id="lblNoOfCRReceivedDuringUAT">
-                    @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR")
-                </td>
-                <td id="txtNoOfCRReceivedDuringUAT">
-                    @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-md-12", @min = "0" } })
-                    @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblTAT">
-                    @Html.LabelFor(model => model.TAT, "TAT (In Days)")
-                </td>
-                <td id="txtTAT">
-                    @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
-                </td>
-                <td id="lblNoOfShowstoppersPostGoLive">
-                    @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live:")
-                </td>
-                <td id="txtNoOfShowstoppersPostGoLive">
-                    @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblProjectCompletedSchedule">
-                    @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule")
-                </td>
-                <td id="txtProjectCompletedSchedule">
-                    @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new {id = "ProjectCompletedScheduleYes", @onchange = "ToggleProjectCompletedSchedule(this);" })Yes
-                    @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false, new {id = "ProjectCompletedScheduleNo", @onchange = "ToggleProjectCompletedSchedule(this);" }) No
-                    @*@Html.RadioButton("Radio", "Yes", new { onclick = "ProjectCompletedScheduleResult(this)" })  Yes
-        @Html.RadioButton("Radio", "No", new { onclick = "ProjectCompletedScheduleResult(this)" })  No*@
-                </td>
-                <td id="lblManager">
-                    @Html.LabelFor(model => model.Manager, "Assigned To")
-                </td>
-                <td id="txtManager">
-                    @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
-                                         "select a Manager",
-                                         htmlAttributes: new
-                                              {
-                                           @class = "form-control col-md-12 select-manager-placeholder"
-                                         })
-                    @Html.ValidationMessageFor(model => model.Manager, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-            </tr>
-            <tr>
-                <td id="lblReasonRCA">
-                    @Html.LabelFor(model => model.ReasonRCA, "Reason / RCA")
-                </td>
-                <td id="txtReasonRCA">
-                    @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
-                    {
-                        @class = "form-control col-md-12"
-                    })
-                    @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
-                    {
-                          @class = "text-danger"
-                    })
-                </td>
-            </tr>
-            <tr>
-                <td id="txtTitle">
-                    @Html.HiddenFor(model => model.CR_ID)
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table" id="FilesList">
-        <tr>
-            <td>
-                Uploaded Documents
-            </td>
-        </tr>
-        @if (Model.CRAttachFiles.Count > 0)
-        {
-            foreach (var file in Model.CRAttachFiles)
-            {
-                <tr>
-                    <td><a href="javascript:;" onclick="DownloadFile(@file.FileID)">@file.FileName</a> </td>
-                </tr>
-            }
-        }
-    </table>
+                @Html.ValidationMessageFor(model => model.UnitLead, "", new { @class = "text-danger" })
+            </div>
 
-    <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="button" id="btnSubmit" class="btn btn-success">Save changes</button>
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "")<span class="label-input100">No. of CRs received post signoff of original CR *</span>
+                @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "input100", @min = "0" } })
+                @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.TAT, "")<span class="label-input100">TAT (In Days) *</span>
+                @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "input100" } })
+                @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "")<span class="label-input100"># of Showstoppers post go live *</span>
+                @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "input100" } })
+                @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.ProjectCompletedSchedule, "")<span class="label-input100">Project Completed as Schedule *</span><br />
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { @class = "input101", id = "ProjectCompletedScheduleYes", @onchange = "ToggleProjectCompletedSchedule(this);" })<span>Yes</span>
+                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false, new { @class = "input101", id = "ProjectCompletedScheduleNo", @onchange = "ToggleProjectCompletedSchedule(this);" })<span>No</span>
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.Manager, "")<span class="label-input100">Assigned To *</span>
+                @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                     "select a Manager",
+                                     htmlAttributes: new
+                                          {
+                                       @class = "input100"
+                                     })
+                @Html.ValidationMessageFor(model => model.Manager, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Name is required">
+                @Html.LabelFor(model => model.ReasonRCA, "")<span class="label-input100">Reason / RCA *</span>
+                @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
+                                   {
+                                       @class = "input100"
+                                   })
+                @Html.ValidationMessageFor(model => model.ReasonRCA, "", new { @class = "text-danger" })
+            </div>
+            <table class="col-md-12">
+                <tbody class="table">
+                    @*<tr>
+                        <td id="lblTitle">
+                            @Html.LabelFor(model => model.CrTitle, "CR Title")
+                        </td>
+                        <td id="txtTitle">
+                            @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                            @Html.ValidationMessageFor(model => model.CrTitle, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                            <span id="CrTitleError" style="color: red"></span>
+                        </td>
+                        <td id="lblDescription">
+                            @Html.LabelFor(model => model.CrDescription, "CR description", new { htmlAttributes = new { @class = "form-control col-md-7" } })
+                        </td>
+                        <td id="txtDescription">
+                            @Html.TextAreaFor(model => model.CrDescription, htmlAttributes: new
+                                              {
+                                                  @class = "form-control col-md-12"
+                                              })
+                            @Html.ValidationMessageFor(model => model.CrDescription, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                    </tr>*@
+                    @*Uncomment start here
+                    <tr>
+                        <td id="lblComplexity">
+                            @Html.LabelFor(model => model.ComplexityList, "Complexity (Including CRs)")
+                        </td>
+                        <td id="txtComplexity">
+                            @Html.DropDownListFor(model => model.ComplexityList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Complexity))),
+                            "select a Complexity",
+                            htmlAttributes: new
+                            {
+                                @class = "form-control col-md-12 select-complexity-placeholder"
+                            })
+                            @Html.ValidationMessageFor(model => model.ComplexityList, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                        <td id="lblDepartment">
+                            @Html.LabelFor(model => model.DepartmentList, "Department")
+                        </td>
+                        <td id="txtDepartment">
+                            @Html.DropDownListFor(model => model.DepartmentList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Department))),
+                               "select a Department",
+                               htmlAttributes: new
+                               {
+                                  @class = "form-control col-md-12 select-department-placeholder"
+                               })
+                            @Html.ValidationMessageFor(model => model.DepartmentList, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblCategoryList">
+                            @Html.LabelFor(model => model.CategoryList, "System Name")
+                        </td>
+                        <td id="txtCategoryList">
+                            @Html.DropDownListFor(model => model.CategoryList, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Category))),
+                             "select a Category",
+                             htmlAttributes: new
+                             {
+                               @class = "form-control col-md-12 select-category-placeholder"
+                             })
+                            @Html.ValidationMessageFor(model => model.CategoryList, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                        <td id="lblKeyProjects">
+                            @Html.LabelFor(model => model.KeyProjects, "Key Projects")
+                        </td>
+                        <td id="txtKeyProjects">
+                            @Html.RadioButtonFor(model => model.KeyProjects, true, new { id = "KeyProjectsYes", @onchange = "ToggleKeyProjects(this);" })Yes
+                            @Html.RadioButtonFor(model => model.KeyProjects, false, new { id = "KeyProjectsNo", @onchange = "ToggleKeyProjects(this);" }) No
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblProjectCRReceivedDate">
+                            @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date")
+                        </td>
+                        <td id="txtProjectCRReceivedDate">
+                            @Html.EditorFor(model => model.ProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.ProjectCRReceivedDate, "", new { @class = "text-danger" })
+                        </td>
+                        <td id="lblFinalProjectCRReceivedDate">
+                            @Html.LabelFor(model => model.KeyProjects, "Final Project / CR Received Date")
+                        </td>
+                        <td id="txtFinalProjectCRReceivedDate">
+                            @Html.EditorFor(model => model.FinalProjectCRReceivedDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.FinalProjectCRReceivedDate, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblUATDeliveryDate">
+                            @Html.LabelFor(model => model.UATDeliveryDate, "UAT delivery date")
+                        </td>
+                        <td id="txtUATDeliveryDate">
+                            @Html.EditorFor(model => model.UATDeliveryDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.UATDeliveryDate, "", new { @class = "text-danger" })
+                        </td>
+                        <td id="lblUATSignoffDate">
+                            @Html.LabelFor(model => model.UATSignoffDate, "UAT Signoff Date")
+                        </td>
+                        <td id="txtUATSignoffDate">
+                            @Html.EditorFor(model => model.UATSignoffDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.UATSignoffDate, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblUATDeliveryDate">
+                            @Html.LabelFor(model => model.ProjectCRLiveDate, "Project / CR Live Date")
+                        </td>
+                        <td id="txtUATDeliveryDate">
+                            @Html.EditorFor(model => model.ProjectCRLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.ProjectCRLiveDate, "", new { @class = "text-danger" })
+                        </td>
+                        <td id="lblUATSignoffDate">
+                            @Html.LabelFor(model => model.FirstCommittedLiveDate, "First Committed Live Date")
+                        </td>
+                        <td id="txtUATSignoffDate">
+                            @Html.EditorFor(model => model.FirstCommittedLiveDate, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control col-md-12", type = "text" } })
+                            @Html.ValidationMessageFor(model => model.FirstCommittedLiveDate, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblUnitLead">
+                            @Html.LabelFor(model => model.UnitLead, "Unit Lead")
+                        </td>
+                        <td id="txtUnitLead">
+                            @Html.DropDownListFor(model => model.UnitLead, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                                  "select a Lead",
+                                                  htmlAttributes: new
+                                                  {
+                                                    @class = "form-control col-md-12 select-lead-placeholder"
+                                                  })
+                            @Html.ValidationMessageFor(model => model.UnitLead, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                        <td id="lblNoOfCRReceivedDuringUAT">
+                            @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR")
+                        </td>
+                        <td id="txtNoOfCRReceivedDuringUAT">
+                            @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control col-md-12", @min = "0" } })
+                            @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblTAT">
+                            @Html.LabelFor(model => model.TAT, "TAT (In Days)")
+                        </td>
+                        <td id="txtTAT">
+                            @Html.EditorFor(model => model.TAT, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                            @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
+                        </td>
+                        <td id="lblNoOfShowstoppersPostGoLive">
+                            @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live:")
+                        </td>
+                        <td id="txtNoOfShowstoppersPostGoLive">
+                            @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                            @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblProjectCompletedSchedule">
+                            @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule")
+                        </td>
+                        <td id="txtProjectCompletedSchedule">
+                            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true, new { id = "ProjectCompletedScheduleYes", @onchange = "ToggleProjectCompletedSchedule(this);" })Yes
+                            @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false, new { id = "ProjectCompletedScheduleNo", @onchange = "ToggleProjectCompletedSchedule(this);" }) No
+                        </td>
+                        <td id="lblManager">
+                            @Html.LabelFor(model => model.Manager, "Assigned To")
+                        </td>
+                        <td id="txtManager">
+                            @Html.DropDownListFor(model => model.Manager, new SelectList(Enum.GetValues(typeof(CR_Details.Models.Lead))),
+                                                 "select a Manager",
+                                                 htmlAttributes: new
+                                                      {
+                                                   @class = "form-control col-md-12 select-manager-placeholder"
+                                                 })
+                            @Html.ValidationMessageFor(model => model.Manager, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblReasonRCA">
+                            @Html.LabelFor(model => model.ReasonRCA, "Reason / RCA")
+                        </td>
+                        <td id="txtReasonRCA">
+                            @Html.TextAreaFor(model => model.ReasonRCA, htmlAttributes: new
+                            {
+                                @class = "form-control col-md-12"
+                            })
+                            @Html.ValidationMessageFor(model => model.ReasonRCA, "", new
+                            {
+                                  @class = "text-danger"
+                            })
+                        </td>
+                    </tr>
+                    Uncomment end here*@
+                    <tr>
+                        <td id="txtTitle">
+                            @Html.HiddenFor(model => model.CR_ID)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table" id="FilesList">
+                <tr>
+                    <td>
+                        Uploaded Documents
+                    </td>
+                </tr>
+                @if (Model.CRAttachFiles.Count > 0)
+                {
+                    foreach (var file in Model.CRAttachFiles)
+                    {
+                        <tr>
+                            <td><a href="javascript:;" onclick="DownloadFile(@file.FileID)">@file.FileName</a> </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+
+        </form>
+        <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" id="btnSubmit" class="btn btn-success">Save changes</button>
+        </div>
     </div>
-</form>
+</div>
+
+
 
 
 

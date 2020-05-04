@@ -35,7 +35,7 @@
              disableDates = $.map(ExpectedDates, function (value, index) {
                 return [value];
             });
-            alert(disableDates);
+            //alert(disableDates);
             //var ExpectedDatesArray = $.parseJSON(JSON.stringify(ExpectedDates));
             //$.each(ExpectedDates, function (key, value) {
             //    alert(value);
@@ -186,7 +186,7 @@
 
         var me = getUrlVars()["user"];
         if (me != "admin") {
-            alert("normal");
+            //alert("normal");
             $('#complexity').hide();
             $('#crRcvDate').hide();
             $('#finalRcvDate').hide();
@@ -202,7 +202,7 @@
             $('#manager').hide();
         }
         else {
-            alert("Admin");
+            //alert("Admin");
         }
 
 
@@ -256,7 +256,7 @@
             }
             var yy = d.getFullYear();
             var newdate = yy + "-" + mm + "-" + dd;
-            alert(newdate);
+            //alert(newdate);
             return newdate;
         }
 
@@ -411,6 +411,65 @@
     .ui-datepicker td.ui-state-disabled {
         opacity: 100;
     }
+    .control-label {
+        font-family: Raleway-SemiBold;
+        font-size: 14px;
+        color: #555555;
+        line-height: 1.4;
+    }
+    input.form-control {
+        display: block;
+        width: 100%;
+        background: #f2f2f2;
+        border-radius: 2px;
+        /*font-family: Raleway-SemiBold;Cambria,Georgia,serif;*/
+        font-family: Cambria,Georgia,serif;
+        font-size: 18px;
+        color: #686868;
+        line-height: 1.2;
+        padding: 0 28px;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+        height: 40px;
+        border: none;
+    }
+    textarea.form-control {
+        display: block;
+        width: 100%;
+        background: #f2f2f2;
+        border-radius: 2px;
+        /*font-family: Raleway-SemiBold;Cambria,Georgia,serif;*/
+        font-family: Cambria,Georgia,serif;
+        font-size: 18px;
+        color: #686868;
+        line-height: 1.2;
+        padding: 0 28px;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+        border: none;
+    }
+    select.form-control {
+        display: block;
+        width: 100%;
+        background: #f2f2f2;
+        border-radius: 2px;
+        /*font-family: Raleway-SemiBold;Cambria,Georgia,serif;*/
+        font-family: Cambria,Georgia,serif;
+        font-size: 18px;
+        color: #686868;
+        line-height: 1.2;
+        padding: 0 28px;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+        height: 40px;
+        border: none;
+    }
 </style>
 @*@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
 @using (Html.BeginForm())
@@ -419,7 +478,7 @@
     {
         @class = "text-danger"
     })
-    <div class="form-group-sm col-md-12" style="margin-top:10px">
+    <div class="form-group-sm col-md-12" style="padding-top:30px;">
         <div id="title" class="form-group required col-md-6">
             @Html.LabelFor(model => model.CrTitle, "CR Title ", htmlAttributes: new
        {
@@ -511,7 +570,7 @@
             @Html.RadioButton("Radio", "No", new { onclick = "keyProjectsResult(this)" })  No
         </div>
         <div id="crRcvDate" class="form-group required col-md-6">
-            @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date ", htmlAttributes: new
+            @Html.LabelFor(model => model.ProjectCRReceivedDate, "Project / CR Received Date", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
@@ -521,7 +580,7 @@
     </div>
     <div class="form-group-sm col-md-12">
         <div id="finalRcvDate" class="form-group required col-md-6">
-            @Html.LabelFor(model => model.FinalProjectCRReceivedDate, "Final Project / CR Received Date ", htmlAttributes: new
+            @Html.LabelFor(model => model.FinalProjectCRReceivedDate, "Final Project / CR Received Date", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
@@ -581,7 +640,7 @@
         </div>
     </div>
     <div class="form-group-sm col-md-12">
-        <div id="noCrRcv" class="form-group col-md-6">
+        <div id="noCrRcv" class="form-group required col-md-6">
             @Html.LabelFor(model => model.NoOfCRReceivedDuringUAT, "No. of CRs received post signoff of original CR ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
@@ -589,7 +648,7 @@
             @Html.EditorFor(model => model.NoOfCRReceivedDuringUAT, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
             @Html.ValidationMessageFor(model => model.NoOfCRReceivedDuringUAT, "", new { @class = "text-danger" })
         </div>
-        <div id="tat" class="form-group col-md-6">
+        <div id="tat" class="form-group required col-md-6">
             @Html.LabelFor(model => model.TAT, "TAT (In Days) ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
@@ -598,22 +657,16 @@
             @Html.ValidationMessageFor(model => model.TAT, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group-sm col-md-12">
+    <div class="form-group required col-md-12">
         <div id="noShowstoppers" class="form-group col-md-6">
-            @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live: ", htmlAttributes: new
+            @Html.LabelFor(model => model.NoOfShowstoppersPostGoLive, "# of Showstoppers post go live ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"
             })
             @Html.EditorFor(model => model.NoOfShowstoppersPostGoLive, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
             @Html.ValidationMessageFor(model => model.NoOfShowstoppersPostGoLive, "", new { @class = "text-danger" })
         </div>
-        <div id="projCompSchdl" class="form-group col-md-6">
-            @*@Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
-                {
-                    @class = "control-label col-md-5"
-                })
-                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, true)Yes
-                @Html.RadioButtonFor(model => model.ProjectCompletedSchedule, false) No*@
+        <div id="projCompSchdl" class="form-group required col-md-6">
             @Html.LabelFor(model => model.ProjectCompletedSchedule, "Project Completed as Schedule: ", htmlAttributes: new
                           {
                               @class = "control-label col-md-5"
@@ -666,7 +719,7 @@
     <div class="form-group-sm col-md-12">
         <div id="upload" class="form-group col-md-6">
             <div class="col-md-5">
-                <label>Upload required Document<span style="content:'*';color:red">*</span></label>
+                <label style="font-family: Raleway-SemiBold;font-size: 14px;color: #555555;line-height: 1.4;">Upload required Document<span style="content:'*';color:red">*</span></label>
             </div>
             <div class="col-md-6">
                 <label for="fileInput" class="btn btn-primary">Browse</label>

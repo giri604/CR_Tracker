@@ -234,4 +234,5 @@ F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.csproj.CoreCompileInpu
 F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.csproj.CopyComplete
 F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.dll
 F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.pdb
+F:\HDFC\Github\CR_Tracker\CR-Details\bin\Ionic.Zip.Reduced.dll
 F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.csprojAssemblyReference.cache

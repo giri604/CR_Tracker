@@ -24,42 +24,47 @@ namespace CR_Details.Models
         public bool? KeyProjects { get; set; } = null;
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? ProjectCRReceivedDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? FinalProjectCRReceivedDate { get; set; }
 
         [Range(0,Int32.MaxValue)]
         public int? NoOfCRReceivedDuringUAT { get; set; } = null;
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? UATDeliveryDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? UATSignoffDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? ProjectCRLiveDate { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? FirstCommittedLiveDate { get; set; }
         public string TAT { get; set; }
         public int? NoOfShowstoppersPostGoLive { get; set; } = null;
         public Lead? UnitLead { get; set; } = null;
         public Lead? Manager { get; set; } = null;
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime? ExpectedDate { get; set; }
         public string ReasonRCA { get; set; }
         public int? AttachFileId { get; set; } = null;
 
         public List<CRAttachFiles> CRAttachFiles { get; set; }
+
+        public Nullable<int> All_CR_Details_Count { get; set; }
+        public Nullable<int> CR_Working_Count { get; set; }
+        public Nullable<int> CR_Complete_Count { get; set; }
+        public Nullable<int> CR_UAT_Count { get; set; }
 
     }
 

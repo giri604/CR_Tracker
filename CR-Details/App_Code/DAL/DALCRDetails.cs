@@ -14,10 +14,7 @@ namespace CR_Details.DAL
     public class CRDetails
     {
         static SqlConnection m_conn;
-        static DataSet m_dsAccMsts;
         static DataSet m_dsCRMst;
-        static DataSet m_dsBalSheet;
-        static DataSet m_dsBalSheet1;
         static string m_strmessage;
 
         public CRDetails()
@@ -134,7 +131,7 @@ namespace CR_Details.DAL
             }
             catch (Exception ex)
             {
-
+                m_strmessage = ex.Message;
                 OutCR_ID = 0;
             }
             finally
@@ -209,6 +206,7 @@ namespace CR_Details.DAL
             }
             catch (Exception ex)
             {
+                m_strmessage = ex.Message;
                 cRDetail.CR_ID = 0;
                 return cRDetail;
             }
@@ -268,7 +266,7 @@ namespace CR_Details.DAL
             }
             catch (Exception ex)
             {
-
+                m_strmessage = ex.Message;
                 return cRAttachFiles;
             }
             finally
@@ -304,7 +302,7 @@ namespace CR_Details.DAL
             }
             catch (Exception ex)
             {
-
+                m_strmessage = ex.Message;
                 return cRAttach;
             }
             finally
@@ -351,7 +349,7 @@ namespace CR_Details.DAL
             }
             catch (Exception ex)
             {
-
+                m_strmessage = ex.Message;
                 return ExpectedDates;
             }
             finally

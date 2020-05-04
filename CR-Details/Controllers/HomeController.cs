@@ -62,11 +62,8 @@ namespace CR_Details.Controllers
                 var categoryType = (Models.Category)Enum.Parse(typeof(Models.Category), Convert.ToString(formCollection["CategoryList"]));
                 cRDetails.CategoryList = categoryType;
             }
-            //cRDetails.ProjectCompletedSchedule = Convert.ToBoolean(formCollection["ProjectCompletedSchedule"]);
             cRDetails.ProjectCompletedSchedule = (formCollection["ProjectCompletedSchedule"] != "null") ? (Convert.ToBoolean(formCollection["ProjectCompletedSchedule"])) : (Boolean?)null;
-
             cRDetails.KeyProjects = (formCollection["KeyProjects"] != "null") ? (Convert.ToBoolean(formCollection["KeyProjects"])) : (Boolean?)null;
-            //cRDetails.ProjectCRReceivedDate = (formCollection["ProjectCRReceivedDate"] != "") ? (Convert.ToDateTime(formCollection["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
             cRDetails.ProjectCRReceivedDate = DateTime.TryParse((formCollection["ProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.FinalProjectCRReceivedDate = DateTime.TryParse((formCollection["FinalProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.NoOfCRReceivedDuringUAT = (formCollection["NoOfCRReceivedDuringUAT"] != "") ? (Convert.ToInt32(formCollection["NoOfCRReceivedDuringUAT"])) : 0;

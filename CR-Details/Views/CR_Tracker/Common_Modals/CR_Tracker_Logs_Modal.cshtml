@@ -1,0 +1,57 @@
+﻿<style>
+    .cr-remark-icon {
+        background: #ffffff;
+        border-radius: 50%;
+        font-size: 15px;
+        height: 30px;
+        left: 18px;
+        line-height: 30px;
+        position: absolute;
+        text-align: center;
+    }
+</style>
+
+<div class="modal" id="cr_status_details">
+    <input type="hidden" id="txt_hidden_cr_remark_id" />
+    <input type="hidden" id="txt_hidden_cr_id" />
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CR Tracker Follow-Up | Status | Remark</h4>
+                <div class="ml-auto">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm" id="btn_add_cr_remark"> <i class="far fa-comment-alt"></i> Add Remark</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="txt-message-reply" style="display:none;">
+                        <!--Here we are Message to Person (lbl_Message_To) using Jquery-->
+                        <h6><b>CR Tracker ID : </b><label id="lbl_Message_To"></label> <span class="close-reply">&times;</span> </h6>
+                        <textarea rows="4" id="txt_cr_remark_details"></textarea>
+                        <input type="submit" value="SAVE" id="btn_save_cr_remark_details" />
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Load TimeLine Details Using Ajax (CR_Remark_DetailsP)-->
+                    <div class="col-md-12" style="height: 450px; overflow: auto;">
+                        <div class="overlay timeline-overlay" style="height: 100%;left: 0;position: absolute;top: 0; width: 100%;border-radius: 0.25rem; -ms-flex-align: center; align-items: center; background: rgba(255, 255, 255, 0.7); display: -ms-flexbox;  display: flex;  -ms-flex-pack: center;  justify-content: center;  z-index: 50;">
+                            <i class="fas fa-2x fa-sync-alt fa-spin" style="font-size: 60px;"></i>
+                        </div>
+                        <idv id="cr_remark_timeline_details"></idv>
+                        <!-- The time line -->
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

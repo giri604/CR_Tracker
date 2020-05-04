@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>..\..\..\Ajay\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -133,7 +136,9 @@
     <Compile Include="Models\CRDetails.cs" />
     <Compile Include="Models\CRDetailsRepository.cs" />
     <Compile Include="Models\ICRDetailsRepository.cs" />
+    <Compile Include="Models\Model_Context.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\DBHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -143,6 +148,7 @@
     <Content Include="Content\buttons.bootstrap4.min.css" />
     <Content Include="Content\cr-tracker-dashboard.css" />
     <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
@@ -155,7 +161,14 @@
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
+    <Content Include="fonts\raleway\OFL.txt" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\adminlte.min.js" />
@@ -164,6 +177,62 @@
     <Content Include="Scripts\amcharts-core.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="CR_Tracker_Files\Time sheet for Apr 2020.xls" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.eot" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.ttf" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff" />
+    <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff2" />
+    <Content Include="fonts\raleway\Raleway-Black.ttf" />
+    <Content Include="fonts\raleway\Raleway-BlackItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Bold.ttf" />
+    <Content Include="fonts\raleway\Raleway-BoldItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-ExtraBold.ttf" />
+    <Content Include="fonts\raleway\Raleway-ExtraBoldItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-ExtraLight.ttf" />
+    <Content Include="fonts\raleway\Raleway-ExtraLightItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Italic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Light.ttf" />
+    <Content Include="fonts\raleway\Raleway-LightItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Medium.ttf" />
+    <Content Include="fonts\raleway\Raleway-MediumItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Regular.ttf" />
+    <Content Include="fonts\raleway\Raleway-SemiBold.ttf" />
+    <Content Include="fonts\raleway\Raleway-SemiBoldItalic.ttf" />
+    <Content Include="fonts\raleway\Raleway-Thin.ttf" />
+    <Content Include="fonts\raleway\Raleway-ThinItalic.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\buttons.bootstrap4.min.js" />
     <Content Include="Scripts\buttons.html5.min.js" />
@@ -171,6 +240,7 @@
     <Content Include="Scripts\cr-tracker-dashboard.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dataTables.buttons.min.js" />
+    <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\font-awsome.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -179,6 +249,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -189,6 +260,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jszip.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\pdfmake.min.js" />
     <Content Include="Scripts\vfs_fonts.js" />
     <Content Include="Web.config" />
@@ -207,6 +279,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CR_Tracker\CR_Tracker_Dashboard.cshtml" />
     <Content Include="Views\Modal\GetCRDetails.cshtml" />
+    <Content Include="Views\CR_Tracker\CR_Details_DataTableP.cshtml" />
+    <Content Include="Views\CR_Tracker\CR_Remark_DetailsP.cshtml" />
+    <Content Include="Views\CR_Tracker\Common_Modals\CR_Tracker_Logs_Modal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

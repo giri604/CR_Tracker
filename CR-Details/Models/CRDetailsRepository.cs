@@ -8,7 +8,6 @@ namespace CR_Details.Models
 {
     public class CRDetailsRepository : ICRDetailsRepository
     {
-        static DataSet m_dsCrDetail;
 
         public CRAttachFiles getCRAttachFile(int? FileId)
         {

@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -11,6 +13,24 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/cssjqryUi")
     <style>
+        /*//////////////////////////////////////////////////////////////////
+    [ FONT ]*/
+
+        @@font-face {
+            font-family: Raleway-Black;
+            src: url('../fonts/raleway/Raleway-Black.ttf');
+        }
+
+        @@font-face {
+            font-family: Raleway-SemiBold;
+            src: url('../fonts/raleway/Raleway-SemiBold.ttf');
+        }
+
+        @@font-face {
+            font-family: Raleway-Bold;
+            src: url('../fonts/raleway/Raleway-Bold.ttf');
+        }
+
         /* navbar */
         .navbar {
             background-color: #e61717;
@@ -29,7 +49,7 @@
             <h2 style="color:white;background-color:#e61717">CR Details Form</h2>
         </div>
     </div>
-    <div class="container body-content" style="margin-top: 20px; background-color: #ffffff">
+    <div class="container body-content" style="background-color: #ffffff">
         @RenderBody()
 
     </div>
