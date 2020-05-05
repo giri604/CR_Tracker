@@ -12,10 +12,10 @@ namespace CR_Details.Models
         [Key]
         public int CR_ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter CrTitle")]
         public string CrTitle { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter CR Description")]
         public string CrDescription { get; set; }
         public Complexity? ComplexityList { get; set; } = null;
         public Department? DepartmentList { get; set; } = null;

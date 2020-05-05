@@ -312,3 +312,4 @@ E:\Ajay Bind\Projects\2020 Project\CR_Tracker\CR-Details\bin\Microsoft.CodeDom.P
 E:\Ajay Bind\Projects\2020 Project\CR_Tracker\CR-Details\obj\Debug\CR-Details.csprojResolveAssemblyReference.cache
 E:\Ajay Bind\Projects\2020 Project\CR_Tracker\CR-Details\obj\Debug\CR-Details.dll
 E:\Ajay Bind\Projects\2020 Project\CR_Tracker\CR-Details\obj\Debug\CR-Details.pdb
+F:\HDFC\Github\CR_Tracker\CR-Details\obj\Debug\CR-Details.csprojAssemblyReference.cache

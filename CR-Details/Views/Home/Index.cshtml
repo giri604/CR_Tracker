@@ -3,404 +3,430 @@
     ViewBag.Title = "Home Page";
 }
 
-<script>
+    <script>
 
-
-    var keyBool = null;
-    var projBool = null;
-    function keyProjectsResult(radio) {
-        var selected = radio.value;
-        if (selected == "Yes")
-            keyBool = true;
-        else if (selected == "No")
-            keyBool = false;
-    }
-
-    function ProjectCompletedScheduleResult(radio) {
-        var selected = radio.value;
-        if (selected == "Yes")
-            projBool = true;
-        else if (selected == "No")
-            projBool = false;
-    }
-
-    $(document).ready(function () {
-        var disableDates = [];
-        var options = {};
-        options.url = "/Home/GetExpectedDates";
-        options.dataType = "json";
-        options.contentType = "application/json";
-        options.success = function (ExpectedDates) {
-            //disableDates = ExpectedDates;
-            disableDates = $.map(ExpectedDates, function (value, index) {
-                return [value];
-            });
-            //alert(disableDates);
-            //var ExpectedDatesArray = $.parseJSON(JSON.stringify(ExpectedDates));
-            //$.each(ExpectedDates, function (key, value) {
-            //    alert(value);
-            //});
-        };
-        options.error = function () { alert("Error retrieving ExpectedDates data!"); };
-        $.ajax(options);
-
-        var Alldays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        //var disableDates = ["2012/11/26", "2012/11/28", "2012/12/05"]; // yyyy/MM/dd
-        var disableDays = ["Sunday"];
-
-        function ShowDisableDates(date) {
-            ymd = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
-            day = new Date(ymd).getDay();
-            if ($.inArray(ymd, disableDates) < 0 && $.inArray(Alldays[day], disableDays) < 0) {
-                return [true, "enabled", "Available"];
-            } else {
-                return [false, "disabled", "Un-Available"];
-            }
-        }
-
-        $(function () {
-            $("#ExpectedDate").attr("readonly", "true");
-            $("#ExpectedDate").datepicker({
-                beforeShowDay: ShowDisableDates,
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-        });
-
-        $(function () {
-            $("#CrTitle").keypress(function (e) {
-                var keyCode = e.keyCode || e.which;
-
-                $("#CrTitleError").html("");
-
-                //Regex for Valid Characters i.e. Alphabets and Numbers.
-                var regex = /^[A-Za-z0-9]+$/;
-
-                //Validate TextBox value against the Regex.
-                var isValid = regex.test(String.fromCharCode(keyCode));
-                if (!isValid) {
-                    $("#CrTitleError").html("Only Alphabets and Numbers allowed.");
-                }
-
-                return isValid;
-            });
-        });
-
-        $('#NoOfShowstoppersPostGoLive').keyup(function () {
-
-            this.value = this.value.replace(/[^0-9\.]/g, '');
-
-        });
-
-        $("#NoOfShowstoppersPostGoLive").keypress(function (evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode != 46 && charCode > 31
-                && (charCode < 48 || charCode > 57))
-                return false;
-
-            return true;
-        });
-
-        $('#NoOfCRReceivedDuringUAT').keyup(function () {
-
-            this.value = this.value.replace(/[^0-9\.]/g, '');
-
-        });
-
-        $("#NoOfCRReceivedDuringUAT").keypress(function (evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode != 46 && charCode > 31
-                && (charCode < 48 || charCode > 57))
-                return false;
-
-            return true;
-        });
-
-
-
-        $(function () {
-            $("#ProjectCRReceivedDate").attr("readonly", "true");
-            $("#FinalProjectCRReceivedDate").attr("readonly", "true");
-            $("#UATDeliveryDate").attr("readonly", "true");
-            $("#UATSignoffDate").attr("readonly", "true");
-            $("#ProjectCRLiveDate").attr("readonly", "true");
-            $("#FirstCommittedLiveDate").attr("readonly", "true");
-
-            var $dp2 = $("#ProjectCRReceivedDate");
-            $dp2.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-
-            var $dp3 = $("#FinalProjectCRReceivedDate");
-            $dp3.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-
-            var $dp4 = $("#UATDeliveryDate");
-            $dp4.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-
-            var $dp5 = $("#UATSignoffDate");
-            $dp5.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-
-            var $dp6 = $("#ProjectCRLiveDate");
-            $dp6.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-
-            var $dp7 = $("#FirstCommittedLiveDate");
-            $dp7.datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: 0,
-                dateFormat: "dd-MM-yy",
-                yearRange: "-100:+20",
-            });
-        });
-
-        var me = getUrlVars()["user"];
-        if (me != "admin") {
-            //alert("normal");
-            $('#complexity').hide();
-            $('#crRcvDate').hide();
-            $('#finalRcvDate').hide();
-            $('#UATDate').hide();
-            $('#UATSignOffDate').hide();
-            $('#crLiveDate').hide();
-            $('#fstCommDate').hide();
-            $('#lead').hide();
-            $('#noCrRcv').hide();
-            $('#tat').hide();
-            $('#noShowstoppers').hide();
-            $('#projCompSchdl').hide();
-            $('#manager').hide();
-        }
-        else {
-            //alert("Admin");
-        }
-
-
-        // Read a page's GET URL variables and return them as an associative array.
-        function getUrlVars() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        }
-
-        //upload file code
         var formdata = new FormData(); //FormData object
 
-        //$(document).ready(function () {
-        $(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
-        $(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
-        $(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
-        $(".select-lead-placeholder").prepend("<option value='' disabled selected>Select a lead...</option>");
-        $(".select-manager-placeholder").prepend("<option value='' disabled selected>Select a manager...</option>");
-
-        $("#fileInput").on("change", function () {
-            var fileInput = document.getElementById('fileInput');
-            //Iterating through each files selected in fileInput
-            for (i = 0; i < fileInput.files.length; i++) {
-
-                var sfilename = fileInput.files[i].name;
-                let srandomid = Math.random().toString(36).substring(7);
-
-                formdata.append(sfilename, fileInput.files[i]);
-
-                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
-                    "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
-                $("#FilesList tbody").append(markup);
-
-            }
-            chkatchtbl();
-            $('#fileInput').val('');
-        });
-
-        //$('#fileInput').filestyle({
-        //    input: false,
-        //    buttonName: 'btn-danger',
-        //    iconName: 'glyphicon glyphicon-folder-close',
-        //    badge: true
-        //});
-
-        function formatDate(date) {
-            var d = new Date(date.split("/").reverse().join("-"));
-            var dd = d.getDate();
-            var mm = d.getMonth() + 1;
-            if (mm.toString().length == 1) {
-                mm = ('0' + mm).slice(-2);
-            }
-            var yy = d.getFullYear();
-            var newdate = yy + "-" + mm + "-" + dd;
-            //alert(newdate);
-            return newdate;
+        var keyBool = null;
+        var projBool = null;
+        function keyProjectsResult(radio) {
+            
+            var selected = radio.value;
+            if (selected == "Yes")
+                keyBool = true;
+            else if (selected == "No")
+                keyBool = false;
         }
 
+        function ProjectCompletedScheduleResult(radio) {
+            var selected = radio.value;
+            if (selected == "Yes")
+                projBool = true;
+            else if (selected == "No")
+                projBool = false;
+        }
 
-        $("#btnSubmit").click(function () {
+        $(document).ready(function () {
+            var disableDates = [];
+            var options = {};
+            options.url = "/Home/GetExpectedDates";
+            options.dataType = "json";
+            options.contentType = "application/json";
+            options.success = function (ExpectedDates) {
+                //disableDates = ExpectedDates;
+                disableDates = $.map(ExpectedDates, function (value, index) {
+                    return [value];
+                });
+                //alert(disableDates);
+                //var ExpectedDatesArray = $.parseJSON(JSON.stringify(ExpectedDates));
+                //$.each(ExpectedDates, function (key, value) {
+                //    alert(value);
+                //});
+            };
+            options.error = function () { alert("Error retrieving ExpectedDates data!"); };
+            $.ajax(options);
 
-            //validation code start here
-            var isValid = true;
-            if ($("#CrTitle").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
-                isValid = false;
+            var Alldays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            //var disableDates = ["2012/11/26", "2012/11/28", "2012/12/05"]; // yyyy/MM/dd
+            var disableDays = ["Sunday"];
+
+            function ShowDisableDates(date) {
+                ymd = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
+                day = new Date(ymd).getDay();
+                if ($.inArray(ymd, disableDates) < 0 && $.inArray(Alldays[day], disableDays) < 0) {
+                    return [true, "enabled", "Available"];
+                } else {
+                    return [false, "disabled", "Un-Available"];
+                }
             }
-            else if ($("#CrDescription").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
-                isValid = false;
-            }
-            else if ($("#DepartmentList").val() == "" || $("#DepartmentList").val() == "null" || $("#DepartmentList").val() == null) {
-                isValid = false;
-            }
-            else if ($("#CategoryList").val() == "" || $("#CategoryList").val() == "null" || $("#CategoryList").val() == null) {
-                isValid = false;
-            }
-            else if (keyBool == "" || keyBool == null || keyBool == "null") {
-                isValid = false;
-            }
-            else if ($("#ExpectedDate").val() == "" || $("#ExpectedDate").val() == "null" || $("#ExpectedDate").val() == null) {
-                isValid = false;
-            }
-            else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
-                isValid = false;
-            }
-            else {
-                isValid = true;
-            }
+
+            $(function () {
+                $("#ExpectedDate").attr("readonly", "true");
+                $("#ExpectedDate").datepicker({
+                    beforeShowDay: ShowDisableDates,
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+            });
+
+            $(function () {
+                $("#CrTitle").keypress(function (e) {
+                    var keyCode = e.keyCode || e.which;
+
+                    $("#CrTitleError").html("");
+
+                    //Regex for Valid Characters i.e. Alphabets and Numbers.
+                    var regex = /^[A-Za-z0-9]+$/;
+
+                    //Validate TextBox value against the Regex.
+                    var isValid = regex.test(String.fromCharCode(keyCode));
+                    if (!isValid) {
+                        //$("#CrTitleError").html("Only Alpha-numeric allowed");
+                    }
+
+                    return isValid;
+                });
+            });
+
+            $('#NoOfShowstoppersPostGoLive').keyup(function () {
+
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+
+            });
+
+            $("#NoOfShowstoppersPostGoLive").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
+            });
+
+            $('#NoOfCRReceivedDuringUAT').keyup(function () {
+
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+
+            });
+
+            $("#NoOfCRReceivedDuringUAT").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
+            });
+
+
+
+            $(function () {
+                $("#ProjectCRReceivedDate").attr("readonly", "true");
+                $("#FinalProjectCRReceivedDate").attr("readonly", "true");
+                $("#UATDeliveryDate").attr("readonly", "true");
+                $("#UATSignoffDate").attr("readonly", "true");
+                $("#ProjectCRLiveDate").attr("readonly", "true");
+                $("#FirstCommittedLiveDate").attr("readonly", "true");
+
+                var $dp2 = $("#ProjectCRReceivedDate");
+                $dp2.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+
+                var $dp3 = $("#FinalProjectCRReceivedDate");
+                $dp3.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+
+                var $dp4 = $("#UATDeliveryDate");
+                $dp4.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+
+                var $dp5 = $("#UATSignoffDate");
+                $dp5.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+
+                var $dp6 = $("#ProjectCRLiveDate");
+                $dp6.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+
+                var $dp7 = $("#FirstCommittedLiveDate");
+                $dp7.datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    minDate: 0,
+                    dateFormat: "dd-MM-yy",
+                    yearRange: "-100:+20",
+                });
+            });
 
             var me = getUrlVars()["user"];
-            if (me == "admin") {
-                alert("admin");
-                if ($("#ComplexityList").val() == "" || $("#ComplexityList").val() == "null" || $("#ComplexityList").val() == null) {
+            if (me != "admin") {
+                //alert("normal");
+                $('#complexity').hide();
+                $('#crRcvDate').hide();
+                $('#finalRcvDate').hide();
+                $('#UATDate').hide();
+                $('#UATSignOffDate').hide();
+                $('#crLiveDate').hide();
+                $('#fstCommDate').hide();
+                $('#lead').hide();
+                $('#noCrRcv').hide();
+                $('#tat').hide();
+                $('#noShowstoppers').hide();
+                $('#projCompSchdl').hide();
+                $('#manager').hide();
+            }
+            else {
+                //alert("Admin");
+            }
+
+
+            // Read a page's GET URL variables and return them as an associative array.
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+
+            //upload file code
+            //var formdata = new FormData(); //FormData object
+
+            //$(document).ready(function () {
+            $(".select-department-placeholder").prepend("<option value='' disabled selected>Select a department...</option>");
+            $(".select-complexity-placeholder").prepend("<option value='' disabled selected>Select a complexity...</option>");
+            $(".select-category-placeholder").prepend("<option value='' disabled selected>Select a category...</option>");
+            $(".select-lead-placeholder").prepend("<option value='' disabled selected>Select a lead...</option>");
+            $(".select-manager-placeholder").prepend("<option value='' disabled selected>Select a manager...</option>");
+            var arr = [];
+            $("#fileInput").on("change", function () {
+              
+                //var fileInput = document.getElementById('fileInput');
+                //for (i = 0; i < fileInput.files.length; i++) {
+                //        var sfilename = fileInput.files[i].name;
+                //        let srandomid = Math.random().toString(36).substring(7);
+
+                //        formdata.append(sfilename, fileInput.files[i]);
+
+                //        var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                //            "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
+                //        $("#FilesList tbody").append(markup);
+                //}
+                var fileInput = $('#fileInput')[0].files;
+                //Iterating through each files selected in fileInput
+                for (i = 0; i < fileInput.length; i++) {
+                    if (arr.indexOf(fileInput[i].name) === -1) {
+                        arr.push(fileInput[i].name)
+
+                        var sfilename = fileInput[i].name;
+                        let srandomid = Math.random().toString(36).substring(7);
+
+                        formdata.append(sfilename, fileInput[i]);
+
+                        var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                            "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
+                        $("#FilesList tbody").append(markup);
+                    }
+                    else {
+                        alert('"' +fileInput[i].name +'"' + " file already selected")
+                    }
+                }
+                chkatchtbl();
+                $('#fileInput').val('');
+            });
+
+
+            //$('#fileInput').filestyle({
+            //    input: false,
+            //    buttonName: 'btn-danger',
+            //    iconName: 'glyphicon glyphicon-folder-close',
+            //    badge: true
+            //});
+
+            function formatDate(date) {
+                var d = new Date(date.split("/").reverse().join("-"));
+                var dd = d.getDate();
+                var mm = d.getMonth() + 1;
+                if (mm.toString().length == 1) {
+                    mm = ('0' + mm).slice(-2);
+                }
+                var yy = d.getFullYear();
+                var newdate = yy + "-" + mm + "-" + dd;
+                //alert(newdate);
+                return newdate;
+            }
+
+
+            $("#btnSubmit").click(function () {
+                //validation code start here
+                var isValid = true;
+                if ($("#CrTitle").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
+                    console.log("CrTitle is empty");
                     isValid = false;
                 }
-                else if (projBool == "" || projBool == null || projBool == "null") {
+                else if ($("#CrDescription").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
+                    console.log("CrDescription is empty");
                     isValid = false;
                 }
-                else if ($("#ProjectCRReceivedDate").val() == "" || $("#ProjectCRReceivedDate").val() == "null" || $("#ProjectCRReceivedDate").val() == null) {
+                else if ($("#DepartmentList").val() == "" || $("#DepartmentList").val() == "null" || $("#DepartmentList").val() == null) {
+                    console.log("DepartmentList is empty");
                     isValid = false;
                 }
-                else if ($("#FinalProjectCRReceivedDate").val() == "" || $("#FinalProjectCRReceivedDate").val() == "null" || $("#FinalProjectCRReceivedDate").val() == null) {
+                else if ($("#CategoryList").val() == "" || $("#CategoryList").val() == "null" || $("#CategoryList").val() == null) {
+                    console.log("CategoryList is empty");
                     isValid = false;
                 }
-                else if ($("#NoOfCRReceivedDuringUAT").val() == "" || $("#NoOfCRReceivedDuringUAT").val() == "null" || $("#NoOfCRReceivedDuringUAT").val() == null) {
+                else if (keyBool == "null") {
+                    console.log("KeyProject is empty");
                     isValid = false;
                 }
-                else if ($("#UATDeliveryDate").val() == "" || $("#UATDeliveryDate").val() == "null" || $("#UATDeliveryDate").val() == null) {
+                else if ($("#ExpectedDate").val() == "" || $("#ExpectedDate").val() == "null" || $("#ExpectedDate").val() == null) {
+                    console.log("ExpectedDate is empty");
                     isValid = false;
                 }
-                else if ($("#UATSignoffDate").val() == "" || $("#UATSignoffDate").val() == "null" || $("#UATSignoffDate").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#ProjectCRLiveDate").val() == "" || $("#ProjectCRLiveDate").val() == "null" || $("#ProjectCRLiveDate").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#FirstCommittedLiveDate").val() == "" || $("#FirstCommittedLiveDate").val() == "null" || $("#FirstCommittedLiveDate").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#TAT").val() == "" || $("#TAT").val() == "null" || $("#TAT").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#NoOfShowstoppersPostGoLive").val() == "" || $("#NoOfShowstoppersPostGoLive").val() == "null" || $("#NoOfShowstoppersPostGoLive").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#UnitLead").val() == "" || $("#UnitLead").val() == "null" || $("#UnitLead").val() == null) {
-                    isValid = false;
-                }
-                else if ($("#Manager").val() == "" || $("#Manager").val() == "null" || $("#Manager").val() == null) {
+                else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
+                    console.log("ReasonRCA is empty");
                     isValid = false;
                 }
                 else {
                     isValid = true;
                 }
-            }
 
-            if (isValid) {
-                formdata.append("CrTitle", $("#CrTitle").val());
-                formdata.append("CrDescription", $("#CrDescription").val());
-                formdata.append("ComplexityList", $("#ComplexityList").val());
-                formdata.append("DepartmentList", $("#DepartmentList").val());
-                formdata.append("CategoryList", $("#CategoryList").val());
-                formdata.append("KeyProjects", keyBool);
-                formdata.append("ProjectCompletedSchedule", projBool);
-                formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
-                formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
-                formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
-                formdata.append("UATDeliveryDate", $("#UATDeliveryDate").val());
-                formdata.append("UATSignoffDate", $("#UATSignoffDate").val());
-                formdata.append("ProjectCRLiveDate", $("#ProjectCRLiveDate").val());
-                formdata.append("FirstCommittedLiveDate", $("#FirstCommittedLiveDate").val());
-                formdata.append("TAT", $("#TAT").val());
-                formdata.append("NoOfShowstoppersPostGoLive", $("#NoOfShowstoppersPostGoLive").val());
-                formdata.append("UnitLead", $("#UnitLead").val());
-                formdata.append("Manager", $("#Manager").val());
-                formdata.append("ExpectedDate", $("#ExpectedDate").val());
-                formdata.append("ReasonRCA", $("#ReasonRCA").val());
-                formdata.append('uploadername', fileInput);
-                $.ajax({
-                    url: '/Home/CRDetails',
-                    type: "POST",
-                    contentType: false, // Not to set any content header
-                    processData: false, // Not to process data
-                    data: formdata,
-                    async: false,
-                    success: function (result) {
-                        alert("added successfully");
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                        console.log(xhr.responseText);
-                        alert(thrownError);
+                var me = getUrlVars()["user"];
+                if (me == "admin") {
+                    alert("admin");
+                    if ($("#ComplexityList").val() == "" || $("#ComplexityList").val() == "null" || $("#ComplexityList").val() == null) {
+                        isValid = false;
                     }
-                });
-            }
-            else {
-                alert("Please Enter Required fields input");
-            }
+                    else if (projBool == "" || projBool == null || projBool == "null") {
+                        isValid = false;
+                    }
+                    else if ($("#ProjectCRReceivedDate").val() == "" || $("#ProjectCRReceivedDate").val() == "null" || $("#ProjectCRReceivedDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#FinalProjectCRReceivedDate").val() == "" || $("#FinalProjectCRReceivedDate").val() == "null" || $("#FinalProjectCRReceivedDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#NoOfCRReceivedDuringUAT").val() == "" || $("#NoOfCRReceivedDuringUAT").val() == "null" || $("#NoOfCRReceivedDuringUAT").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#UATDeliveryDate").val() == "" || $("#UATDeliveryDate").val() == "null" || $("#UATDeliveryDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#UATSignoffDate").val() == "" || $("#UATSignoffDate").val() == "null" || $("#UATSignoffDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#ProjectCRLiveDate").val() == "" || $("#ProjectCRLiveDate").val() == "null" || $("#ProjectCRLiveDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#FirstCommittedLiveDate").val() == "" || $("#FirstCommittedLiveDate").val() == "null" || $("#FirstCommittedLiveDate").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#TAT").val() == "" || $("#TAT").val() == "null" || $("#TAT").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#NoOfShowstoppersPostGoLive").val() == "" || $("#NoOfShowstoppersPostGoLive").val() == "null" || $("#NoOfShowstoppersPostGoLive").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#UnitLead").val() == "" || $("#UnitLead").val() == "null" || $("#UnitLead").val() == null) {
+                        isValid = false;
+                    }
+                    else if ($("#Manager").val() == "" || $("#Manager").val() == "null" || $("#Manager").val() == null) {
+                        isValid = false;
+                    }
+                    else {
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    formdata.append("CrTitle", $("#CrTitle").val());
+                    formdata.append("CrDescription", $("#CrDescription").val());
+                    formdata.append("ComplexityList", $("#ComplexityList").val());
+                    formdata.append("DepartmentList", $("#DepartmentList").val());
+                    formdata.append("CategoryList", $("#CategoryList").val());
+                    formdata.append("KeyProjects", keyBool);
+                    formdata.append("ProjectCompletedSchedule", projBool);
+                    formdata.append("ProjectCRReceivedDate", $("#ProjectCRReceivedDate").val());
+                    formdata.append("FinalProjectCRReceivedDate", $("#FinalProjectCRReceivedDate").val());
+                    formdata.append("NoOfCRReceivedDuringUAT", $("#NoOfCRReceivedDuringUAT").val());
+                    formdata.append("UATDeliveryDate", $("#UATDeliveryDate").val());
+                    formdata.append("UATSignoffDate", $("#UATSignoffDate").val());
+                    formdata.append("ProjectCRLiveDate", $("#ProjectCRLiveDate").val());
+                    formdata.append("FirstCommittedLiveDate", $("#FirstCommittedLiveDate").val());
+                    formdata.append("TAT", $("#TAT").val());
+                    formdata.append("NoOfShowstoppersPostGoLive", $("#NoOfShowstoppersPostGoLive").val());
+                    formdata.append("UnitLead", $("#UnitLead").val());
+                    formdata.append("Manager", $("#Manager").val());
+                    formdata.append("ExpectedDate", $("#ExpectedDate").val());
+                    formdata.append("ReasonRCA", $("#ReasonRCA").val());
+                    formdata.append('uploadername', fileInput);
+                    $.ajax({
+                        url: '/Home/CRDetails',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: formdata,
+                        async: false,
+                        success: function (result) {
+                            alert("added successfully");
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
+                            console.log(xhr.responseText);
+                            alert(thrownError);
+                        }
+                    });
+                }
+                else {
+                    alert("Please Enter Required fields input");
+                }
+            });
         });
-    });
-    function DeleteFile(Fileid, FileName) {
-        formdata.delete(FileName)
-        $("#" + Fileid).remove();
-        chkatchtbl();
-    }
-    function chkatchtbl() {
-        if ($('#FilesList tr').length > 1) {
-            $("#FilesList").css("visibility", "visible");
-        } else {
-            $("#FilesList").css("visibility", "hidden");
+        function DeleteFile(Fileid, FileName) {
+            formdata.delete(FileName)
+            $("#" + Fileid).remove();
+            chkatchtbl();
         }
-    }
-</script>
+        function chkatchtbl() {
+            if ($('#FilesList tr').length > 1) {
+                $("#FilesList").css("visibility", "visible");
+            } else {
+                $("#FilesList").css("visibility", "hidden");
+            }
+        }
+    </script>
 <style>
     .form-group.required .control-label:after {
         content: "*";
@@ -489,7 +515,7 @@
     }
 </style>
 @*@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm" }))
 {
     @Html.ValidationSummary(true, "", new
     {
@@ -501,7 +527,7 @@
        {
            @class = "control-label col-md-5"
        })
-            @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+            @Html.EditorFor(model => model.CrTitle, new { htmlAttributes = new { @class = "form-control col-md-6", @title = "Only Alpha-numeric allowed" } })
             @Html.ValidationMessageFor(model => model.CrTitle, "", new
             {
                   @class = "text-danger"

@@ -94,7 +94,6 @@ namespace CR_Details.Controllers
             for (int i = 0; i < files.Count; i++)
             {
                 HttpPostedFileBase file = files[i];
-                //insert file into CRAttachFiles table and get id return for CRDetails
                 fileID = repository.SaveCRAttachFiles(CrID, file);
 
             }

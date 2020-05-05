@@ -16,17 +16,24 @@ CREATE procedure [dbo].[AddCRAttachments]
 @AttachDocument varbinary(max)
 
 As
-BEGIN
-Insert into [dbo].[CRAttachFiles] 
-		([CR_ID]
-      ,[FileName]
-      ,[ContentType]
-      ,[AttachDocument])
-values
-	(@CR_ID,
-	@Filename,
-	@ContentType,
-	@AttachDocument)
+begin
+
+IF NOT EXISTS(select * from CRAttachFiles where [FileName] = @Filename and [CR_ID] = @CR_ID )
+	begin
+		INSERT [dbo].[CRAttachFiles] ([CR_ID] ,[FileName] ,[ContentType] ,[AttachDocument])
+		VALUES (@CR_ID, @Filename, @ContentType, @AttachDocument);
+	end
+
+--Insert into [dbo].[CRAttachFiles] 
+--		([CR_ID]
+--      ,[FileName]
+--      ,[ContentType]
+--      ,[AttachDocument])
+--values
+--	(@CR_ID,
+--	@Filename,
+--	@ContentType,
+--	@AttachDocument)
 
 update [dbo].[CRDetails] set AttachFileId = @CR_ID where CR_ID = @CR_ID
 end

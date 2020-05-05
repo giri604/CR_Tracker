@@ -351,7 +351,7 @@ $j('#cr_details').on('show.bs.modal', function (e) {
         data: { "crID": bookId },
         datatype: "json",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             //alert(JSON.stringify(data));
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
@@ -457,7 +457,7 @@ function ToggleUnitLead(el) {
     var lead = el.value;
     if (lead != "") {
         $j('#CRStatus').val('Assigned');
-        alert("value changed");
+        //alert("value changed");
     }
 }
 
