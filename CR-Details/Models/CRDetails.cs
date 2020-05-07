@@ -63,11 +63,13 @@ namespace CR_Details.Models
 
         public List<CRAttachFiles> CRAttachFiles { get; set; }
 
+        //Dashboard Count
         public Nullable<int> All_CR_Details_Count { get; set; }
+        public Nullable<int> CR_Assinged_Count { get; set; }
         public Nullable<int> CR_Working_Count { get; set; }
+        public Nullable<int> CR_Pending_Count { get; set; }
         public Nullable<int> CR_Complete_Count { get; set; }
         public Nullable<int> CR_UAT_Count { get; set; }
-
     }
 
     public enum Complexity
@@ -101,12 +103,14 @@ namespace CR_Details.Models
         SagarDasgupta
     }
 
+    //new field added 07-may-2020
     public enum CRStatus
     {
         Unassigned,
-        Pending,
         Assigned,
         Working,
+        Pending,
+        Completed,
         UAT
     }
 }

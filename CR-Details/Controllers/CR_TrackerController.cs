@@ -22,7 +22,7 @@ namespace CR_Details.Controllers
         public static string Get_Connection_String()
         {
             //Local
-            string connectionString = @"Data Source=DEEPAK;Initial Catalog=MyDemoDB;Integrated Security=true;";
+            string connectionString = @"Data Source=ADMIN-PC;Initial Catalog=MyDemoDB;Integrated Security=true;";
             return connectionString;
         }
 
@@ -63,9 +63,6 @@ namespace CR_Details.Controllers
 
         public ActionResult CR_Tracker_Dashboard()
         {
-            //mymodel.CRDetails = new CRDetails();
-            //mymodel.CR_Tracker_Details = new CR_Tracker_Details();
-
 
             var obj_cr_details = new CRDetails();
             try
@@ -77,20 +74,18 @@ namespace CR_Details.Controllers
                 if (cr_dt.Rows.Count > 0)
                 {
                     obj_cr_details.All_CR_Details_Count = cr_dt.Rows.Count;
+                    obj_cr_details.CR_Assinged_Count = cr_dt.AsEnumerable().Where(a => !string.IsNullOrEmpty(a.Field<string>("CR_Status")) && a.Field<string>("CR_Status") == "Assigned").ToList().Count;
                     obj_cr_details.CR_Working_Count = cr_dt.AsEnumerable().Where(a => !string.IsNullOrEmpty(a.Field<string>("CR_Status")) && a.Field<string>("CR_Status") == "Working").ToList().Count;
+                    obj_cr_details.CR_Pending_Count = cr_dt.AsEnumerable().Where(a => !string.IsNullOrEmpty(a.Field<string>("CR_Status")) && a.Field<string>("CR_Status") == "Pending").ToList().Count;
                     obj_cr_details.CR_Complete_Count = cr_dt.AsEnumerable().Where(a => !string.IsNullOrEmpty(a.Field<string>("CR_Status")) && a.Field<string>("CR_Status") == "Completed").ToList().Count;
                     obj_cr_details.CR_UAT_Count = cr_dt.AsEnumerable().Where(a => !string.IsNullOrEmpty(a.Field<string>("CR_Status")) && a.Field<string>("CR_Status") == "UAT").ToList().Count;
                 }
                 return View(obj_cr_details);
-                //mymodel.CR_Tracker_Details = obj_cr_details;
-                //return View(mymodel);
             }
             catch (Exception ex)
             {
                 ViewBag.Error_Message = ex.Message.ToString();
-                //mymodel.CR_Tracker_Details = obj_cr_details;
                 return View(obj_cr_details);
-                //return View(mymodel);
             }
         }
 
@@ -101,8 +96,12 @@ namespace CR_Details.Controllers
                 StringBuilder whereCondition = new StringBuilder();
                 //whereCondition.Append("Manager = 'Pravat Sharma'"); // You Can Where condtion (Like CR Created By)
                 //1.check condtion for status (For Dashbaord & Pie Chart Clicked Event)
-                if (status == "Working")
+                if (status == "Assigned")
+                { whereCondition.Append("CR_Status = 'Assigned' "); }
+                else if (status == "Working")
                 { whereCondition.Append("CR_Status = 'Working' "); }
+                else if (status == "Pending")
+                { whereCondition.Append("CR_Status = 'Pending' "); }
                 else if (status == "Completed")
                 { whereCondition.Append("CR_Status = 'Completed' "); }
                 else if (status == "UAT")

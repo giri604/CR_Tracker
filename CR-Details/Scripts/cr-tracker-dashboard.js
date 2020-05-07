@@ -14,8 +14,13 @@ var ChartManager = {
 
         function onSuccess(jsonData) {
             obj = jsonData;
+            $j('.pie-chart-overlay').hide();
+            if (jsonData.length <= 0) {
+                $j('#chartdiv1').html("<p style='height: 100%; position: absolute; top: 0; width: 100%; align-items: center; display: flex; justify-content: center;'>No Record Found !!</p>")
+            }
         }
         function onFailed(error) {
+            $j('.pie-chart-overlay').hide();
             alert(error.statusText);
             alert(error.responseText);
             console.log(error.responseText);
@@ -54,7 +59,7 @@ var ChartHelper = {
             chart1.data = data;
 
             chart1.innerRadius = am4core.percent(35);
-            chart1.depth = 90;
+            chart1.depth = 50;
             //chart1.height = 350;
             //chart1.width = 400;
 
@@ -98,9 +103,14 @@ var StackBarManager = {
         ChartManager.GetJsonResult(serviceUrl, jsonParam, false, false, onSuccess, onFailed);
 
         function onSuccess(jsonData) {
+            $j('.bar-chart-overlay').hide();
             obj = jsonData;
+            if (jsonData.length <= 0) {
+                $j('#chartdiv2').html("<p style='height: 100%; position: absolute; top: 0; width: 100%; align-items: center; display: flex; justify-content: center;'>No Record Found !! </br>Since Last 6 Months</p>")
+            }
         }
         function onFailed(error) {
+            $j('.bar-chart-overlay').hide();
             alert(error.statusText);
         }
         return obj;
@@ -722,6 +732,15 @@ $j(document).on('click', '.cr-count-dashboard', function () {
 $j(document).on('click', '.btn-clear-status-filter', function () {
     Get_CR_Tracker_Table_Details_By_Filter("All CR Module", "");
 })
+$j(document).on('click', '.btn-refresh-cr-details', function () {
+    Get_CR_Tracker_Table_Details_By_Filter("All CR Module", "");
+    //----If You Want to Refresh Chart Details Also--- Then UnComment Below
+    //$j('.pie-chart-overlay,.bar-chart-overlay').show();
+    //ChartHelper.LoadPieChart();
+    //StackBarHelper.LoadBarGraph();
+})
+
+
 
 function Get_CR_Tracker_Table_Details_By_Filter(clicked_status, MonthClicked) {
     var $j = jQuery.noConflict();
