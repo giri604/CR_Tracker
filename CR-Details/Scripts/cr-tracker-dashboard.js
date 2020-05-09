@@ -632,7 +632,8 @@ $j(document).on("click", "#btnSubmit", function (event) {
                     keyBool = null;
                     projBool = null;
                     $j('#cr_details').modal('toggle'); //or  $j('#IDModal').modal('hide');
-                    $j('#cr_detailsP').load('/CR_Tracker/CR_Details_DataTableP');
+                    //$j('#cr_detailsP').load('/CR_Tracker/CR_Details_DataTableP');
+                    Get_CR_Tracker_Table_Details_By_Filter("", ""); // refresh CR-Tracker Datatable records
                     return false;
                 }
             },

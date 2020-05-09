@@ -300,19 +300,30 @@ namespace CR_Details.Controllers
             try
             {
                 List<CRAttachFiles> files = repository.getCRAttachFiles(crID);
-                using (ZipFile zip = new ZipFile())
+                if (files.Count == 1)
                 {
-                    foreach (var objFile in files)
+                    byte[] bytes = files[0].AttachDocument;
+                    string fileName = files[0].FileName;
+                    string contentType = files[0].ContentType;
+                    return File(bytes, contentType, fileName);
+                }
+                else if (files.Count > 1)
+                {
+                    using (ZipFile zip = new ZipFile())
                     {
-                        zip.AddEntry(objFile.FileName, objFile.AttachDocument);
-                    }
-                    string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        zip.Save(memoryStream);
-                        return File(memoryStream.ToArray(), "application/zip", zipName);
+                        foreach (var objFile in files)
+                        {
+                            zip.AddEntry(objFile.FileName, objFile.AttachDocument);
+                        }
+                        string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            zip.Save(memoryStream);
+                            return File(memoryStream.ToArray(), "application/zip", zipName);
+                        }
                     }
                 }
+                return RedirectToAction("CR_Tracker_Dashboard");
             }
             catch (Exception ex)
             {
