@@ -360,13 +360,18 @@ $j('#cr_details').on('show.bs.modal', function (e) {
         contentType: "application/json; charset=utf-8",
         data: { "crID": bookId },
         datatype: "json",
+        beforeSend: function () {
+            $j('.loader').show();
+        },
         success: function (data) {
             //console.log(data);
             //alert(JSON.stringify(data));
+            $j('.loader').hide();
             $j('#myModalContent').html(data);
             $j('#cr_details').modal('show');
         },
         error: function () {
+            $j('.loader').hide();
             //alert("Error: Dynamic content load failed.");
         }
     });
@@ -441,6 +446,14 @@ $j('#cr_details').on('show.bs.modal', function (e) {
         dateFormat: "dd-MM-yy",
         yearRange: "-100:+20",
     });
+
+    if ($j('#UATSignoffDate').val() != "" && $j("#FirstCommittedLiveDate").val()) {
+        var start = $j('#UATSignoffDate').val();
+        var end = $j('#FirstCommittedLiveDate').val();
+        var diff = new Date(Date.parse(end) - Date.parse(start));
+        var days = diff / 1000 / 60 / 60 / 24;
+        $j('#TAT').val(days);
+    }
 
 
     if (typeof $j("#UnitLead").val() === "undefined") {

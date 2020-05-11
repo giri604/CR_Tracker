@@ -250,7 +250,9 @@
                 <div class="modal-body">
                     <input type="hidden" name="bookId" id="bookId" value="" />
                     <script type="text/javascript"> var TeamDetailPostBackURL = '@Url.Action("GetCRDetails", "Modal")' </script>
-                    <div id='myModalContent'></div>
+                    <div id='myModalContent'>
+                        <div id="loader" class="loader" style="display:none;"></div>
+                    </div>
 
 
                 </div>
