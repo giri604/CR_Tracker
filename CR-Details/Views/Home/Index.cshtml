@@ -38,7 +38,10 @@
                     return [value];
                 });
             };
-            options.error = function () { alert("Error retrieving ExpectedDates data!"); };
+            options.error = function () {
+                AlertModal(getMessage("error"), "Error retrieving ExpectedDates data!.", BootstrapDialog.TYPE_DANGER, function () {
+                });
+            };
             $.ajax(options);
 
             var Alldays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -227,17 +230,6 @@
             var arr = [];
             $("#fileInput").on("change", function () {
               
-                //var fileInput = document.getElementById('fileInput');
-                //for (i = 0; i < fileInput.files.length; i++) {
-                //        var sfilename = fileInput.files[i].name;
-                //        let srandomid = Math.random().toString(36).substring(7);
-
-                //        formdata.append(sfilename, fileInput.files[i]);
-
-                //        var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
-                //            "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
-                //        $("#FilesList tbody").append(markup);
-                //}
                 var fileInput = $('#fileInput')[0].files;
                 //Iterating through each files selected in fileInput
                 for (i = 0; i < fileInput.length; i++) {
@@ -254,7 +246,8 @@
                         $("#FilesList tbody").append(markup);
                     }
                     else {
-                        alert('"' +fileInput[i].name +'"' + " file already selected")
+                        AlertModal(getMessage("warning"), '"' + fileInput[i].name + '"' + " file already selected", BootstrapDialog.TYPE_DANGER, function () {
+                        });
                     }
                 }
                 chkatchtbl();
@@ -320,7 +313,6 @@
 
                 var me = getUrlVars()["user"];
                 if (me == "admin") {
-                    alert("admin");
                     if ($("#ComplexityList").val() == "" || $("#ComplexityList").val() == "null" || $("#ComplexityList").val() == null) {
                         isValid = false;
                     }
@@ -395,17 +387,22 @@
                         data: formdata,
                         async: false,
                         success: function (result) {
-                            alert("added successfully");
+                            AlertModal(getMessage("Success"), "Added successfully.", BootstrapDialog.TYPE_PRIMARY, function () {
+                                window.location.href = window.location.href;  
+                            });
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
-                            alert(xhr.responseText);
+                            AlertModal(getMessage("error"), xhr.responseText, BootstrapDialog.TYPE_DANGER, function () {
+                            });
                             console.log(xhr.responseText);
-                            alert(thrownError);
+                            AlertModal(getMessage("error"), thrownError, BootstrapDialog.TYPE_DANGER, function () {
+                            });
                         }
                     });
                 }
                 else {
-                    alert("Please Enter Required fields input");
+                    AlertModal(getMessage("error"), "Please Enter Required fields input.", BootstrapDialog.TYPE_DANGER, function () {
+                    });
                 }
             });
         });
@@ -421,6 +418,132 @@
                 $("#FilesList").css("visibility", "hidden");
             }
         }
+        function AlertModal(title, message, dialogType1, callback) {
+            //debugger
+            var okButtonText = getMessage("Okay");
+            var dialogType = (dialogType1) ? dialogType1 : BootstrapDialog.TYPE_PRIMARY;
+
+            BootstrapDialog.show({
+                title: title,
+                message: message,
+                type: dialogType,
+                closable: true,
+                closeByBackdrop: false,
+                closeByKeyboard: true,
+                onhide: function (dialogRef) {
+                    if (callback) {
+                        callback();
+                    }
+                },
+                buttons: [{
+                    label: okButtonText,
+                    hotkey: 14,
+                    cssClass: 'btn btn-primary',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+        function getMessage(key, placeHolders) {
+            var languageCurrent = 'en'; //Default English
+            if (localStorage) {
+                if (localStorage.LanguageCurrent != undefined) {
+                    languageCurrent = localStorage.LanguageCurrent;
+                }
+            }
+            return format(Languages[languageCurrent][key], placeHolders);
+        }
+
+        var Languages =
+        {
+            en:
+            {
+                error: "Message",
+                errorMessage: "System error has occurred.",
+                error403Message: 'Your session has been expired, please login again.',
+                success: "Success",
+                warning: "Warning",
+                alert: "Alert",
+                Delete: "Delete ",
+                deleteConfirm: "Are you sure you want to delete ",
+                deleteMessage: "Record deleted successfully.",
+                Select: "--Select--",
+                All: "All",
+                Yes: "Yes",
+                No: "No",
+                Okay: "OK",
+                Save: "Save",
+                Close: "Close",
+                Cancel: "Cancel",
+                Browse: 'Browse',
+                CancelConfirm: "Are you sure you want to cancel ?",
+                cancelMessage: "Record canceled successfully.",
+                errorTitle: "Correct following error(s).",
+                FromDateRequiredMessage: "Please select From Date.",
+                ToDateRequiredMessage: "Please select To Date.",
+                resErrorFromToDate: "Please select From Date smaller or equal to To Date.",
+                resErrorStartEnddate: "Please select Start Date smaller or equal to End Date.",
+                InvalidEmail: 'Please enter a valid Email ID.',
+                RequiredEmail: 'Please enter a Email ID.',
+                RequiredUserName: 'Please enter a User Name.',
+                ManageUser_RequiredEmail: 'Please enter an Email Id.',
+                ManageUser_InvalidEmail: 'Please enter a valid Email Id.',
+                EnterTwoDecimalPlaceOnly: "Please enter two decimal places only.",
+                InvalidDateValidation: 'Please enter a valid Date.',
+                NumberMaxLengthValidation: "Maximum {MAXLENGTH} digits can be allowed.",
+                DecimalValidation: "Please enter a valid Amount.",
+                MaxlengthFieldValidation: "Maximum {MAXLENGTH} characters can be allowed in {FIELD_NAME}.",
+                NumberFieldMaxLengthValidation: "Maximum {MAXLENGTH} digits can be allowed in {FIELD_NAME}.",
+                Login_ValidEmailAddress: "Please enter valid Email ID.",
+                Login_RequiredPassword: "Please enter a Password.",
+                RequiredRoleId: "Please select Role.",
+                RequiredFirstName: 'Please enter a First Name.',
+                RequiredLastName: 'Please enter a Last Name.',
+                RequiredLevel: 'Please select Level.',
+                ValidEmail: "Please enter a valid Email ID.",
+                RequiredRole: "Please enter a Role.",
+                OnlyNumericValidation: "Please enter only numeric values in {FIELD_NAME}.",
+                RequiredAccountName: "Please enter Account Name.",
+                RequiredName: "Please enter a Name.",
+                RequiredRoleName: "Please select a Role.",
+                RequiredTransactionTypeId: "Please select a Transaction Type.",
+                RequiredAccountTypeId: "Please select an Account Type.",
+                RequiredAmount: "Please enter an Amount.",
+                RequiredSourceColumn: "Please enter a Source Column Name.",
+                RequiredEffectiveDate: "Please select Effective From.",
+                RequiredTransactionMode: "Please select Transaction Mode.",
+                RequiredCalculationLogin: "Please enter a Calculation Logic.",
+                ValidateAmount: "Please enter a valid Amount Percentage.",
+                RequiredAccountCode: "Please enter an Account Code.",
+                ActiveDirectoryUserNotFound: "Please enter User Name.",
+                UserNotAvailableInActiveDirectory: "We could not found user in Active Directory.",
+                ValidContactInformation: "Please Enter Valid Contact Information.",
+                RequiredAccountIdentity: "Please enter Account ID.",
+                deleteNotValid: "Can't Delete. This rule contains single accounting entry for transaction type.",
+                insertNotValid: "Can't Insert. This rule not contain single entry of CR/DR for transaction type.",
+                RollBack: "RollBack",
+                rollBackConfirm: "Are you sure you want to rollback ",
+                RequiredRMID: "Please Enter Manager's NT Id.",
+                RequiredLeapId: "Please Enter FOS Leap Id.",
+                RequiredDTCode: "Please Enter FOS DT Code."
+            }
+        }
+
+        function format(string, placeHolders) {
+            placeHolders = typeof placeHolders === 'object' ? placeHolders : Array.prototype.slice.call(arguments, 1);
+
+            if (string != undefined) {
+                return string.replace(/\{\{|\}\}|\{(\w+)\}/g, function (m, n) {
+                    if (m == "{{") { return "{"; }
+                    if (m == "}}") { return "}"; }
+                    return placeHolders[n];
+                });
+            }
+            else {
+                return "";
+            }
+        };
     </script>
 <style>
     .form-group.required .control-label:after {
@@ -778,7 +901,7 @@
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button id="btnSubmit" class="btn btn-success">Save changes</button>
+        <button id="btnSubmit" type="button" class="btn btn-success">Save changes</button>
     </div>
 
 

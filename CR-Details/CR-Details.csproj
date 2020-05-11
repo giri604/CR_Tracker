@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Models\CRAttachFiles.cs" />
     <Compile Include="Models\CRDetails.cs" />
     <Compile Include="Models\CRDetailsRepository.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Shared\DBHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-dialog.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\buttons.bootstrap4.min.css" />
@@ -172,6 +174,7 @@
     <Content Include="Scripts\amcharts-animated.js" />
     <Content Include="Scripts\amcharts-charts.js" />
     <Content Include="Scripts\amcharts-core.js" />
+    <Content Include="Scripts\bootstrap-dialog.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -234,6 +237,7 @@
     <Content Include="Scripts\buttons.bootstrap4.min.js" />
     <Content Include="Scripts\buttons.html5.min.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\cr-tracker-dashboard.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\dataTables.buttons.min.js" />

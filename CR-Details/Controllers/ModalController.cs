@@ -106,6 +106,7 @@ namespace CR_Details.Controllers
             if (formCollection["UnitLead"] != "")
             {
                 var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
+                //var leadType = EnumHelper<Lead>.GetValueFromName(Convert.ToString(formCollection["UnitLead"]));
                 cRDetails.UnitLead = leadType;
             }
             if (formCollection["Manager"] != "")

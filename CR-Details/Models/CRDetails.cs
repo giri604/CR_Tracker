@@ -95,7 +95,7 @@ namespace CR_Details.Models
         CIMA,
         Orion
     }
-    public enum Lead
+    public enum Lead  : int
     {
         [Display(Name = "Pravat Sharma")]
         PravatSharma,

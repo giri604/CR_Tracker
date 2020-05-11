@@ -25,11 +25,6 @@ var ChartManager = {
             alert(error.responseText);
             console.log(error.responseText);
         }
-        //error: function (xhr, ajaxOptions, thrownError) {
-        //    alert(xhr.responseText);
-        //    console.log(xhr.responseText);
-        //    alert(thrownError);
-        //}
         return obj;
     },
 
@@ -364,7 +359,7 @@ $j('#cr_details').on('show.bs.modal', function (e) {
             $j('.loader').show();
         },
         success: function (data) {
-            //console.log(data);
+            console.log(data);
             //alert(JSON.stringify(data));
             $j('.loader').hide();
             $j('#myModalContent').html(data);
@@ -655,7 +650,10 @@ $j(document).on("click", "#btnSubmit", function (event) {
             async: false,
             success: function (result) {
                 if (result != "") {
-                    alert(result);
+                    AlertModal(getMessage("Success"), result, BootstrapDialog.TYPE_PRIMARY, function () {
+                        //window.location.href = window.location.href;
+                    });
+                    //alert(result);
                     keyFlag = 0;
                     projFlag = 0;
                     keyBool = null;
@@ -667,12 +665,16 @@ $j(document).on("click", "#btnSubmit", function (event) {
                 }
             },
             error: function (err) {
-                alert(err.statusText);
+                AlertModal(getMessage("error"), err.statusText, BootstrapDialog.TYPE_DANGER, function () {
+                });
+                //alert(err.statusText);
             }
         });
     }
     else {
-        alert("Please Enter Required fields input");
+        AlertModal(getMessage("error"), "Please Enter Required fields input", BootstrapDialog.TYPE_DANGER, function () {
+        });
+        //alert("Please Enter Required fields input");
     }
 });
 
@@ -727,6 +729,133 @@ $j(document).on("keypress", "#NoOfCRReceivedDuringUAT", function (evt) {
 
     return true;
 });
+
+function AlertModal(title, message, dialogType1, callback) {
+    //debugger
+    var okButtonText = getMessage("Okay");
+    var dialogType = (dialogType1) ? dialogType1 : BootstrapDialog.TYPE_PRIMARY;
+
+    BootstrapDialog.show({
+        title: title,
+        message: message,
+        type: dialogType,
+        closable: true,
+        closeByBackdrop: false,
+        closeByKeyboard: true,
+        onhide: function (dialogRef) {
+            if (callback) {
+                callback();
+            }
+        },
+        buttons: [{
+            label: okButtonText,
+            hotkey: 14,
+            cssClass: 'btn btn-primary',
+            action: function (dialogItself) {
+                dialogItself.close();
+            }
+        }]
+    });
+}
+function getMessage(key, placeHolders) {
+    var languageCurrent = 'en'; //Default English
+    if (localStorage) {
+        if (localStorage.LanguageCurrent != undefined) {
+            languageCurrent = localStorage.LanguageCurrent;
+        }
+    }
+    return format(Languages[languageCurrent][key], placeHolders);
+}
+
+var Languages =
+{
+    en:
+    {
+        error: "Message",
+        errorMessage: "System error has occurred.",
+        error403Message: 'Your session has been expired, please login again.',
+        success: "Success",
+        warning: "Warning",
+        alert: "Alert",
+        Delete: "Delete ",
+        deleteConfirm: "Are you sure you want to delete ",
+        deleteMessage: "Record deleted successfully.",
+        Select: "--Select--",
+        All: "All",
+        Yes: "Yes",
+        No: "No",
+        Okay: "OK",
+        Save: "Save",
+        Close: "Close",
+        Cancel: "Cancel",
+        Browse: 'Browse',
+        CancelConfirm: "Are you sure you want to cancel ?",
+        cancelMessage: "Record canceled successfully.",
+        errorTitle: "Correct following error(s).",
+        FromDateRequiredMessage: "Please select From Date.",
+        ToDateRequiredMessage: "Please select To Date.",
+        resErrorFromToDate: "Please select From Date smaller or equal to To Date.",
+        resErrorStartEnddate: "Please select Start Date smaller or equal to End Date.",
+        InvalidEmail: 'Please enter a valid Email ID.',
+        RequiredEmail: 'Please enter a Email ID.',
+        RequiredUserName: 'Please enter a User Name.',
+        ManageUser_RequiredEmail: 'Please enter an Email Id.',
+        ManageUser_InvalidEmail: 'Please enter a valid Email Id.',
+        EnterTwoDecimalPlaceOnly: "Please enter two decimal places only.",
+        InvalidDateValidation: 'Please enter a valid Date.',
+        NumberMaxLengthValidation: "Maximum {MAXLENGTH} digits can be allowed.",
+        DecimalValidation: "Please enter a valid Amount.",
+        MaxlengthFieldValidation: "Maximum {MAXLENGTH} characters can be allowed in {FIELD_NAME}.",
+        NumberFieldMaxLengthValidation: "Maximum {MAXLENGTH} digits can be allowed in {FIELD_NAME}.",
+        Login_ValidEmailAddress: "Please enter valid Email ID.",
+        Login_RequiredPassword: "Please enter a Password.",
+        RequiredRoleId: "Please select Role.",
+        RequiredFirstName: 'Please enter a First Name.',
+        RequiredLastName: 'Please enter a Last Name.',
+        RequiredLevel: 'Please select Level.',
+        ValidEmail: "Please enter a valid Email ID.",
+        RequiredRole: "Please enter a Role.",
+        OnlyNumericValidation: "Please enter only numeric values in {FIELD_NAME}.",
+        RequiredAccountName: "Please enter Account Name.",
+        RequiredName: "Please enter a Name.",
+        RequiredRoleName: "Please select a Role.",
+        RequiredTransactionTypeId: "Please select a Transaction Type.",
+        RequiredAccountTypeId: "Please select an Account Type.",
+        RequiredAmount: "Please enter an Amount.",
+        RequiredSourceColumn: "Please enter a Source Column Name.",
+        RequiredEffectiveDate: "Please select Effective From.",
+        RequiredTransactionMode: "Please select Transaction Mode.",
+        RequiredCalculationLogin: "Please enter a Calculation Logic.",
+        ValidateAmount: "Please enter a valid Amount Percentage.",
+        RequiredAccountCode: "Please enter an Account Code.",
+        ActiveDirectoryUserNotFound: "Please enter User Name.",
+        UserNotAvailableInActiveDirectory: "We could not found user in Active Directory.",
+        ValidContactInformation: "Please Enter Valid Contact Information.",
+        RequiredAccountIdentity: "Please enter Account ID.",
+        deleteNotValid: "Can't Delete. This rule contains single accounting entry for transaction type.",
+        insertNotValid: "Can't Insert. This rule not contain single entry of CR/DR for transaction type.",
+        RollBack: "RollBack",
+        rollBackConfirm: "Are you sure you want to rollback ",
+        RequiredRMID: "Please Enter Manager's NT Id.",
+        RequiredLeapId: "Please Enter FOS Leap Id.",
+        RequiredDTCode: "Please Enter FOS DT Code."
+    }
+}
+
+function format(string, placeHolders) {
+    placeHolders = typeof placeHolders === 'object' ? placeHolders : Array.prototype.slice.call(arguments, 1);
+
+    if (string != undefined) {
+        return string.replace(/\{\{|\}\}|\{(\w+)\}/g, function (m, n) {
+            if (m == "{{") { return "{"; }
+            if (m == "}}") { return "}"; }
+            return placeHolders[n];
+        });
+    }
+    else {
+        return "";
+    }
+};
 
 
 //-----------------------------------------------------------------------
