@@ -22,7 +22,7 @@ namespace CR_Details.Controllers
         public static string Get_Connection_String()
         {
             //Local
-            string connectionString = @"Data Source=ADMIN-PC;Initial Catalog=MyDemoDB;Integrated Security=true;";
+            string connectionString = @"Data Source=DEEPAK;Initial Catalog=MyDemoDB;Integrated Security=true;";
             return connectionString;
         }
 
