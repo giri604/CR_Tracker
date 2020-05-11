@@ -37,11 +37,6 @@
                 disableDates = $.map(ExpectedDates, function (value, index) {
                     return [value];
                 });
-                //alert(disableDates);
-                //var ExpectedDatesArray = $.parseJSON(JSON.stringify(ExpectedDates));
-                //$.each(ExpectedDates, function (key, value) {
-                //    alert(value);
-                //});
             };
             options.error = function () { alert("Error retrieving ExpectedDates data!"); };
             $.ajax(options);
@@ -315,10 +310,10 @@
                     console.log("ExpectedDate is empty");
                     isValid = false;
                 }
-                else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
-                    console.log("ReasonRCA is empty");
-                    isValid = false;
-                }
+                //else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
+                //    console.log("ReasonRCA is empty");
+                //    isValid = false;
+                //}
                 else {
                     isValid = true;
                 }
@@ -744,7 +739,7 @@
         </div>
     </div>
     <div class="form-group-sm col-md-12">
-        <div class="form-group required col-md-6">
+        <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ReasonRCA, "Reason / RCA ", htmlAttributes: new
             {
                 @class = "control-label col-md-5"

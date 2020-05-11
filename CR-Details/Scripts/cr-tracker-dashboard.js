@@ -400,32 +400,48 @@ $j('#cr_details').on('show.bs.modal', function (e) {
         yearRange: "-100:+20",
     });
 
+    function NotBeforeToday(date) {
+        var now = new Date();//this gets the current date and time
+        if (date.getFullYear() == now.getFullYear() && date.getMonth() == now.getMonth() && date.getDate() >= now.getDate())
+            return [true];
+        if (date.getFullYear() >= now.getFullYear() && date.getMonth() > now.getMonth())
+            return [true];
+        if (date.getFullYear() > now.getFullYear())
+            return [true];
+        return [false];
+    }
+
     var $dp5 = $j("#UATSignoffDate");
     $dp5.datepicker({
+        beforeShowDay: NotBeforeToday,
         changeYear: true,
         changeMonth: true,
-        minDate: 0,
+        //minDate: 0,
+        minDate: new Date($j('#UATDeliveryDate').val()),
         dateFormat: "dd-MM-yy",
         yearRange: "-100:+20",
     });
 
     var $dp6 = $j("#ProjectCRLiveDate");
     $dp6.datepicker({
+        beforeShowDay: NotBeforeToday,
         changeYear: true,
         changeMonth: true,
-        minDate: 0,
+        minDate: new Date($j('#UATSignoffDate').val()),
         dateFormat: "dd-MM-yy",
         yearRange: "-100:+20",
     });
 
     var $dp7 = $j("#FirstCommittedLiveDate");
     $dp7.datepicker({
+        beforeShowDay: NotBeforeToday,
         changeYear: true,
         changeMonth: true,
-        minDate: 0,
+        minDate: new Date($j('#UATSignoffDate').val()),
         dateFormat: "dd-MM-yy",
         yearRange: "-100:+20",
     });
+
 
     if (typeof $j("#UnitLead").val() === "undefined") {
         //alert("lead is empty");
@@ -503,18 +519,18 @@ $j(document).on("click", "#btnSubmit", function (event) {
     //else if ($j("#ExpectedDate").val() == "" || $j("#ExpectedDate").val() == "null" || $j("#ExpectedDate").val() == null) {
     //    isValid = false;
     //}
-    else if ($j("#ReasonRCA").val() == "" || $j("#ReasonRCA").val() == "null" || $j("#ReasonRCA").val() == null) {
-        console.log("ReasonRCA is empty");
-        isValid = false;
-    }
+    //else if ($j("#ReasonRCA").val() == "" || $j("#ReasonRCA").val() == "null" || $j("#ReasonRCA").val() == null) {
+    //    console.log("ReasonRCA is empty");
+    //    isValid = false;
+    //}
     else if ($j("#ComplexityList").val() == "" || $j("#ComplexityList").val() == "null" || $j("#ComplexityList").val() == null) {
         console.log("ComplexityList is empty");
         isValid = false;
     }
-    else if ($j("#ProjectCompletedScheduleYes").is(':checked') == false && $j("#ProjectCompletedScheduleNo").is(':checked') == false) {
-        console.log("ProjectCompletedScheduleNo is empty");
-        isValid = false;
-    }
+    //else if ($j("#ProjectCompletedScheduleYes").is(':checked') == false && $j("#ProjectCompletedScheduleNo").is(':checked') == false) {
+    //    console.log("ProjectCompletedScheduleNo is empty");
+    //    isValid = false;
+    //}
     else if ($j("#ProjectCRReceivedDate").val() == "" || $j("#ProjectCRReceivedDate").val() == "null" || $j("#ProjectCRReceivedDate").val() == null) {
         console.log("ProjectCRReceivedDate is empty");
         isValid = false;
@@ -531,22 +547,22 @@ $j(document).on("click", "#btnSubmit", function (event) {
         console.log("UATDeliveryDate is empty");
         isValid = false;
     }
-    else if ($j("#UATSignoffDate").val() == "" || $j("#UATSignoffDate").val() == "null" || $j("#UATSignoffDate").val() == null) {
-        console.log("UATSignoffDate is empty");
-        isValid = false;
-    }
-    else if ($j("#ProjectCRLiveDate").val() == "" || $j("#ProjectCRLiveDate").val() == "null" || $j("#ProjectCRLiveDate").val() == null) {
-        console.log("ProjectCRLiveDate is empty");
-        isValid = false;
-    }
-    else if ($j("#FirstCommittedLiveDate").val() == "" || $j("#FirstCommittedLiveDate").val() == "null" || $j("#FirstCommittedLiveDate").val() == null) {
-        console.log("FirstCommittedLiveDate is empty");
-        isValid = false;
-    }
-    else if ($j("#TAT").val() == "" || $j("#TAT").val() == "null" || $j("#TAT").val() == null) {
-        console.log("TAT is empty");
-        isValid = false;
-    }
+    //else if ($j("#UATSignoffDate").val() == "" || $j("#UATSignoffDate").val() == "null" || $j("#UATSignoffDate").val() == null) {
+    //    console.log("UATSignoffDate is empty");
+    //    isValid = false;
+    //}
+    //else if ($j("#ProjectCRLiveDate").val() == "" || $j("#ProjectCRLiveDate").val() == "null" || $j("#ProjectCRLiveDate").val() == null) {
+    //    console.log("ProjectCRLiveDate is empty");
+    //    isValid = false;
+    //}
+    //else if ($j("#FirstCommittedLiveDate").val() == "" || $j("#FirstCommittedLiveDate").val() == "null" || $j("#FirstCommittedLiveDate").val() == null) {
+    //    console.log("FirstCommittedLiveDate is empty");
+    //    isValid = false;
+    //}
+    //else if ($j("#TAT").val() == "" || $j("#TAT").val() == "null" || $j("#TAT").val() == null) {
+    //    console.log("TAT is empty");
+    //    isValid = false;
+    //}
     else if ($j("#NoOfShowstoppersPostGoLive").val() == "" || $j("#NoOfShowstoppersPostGoLive").val() == "null" || $j("#NoOfShowstoppersPostGoLive").val() == null) {
         console.log("NoOfShowstoppersPostGoLive is empty");
         isValid = false;

@@ -179,7 +179,7 @@ namespace CR_Details.DAL
                     //cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : false;
                     cRDetail.KeyProjects = (m_dsCRMst.Tables[0].Rows[0]["KeyProjects"] != DBNull.Value) ? (Convert.ToBoolean(m_dsCRMst.Tables[0].Rows[0]["KeyProjects"])) : (Boolean?)null;
 
-                    //cRDetail.ProjectCRReceivedDate = (m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"] != DBNull.Value) ? (Convert.ToDateTime(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]).Date) : DateTime.MinValue;
+                    cRDetail.ExpectedDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ExpectedDate"]), out validValue) ? validValue : (DateTime?)null;
                     cRDetail.ProjectCRReceivedDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["ProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
                     cRDetail.FinalProjectCRReceivedDate = DateTime.TryParse(Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["FinalProjectCRReceivedDate"]), out validValue) ? validValue : (DateTime?)null;
                     cRDetail.NoOfCRReceivedDuringUAT = (m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"] != DBNull.Value) ? (Convert.ToInt32(m_dsCRMst.Tables[0].Rows[0]["NoOfCRReceivedDuringUAT"])) : 0;
