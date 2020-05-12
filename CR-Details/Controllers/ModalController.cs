@@ -105,14 +105,15 @@ namespace CR_Details.Controllers
             cRDetails.NoOfShowstoppersPostGoLive = (formCollection["NoOfShowstoppersPostGoLive"] != "") ? (Convert.ToInt32(formCollection["NoOfShowstoppersPostGoLive"])) : 0;
             if (formCollection["UnitLead"] != "")
             {
-                var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
-                //var leadType = EnumHelper<Lead>.GetValueFromName(Convert.ToString(formCollection["UnitLead"]));
-                cRDetails.UnitLead = leadType;
+                //var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
+                var leadType = EnumHelper<Lead>.GetValueFromName(Convert.ToString(formCollection["UnitLead"]));
+                cRDetails.UnitLead = leadType.ToString();
             }
             if (formCollection["Manager"] != "")
             {
-                var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
-                cRDetails.Manager = managerType;
+                //var managerType = (Models.Manager)Enum.Parse(typeof(Models.Manager), Convert.ToString(formCollection["Manager"]));
+                var managerType = EnumHelper<Manager>.GetValueFromName(Convert.ToString(formCollection["Manager"]));
+                cRDetails.Manager = managerType.ToString();
             }
             if (formCollection["CRStatus"] != "")
             {

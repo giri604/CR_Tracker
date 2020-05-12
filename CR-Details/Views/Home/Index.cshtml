@@ -3,7 +3,7 @@
     ViewBag.Title = "Home Page";
 }
 
-    <script>
+<script>
 
         var formdata = new FormData(); //FormData object
 
@@ -281,26 +281,38 @@
                 var isValid = true;
                 if ($("#CrTitle").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
                     console.log("CrTitle is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredCrTitle"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
                 else if ($("#CrDescription").val() == "" || $("#CrDescription").val() == "null" || $("#CrDescription").val() == null) {
                     console.log("CrDescription is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredCrDescription"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
                 else if ($("#DepartmentList").val() == "" || $("#DepartmentList").val() == "null" || $("#DepartmentList").val() == null) {
                     console.log("DepartmentList is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredDepartmentList"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
                 else if ($("#CategoryList").val() == "" || $("#CategoryList").val() == "null" || $("#CategoryList").val() == null) {
                     console.log("CategoryList is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredCategoryList"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
-                else if (keyBool == "null") {
+                else if (keyBool == null) {
                     console.log("KeyProject is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredKeyProjects"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
                 else if ($("#ExpectedDate").val() == "" || $("#ExpectedDate").val() == "null" || $("#ExpectedDate").val() == null) {
                     console.log("ExpectedDate is empty");
+                    AlertModal(getMessage("error"), getMessage("RequiredExpectedDate"), BootstrapDialog.TYPE_DANGER, function () {
+                    });
                     isValid = false;
                 }
                 //else if ($("#ReasonRCA").val() == "" || $("#ReasonRCA").val() == "null" || $("#ReasonRCA").val() == null) {
@@ -314,42 +326,58 @@
                 var me = getUrlVars()["user"];
                 if (me == "admin") {
                     if ($("#ComplexityList").val() == "" || $("#ComplexityList").val() == "null" || $("#ComplexityList").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredComplexityType"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
-                    else if (projBool == "" || projBool == null || projBool == "null") {
-                        isValid = false;
-                    }
+                    //else if (projBool == "" || projBool == null || projBool == "null") {
+                    //    isValid = false;
+                    //}
                     else if ($("#ProjectCRReceivedDate").val() == "" || $("#ProjectCRReceivedDate").val() == "null" || $("#ProjectCRReceivedDate").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredProjectCRReceivedDate"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else if ($("#FinalProjectCRReceivedDate").val() == "" || $("#FinalProjectCRReceivedDate").val() == "null" || $("#FinalProjectCRReceivedDate").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredFinalProjectCRReceivedDate"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else if ($("#NoOfCRReceivedDuringUAT").val() == "" || $("#NoOfCRReceivedDuringUAT").val() == "null" || $("#NoOfCRReceivedDuringUAT").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredNoOfCRReceivedDuringUAT"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else if ($("#UATDeliveryDate").val() == "" || $("#UATDeliveryDate").val() == "null" || $("#UATDeliveryDate").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredUATDeliveryDate"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
-                    else if ($("#UATSignoffDate").val() == "" || $("#UATSignoffDate").val() == "null" || $("#UATSignoffDate").val() == null) {
-                        isValid = false;
-                    }
-                    else if ($("#ProjectCRLiveDate").val() == "" || $("#ProjectCRLiveDate").val() == "null" || $("#ProjectCRLiveDate").val() == null) {
-                        isValid = false;
-                    }
-                    else if ($("#FirstCommittedLiveDate").val() == "" || $("#FirstCommittedLiveDate").val() == "null" || $("#FirstCommittedLiveDate").val() == null) {
-                        isValid = false;
-                    }
-                    else if ($("#TAT").val() == "" || $("#TAT").val() == "null" || $("#TAT").val() == null) {
-                        isValid = false;
-                    }
+                    //else if ($("#UATSignoffDate").val() == "" || $("#UATSignoffDate").val() == "null" || $("#UATSignoffDate").val() == null) {
+                    //    isValid = false;
+                    //}
+                    //else if ($("#ProjectCRLiveDate").val() == "" || $("#ProjectCRLiveDate").val() == "null" || $("#ProjectCRLiveDate").val() == null) {
+                    //    isValid = false;
+                    //}
+                    //else if ($("#FirstCommittedLiveDate").val() == "" || $("#FirstCommittedLiveDate").val() == "null" || $("#FirstCommittedLiveDate").val() == null) {
+                    //    isValid = false;
+                    //}
+                    //else if ($("#TAT").val() == "" || $("#TAT").val() == "null" || $("#TAT").val() == null) {
+                    //    isValid = false;
+                    //}
                     else if ($("#NoOfShowstoppersPostGoLive").val() == "" || $("#NoOfShowstoppersPostGoLive").val() == "null" || $("#NoOfShowstoppersPostGoLive").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredNoOfShowstoppersPostGoLive"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else if ($("#UnitLead").val() == "" || $("#UnitLead").val() == "null" || $("#UnitLead").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredUnitLead"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else if ($("#Manager").val() == "" || $("#Manager").val() == "null" || $("#Manager").val() == null) {
+                        AlertModal(getMessage("error"), getMessage("RequiredManager"), BootstrapDialog.TYPE_DANGER, function () {
+                        });
                         isValid = false;
                     }
                     else {
@@ -401,8 +429,8 @@
                     });
                 }
                 else {
-                    AlertModal(getMessage("error"), "Please Enter Required fields input.", BootstrapDialog.TYPE_DANGER, function () {
-                    });
+                    //AlertModal(getMessage("error"), "Please Enter Required fields input.", BootstrapDialog.TYPE_DANGER, function () {
+                    //});
                 }
             });
         });
@@ -526,7 +554,22 @@
                 rollBackConfirm: "Are you sure you want to rollback ",
                 RequiredRMID: "Please Enter Manager's NT Id.",
                 RequiredLeapId: "Please Enter FOS Leap Id.",
-                RequiredDTCode: "Please Enter FOS DT Code."
+                RequiredDTCode: "Please Enter FOS DT Code.",
+                RequiredComplexityType: "Please Select Complexity Type.",
+                RequiredProjectCRReceivedDate: "Please Select Project / CR Received Date.",
+                RequiredFinalProjectCRReceivedDate: "Please Select Final Project / CR Received Date.",
+                RequiredNoOfCRReceivedDuringUAT: "Please Enter No. of CRs received post signoff of original CR.",
+                RequiredUATDeliveryDate: "Please Select UAT delivery date.",
+                RequiredNoOfShowstoppersPostGoLive: "Please Enter No. of Showstoppers post go live.",
+                RequiredUnitLead: "Please Select Unit Lead.",
+                RequiredManager: "Please Select Assigned To.",
+                RequiredCRStatus: "Please Select Status.",
+                RequiredKeyProjects: "Please Select Key Projects.",
+                RequiredCategoryList: "Please Select Display Name.",
+                RequiredDepartmentList: "Please Select Department.",
+                RequiredCrDescription: "Please Enter CR Description.",
+                RequiredCrTitle: "Please Enter CR Title.",
+                RequiredExpectedDate: "Please Select Expected Date."
             }
         }
 
@@ -632,7 +675,6 @@
         font-size: 13px;
     }
 </style>
-@*@using (Html.BeginForm("CRDetails", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm" }))
 {
     @Html.ValidationSummary(true, "", new
@@ -906,3 +948,4 @@
 
 
 }
+

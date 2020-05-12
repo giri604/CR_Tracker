@@ -506,22 +506,33 @@ $j(document).on("click", "#btnSubmit", function (event) {
     var isValid = true;
     if ($j("#CrTitle").val() == "" || $j("#CrDescription").val() == "null" || $j("#CrDescription").val() == null) {
         console.log("CrTitle is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredCrTitle"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
+       
     }
     else if ($j("#CrDescription").val() == "" || $j("#CrDescription").val() == "null" || $j("#CrDescription").val() == null) {
         console.log("CrDescription is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredCrDescription"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#DepartmentList").val() == "" || $j("#DepartmentList").val() == "null" || $j("#DepartmentList").val() == null) {
         console.log("DepartmentList is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredDepartmentList"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#CategoryList").val() == "" || $j("#CategoryList").val() == "null" || $j("#CategoryList").val() == null) {
         console.log("CategoryList is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredCategoryList"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#KeyProjectsYes").is(':checked') == false && $j("#KeyProjectsNo").is(':checked') == false) {
         console.log("KeyProjects is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredKeyProjects"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     //else if ($j("#ExpectedDate").val() == "" || $j("#ExpectedDate").val() == "null" || $j("#ExpectedDate").val() == null) {
@@ -533,6 +544,8 @@ $j(document).on("click", "#btnSubmit", function (event) {
     //}
     else if ($j("#ComplexityList").val() == "" || $j("#ComplexityList").val() == "null" || $j("#ComplexityList").val() == null) {
         console.log("ComplexityList is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredComplexityType"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     //else if ($j("#ProjectCompletedScheduleYes").is(':checked') == false && $j("#ProjectCompletedScheduleNo").is(':checked') == false) {
@@ -541,18 +554,26 @@ $j(document).on("click", "#btnSubmit", function (event) {
     //}
     else if ($j("#ProjectCRReceivedDate").val() == "" || $j("#ProjectCRReceivedDate").val() == "null" || $j("#ProjectCRReceivedDate").val() == null) {
         console.log("ProjectCRReceivedDate is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredProjectCRReceivedDate"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#FinalProjectCRReceivedDate").val() == "" || $j("#FinalProjectCRReceivedDate").val() == "null" || $j("#FinalProjectCRReceivedDate").val() == null) {
         console.log("FinalProjectCRReceivedDate is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredFinalProjectCRReceivedDate"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#NoOfCRReceivedDuringUAT").val() == "" || $j("#NoOfCRReceivedDuringUAT").val() == "null" || $j("#NoOfCRReceivedDuringUAT").val() == null) {
         console.log("NoOfCRReceivedDuringUAT is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredNoOfCRReceivedDuringUAT"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#UATDeliveryDate").val() == "" || $j("#UATDeliveryDate").val() == "null" || $j("#UATDeliveryDate").val() == null) {
         console.log("UATDeliveryDate is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredUATDeliveryDate"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     //else if ($j("#UATSignoffDate").val() == "" || $j("#UATSignoffDate").val() == "null" || $j("#UATSignoffDate").val() == null) {
@@ -573,18 +594,26 @@ $j(document).on("click", "#btnSubmit", function (event) {
     //}
     else if ($j("#NoOfShowstoppersPostGoLive").val() == "" || $j("#NoOfShowstoppersPostGoLive").val() == "null" || $j("#NoOfShowstoppersPostGoLive").val() == null) {
         console.log("NoOfShowstoppersPostGoLive is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredNoOfShowstoppersPostGoLive"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#UnitLead").val() == "" || $j("#UnitLead").val() == "null" || $j("#UnitLead").val() == null) {
         console.log("UnitLead is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredUnitLead"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#Manager").val() == "" || $j("#Manager").val() == "null" || $j("#Manager").val() == null) {
         console.log("Manager is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredManager"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else if ($j("#CRStatus").val() == "" || $j("#CRStatus").val() == "null" || $j("#CRStatus").val() == null) {
         console.log("CRStatus is empty");
+        AlertModal(getMessage("error"), getMessage("RequiredCRStatus"), BootstrapDialog.TYPE_DANGER, function () {
+        });
         isValid = false;
     }
     else {
@@ -672,8 +701,8 @@ $j(document).on("click", "#btnSubmit", function (event) {
         });
     }
     else {
-        AlertModal(getMessage("error"), "Please Enter Required fields input", BootstrapDialog.TYPE_DANGER, function () {
-        });
+        //AlertModal(getMessage("error"), "Please Enter Required fields input", BootstrapDialog.TYPE_DANGER, function () {
+        //});
         //alert("Please Enter Required fields input");
     }
 });
@@ -838,7 +867,21 @@ var Languages =
         rollBackConfirm: "Are you sure you want to rollback ",
         RequiredRMID: "Please Enter Manager's NT Id.",
         RequiredLeapId: "Please Enter FOS Leap Id.",
-        RequiredDTCode: "Please Enter FOS DT Code."
+        RequiredDTCode: "Please Enter FOS DT Code.",
+        RequiredComplexityType: "Please Select Complexity Type.",
+        RequiredProjectCRReceivedDate: "Please Select Project / CR Received Date.",
+        RequiredFinalProjectCRReceivedDate: "Please Select Final Project / CR Received Date.",
+        RequiredNoOfCRReceivedDuringUAT: "Please Enter No. of CRs received post signoff of original CR.",
+        RequiredUATDeliveryDate: "Please Select UAT delivery date.",
+        RequiredNoOfShowstoppersPostGoLive: "Please Enter No. of Showstoppers post go live.",
+        RequiredUnitLead: "Please Select Unit Lead.",
+        RequiredManager: "Please Select Assigned To.",
+        RequiredCRStatus: "Please Select Status.",
+        RequiredKeyProjects: "Please Select Key Projects.",
+        RequiredCategoryList: "Please Select System Name.",
+        RequiredDepartmentList: "Please Select Department.",
+        RequiredCrDescription: "Please Enter CR Description.",
+        RequiredCrTitle: "Please Enter CR Title."
     }
 }
 

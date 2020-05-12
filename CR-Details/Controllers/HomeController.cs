@@ -76,12 +76,13 @@ namespace CR_Details.Controllers
             if (formCollection["UnitLead"] != "null")
             {
                 var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["UnitLead"]));
-                cRDetails.UnitLead = leadType;
+                //cRDetails.UnitLead = leadType;
+                cRDetails.UnitLead = leadType.ToString();
             }
             if (formCollection["Manager"] != "null")
             {
                 var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(formCollection["Manager"]));
-                cRDetails.Manager = managerType;
+                cRDetails.Manager = managerType.ToString();
             }
             cRDetails.ExpectedDate = DateTime.TryParse((formCollection["ExpectedDate"]), out validValue) ? validValue : (DateTime?)null;
             cRDetails.ReasonRCA = formCollection["ReasonRCA"];

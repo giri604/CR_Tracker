@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using CR_Details.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -192,12 +193,15 @@ namespace CR_Details.DAL
                     if (m_dsCRMst.Tables[0].Rows[0]["UnitLead"] != DBNull.Value)
                     {
                         var leadType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["UnitLead"]));
-                        cRDetail.UnitLead = leadType;
+                        //cRDetail.UnitLead = leadType;
+                        //cRDetail.UnitLead = leadType.ToString();
+                        cRDetail.UnitLead = EnumHelper<Lead>.GetDisplayValue(leadType);
                     }
                     if (m_dsCRMst.Tables[0].Rows[0]["Manager"] != DBNull.Value)
                     {
-                        var managerType = (Models.Lead)Enum.Parse(typeof(Models.Lead), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["Manager"]));
-                        cRDetail.Manager = managerType;
+                        var managerType = (Models.Manager)Enum.Parse(typeof(Models.Manager), Convert.ToString(m_dsCRMst.Tables[0].Rows[0]["Manager"]));
+                        //cRDetail.Manager = managerType;
+                        cRDetail.Manager = EnumHelper<Manager>.GetDisplayValue(managerType); ;
                     }
                     if (m_dsCRMst.Tables[0].Rows[0]["CR_Status"] != DBNull.Value)
                     {

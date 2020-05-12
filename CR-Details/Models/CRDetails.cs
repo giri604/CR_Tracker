@@ -51,8 +51,10 @@ namespace CR_Details.Models
         public DateTime? FirstCommittedLiveDate { get; set; }
         public string TAT { get; set; }
         public int? NoOfShowstoppersPostGoLive { get; set; } = null;
-        public Lead? UnitLead { get; set; } = null;
-        public Lead? Manager { get; set; } = null;
+        //public Lead? UnitLead { get; set; } = null;
+        public string UnitLead { get; set; } = null;
+        //public Lead? Manager { get; set; } = null;
+        public string Manager { get; set; } = null;
         public CRStatus? CRStatus { get; set; } = null;
 
         [DataType(DataType.Date)]
@@ -97,10 +99,24 @@ namespace CR_Details.Models
     }
     public enum Lead
     {
+        [Display(Name = "Amol Kumbhar")]
+        AmolKumbhar,
+        [Display(Name = "Ajay Bind")]
+        AjayBind,
+        [Display(Name = "Deepak Giri")]
+        DeepakGiri
+    }
+
+    public enum Manager
+    {
         [Display(Name = "Pravat Sharma")]
         PravatSharma,
-        [Display(Name = "Sagar Dasgupta")]
-        SagarDasgupta
+        [Display(Name = "Amol Kumbhar")]
+        AmolKumbhar,
+        [Display(Name = "Sandeep")]
+        Sandeep,
+        [Display(Name = "Satish Poojari")]
+        SatishPoojari,
     }
 
     //new field added 07-may-2020
